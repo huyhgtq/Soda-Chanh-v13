@@ -9,11 +9,11 @@ const filterLevels = {
 };
 
 const verificationLevels = {
-	NONE: 'None',
-	LOW: 'Low',
-	MEDIUM: 'Medium',
-	HIGH: 'High',
-	VERY_HIGH: 'Highest'
+	NONE: 'Không',
+	LOW: 'Thấp',
+	MEDIUM: 'Trung bình',
+	HIGH: 'Cao',
+	VERY_HIGH: 'Cao nhất'
 };
 function checkDays(date) {
       let now = new Date();
@@ -21,7 +21,7 @@ function checkDays(date) {
       let days = Math.floor(diff / 86400000);
       return days + (days == 1 ? " day" : " days") + " ago";
   };
-  let verifLevels = ["None", "Low", "Medium", "(╯°□°）╯︵  ┻━┻", "┻━┻ミヽ(ಠ益ಠ)ノ彡┻━┻"];
+  let verifLevels = ["Không", "Thâp", "Trung bình", "(╯°□°）╯︵  ┻━┻", "┻━┻ミヽ(ಠ益ಠ)ノ彡┻━┻"];
 
   let region = {
     "eu-central": ":flag_eu: Central Europe",
@@ -46,7 +46,7 @@ module.exports = class extends Command {
       super(...args, {
         name: 'serverinfo',
         aliases: [ 'server', 'si', 'guildinfo', 'info' ],
-        description: 'Displays information about the current server.',
+        description: 'Hiển thị thông tin về máy chủ hiện tại.',
         category: 'Information',
         guildOnly: true,
         cooldown: 3
@@ -62,7 +62,6 @@ module.exports = class extends Command {
       const language = require(`../../data/language/${guildDB.language}.json`)
 
      const embed = new MessageEmbed() 
-     .setFooter(`Shard #${message.guild.shardID}`)
 .setAuthor(message.guild.name, message.guild.iconURL)
 .addField(`${language.nameS}`, message.guild.name, true)
 .addField("ID", message.guild.id, true)
@@ -75,6 +74,6 @@ module.exports = class extends Command {
 .addField(`Created at`, `${message.channel.guild.createdAt.toUTCString().substr(0, 16)} **(${checkDays(message.channel.guild.createdAt)})**`, true)
 .setThumbnail(message.guild.iconURL())
 .setColor(message.guild.me.displayHexColor);
-    message.channel.send({embed});
+	message.reply({ embeds: [embed]})
 }
 };

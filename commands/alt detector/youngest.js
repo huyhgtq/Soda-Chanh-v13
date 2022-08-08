@@ -13,7 +13,7 @@ module.exports = class extends Command {
       usage: "<date>",
       category: "Alt Detector",
       examples: ["youngest 30"],
-      description: "Find all youngest alts with the provided join date (days)",
+      description: "Tìm tất cả các tài khoản tham gia được cung cấp (ngày)",
       cooldown: 10,
       userPermission: ['MANAGE_GUILD'],
     })
@@ -28,13 +28,19 @@ module.exports = class extends Command {
 
 
       let days = args[0]
-      if(!days) return message.channel.send(new discord.MessageEmbed().setColor(client.color.red).setDescription(`${message.client.emoji.fail} | Please provide a valid Days Duration`))
+      if(!days) return message.reply({ embeds: [new discord.MessageEmbed()
+												.setColor(client.color.red)
+												.setDescription(`${message.client.emoji.fail} | ${language.daysduration}`)]})
 
-      if(isNaN(days)) return message.channel.send(new discord.MessageEmbed().setColor(client.color.red).setDescription(`${message.client.emoji.fail} | Please provide a valid Days Duration`))
+      if(isNaN(days)) return message.reply({ embeds: [new discord.MessageEmbed()
+													  .setColor(client.color.red)
+													  .setDescription(`${message.client.emoji.fail} | ${language.daysduration}`)]})
    
     let day = Number(days)
 
-    if(day > 100) return message.channel.send(new discord.MessageEmbed().setColor(client.color.red).setDescription(`${message.client.emoji.fail} | You may only find alts of an account age of **100 days** or below`))
+    if(day > 1000) return message.reply({ embeds: [new discord.MessageEmbed()
+												   .setColor(client.color.red)
+												   .setDescription(`${message.client.emoji.fail} | ${language.accountageof}`)]})
 
     let array = []
 
@@ -47,7 +53,7 @@ module.exports = class extends Command {
       
     if(day > created) {
 
-    array.push(`${user} (${user.user.tag} | ${user.id})\nJoined At: **${user.joinedAt}**`)
+    array.push(`${user} (${user.user.tag} | ${user.id})\n${language.joinedat}: **${user.joinedAt}**`)
     }
    
     })
@@ -56,22 +62,22 @@ module.exports = class extends Command {
 
 
     const embed = new discord.MessageEmbed()
-    .setTitle(`Alt Detector - Join age < ${days} Days`)
-    .setDescription(array.join("\n\n") || "No alts found")
+    .setTitle(`${language.joinage} ${days} ${language.day}`)
+    .setDescription(array.join("\n\n") || `${language.noaltsfound}`)
     .setColor(message.client.color.green)
 
 if (array.length <= interval) {
     
     const range = (array.length == 1) ? '[1]' : `[1 - ${array.length}]`;
-      message.channel.send(embed
-        .setTitle(`Alt Detector - Join age < ${days} Days`)
+      message.reply({ embeds: [embed
+        .setTitle(`${language.joinage} ${days} ${language.day}`)
         .setDescription(array.join('\n\n'))
-      );
+      ]});
 
     } else {
 
       embed
-        .setTitle(`Alt Detector - Join age < ${days} Days`)
+        .setTitle(`${language.joinage} ${days} ${language.day}`)
         .setFooter(message.author.tag,  
           message.author.displayAvatarURL({ dynamic: true })
         );

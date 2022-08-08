@@ -12,10 +12,10 @@ module.exports = class extends Command {
       super(...args, {
         name: 'removerr',
         aliases: ["removereactionrole", "rreactionrole", "deletereactionrole", "delreactionrole", "remrr", "delrr", 'delreaction', 'deletereaction'],
-        description: 'Create a reaction role',
+        description: 'Tạo một vai trò phản ứng',
         category: 'Reaction Role',
         cooldown: 3,
-        usage: '<channel> <messageID> <emoji>',
+        usage: '<kênh> <ID tin nhắn> <emoji>',
         userPermission: ['MANAGE_GUILD'],
       });
     }
@@ -33,29 +33,29 @@ module.exports = class extends Command {
     let fail = message.client.emoji.fail
       let success = message.client.emoji.success
   const missingPermEmbed = new MessageEmbed()
-  .setAuthor(`Missing User Permissions`, message.author.displayAvatarURL())
-  .setDescription(`${fail} The following command the **Administrator** Permission`)
-  .setFooter(`https://pogy.xyz`)
+  .setAuthor(`Thiếu quyền của người dùng`, message.author.displayAvatarURL())
+  .setDescription(`${fail} Lệnh sau cần Quyền **Administrator **`)
+  .setFooter(`https://sodachan.tk/`)
    .setColor(client.color.red)
 
       let channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[0]) || message.guild.channels.cache.find(ch => ch.name === args[0])
     if (!channel) return message.channel.send(new MessageEmbed()
      .setAuthor(message.author.tag, message.author.displayAvatarURL())
-  .setDescription(`${fail} Provide me with a valid Channel`)
-  .setFooter(`https://pogy.xyz`)
+  .setDescription(`${fail} Cung cấp cho tôi một Kênh hợp lệ`)
+  .setFooter(`https://sodachan.tk/`)
    .setColor(client.color.red)
     );
     
     let ID = args[1]
     if(!ID) return message.channel.send(new MessageEmbed()
      .setAuthor(message.author.tag, message.author.displayAvatarURL())
-  .setDescription(`${fail} Provide me with a valid message ID`)
-  .setFooter(`https://pogy.xyz`)
+  .setDescription(`${fail} Cung cấp cho tôi ID tin nhắn hợp lệ`)
+  .setFooter(`https://sodachan.tk/`)
     );
     let messageID = await channel.messages.fetch(ID).catch(() => { return message.channel.send(new MessageEmbed()
      .setAuthor(message.author.tag, message.author.displayAvatarURL())
-  .setDescription(`${fail} I could not find the following ID`)
-  .setFooter(`https://pogy.xyz`)
+  .setDescription(`${fail} Tôi không thể tìm thấy ID sau`)
+  .setFooter(`https://sodachan.tk/`)
    .setColor(client.color.red)
     ); })
 
@@ -63,8 +63,8 @@ module.exports = class extends Command {
 
     if (!emoji) return message.channel.send(new MessageEmbed()
      .setAuthor(message.author.tag, message.author.displayAvatarURL())
-  .setDescription(`${fail} Provide me with a valid Emoji`)
-  .setFooter(`https://pogy.xyz`)
+  .setDescription(`${fail} Cung cấp cho tôi một Biểu tượng cảm xúc hợp lệ`)
+  .setFooter(`https://sodachan.tk/`)
    .setColor(client.color.red)
     );
 
@@ -72,8 +72,8 @@ module.exports = class extends Command {
     
     if (isCustomEmoji(args[2])) return message.channel.send(new MessageEmbed()
      .setAuthor(message.author.tag, message.author.displayAvatarURL())
-  .setDescription(`${fail} Do Not use custom Emojis!`)
-  .setFooter(`https://pogy.xyz`)
+  .setDescription(`${fail} Không sử dụng Biểu tượng cảm xúc tùy chỉnh!`)
+  .setFooter(`https://sodachan.tk/`)
    .setColor(client.color.red)
     );
     
@@ -84,8 +84,8 @@ module.exports = class extends Command {
      message.channel.send(new MessageEmbed()
    .setColor(client.color.green)
      .setAuthor(message.author.tag, message.author.displayAvatarURL())
-  .setDescription(`${success} Deleted The [Reaction Role](${messageID.url})`)
-  .setFooter(`https://pogy.xyz`))
+  .setDescription(`${success} Đã xóa [Vai trò phản ứng](${messageID.url})`)
+  .setFooter(`https://sodachan.tk/`))
   
 
 

@@ -13,10 +13,10 @@ module.exports = class extends Command {
       super(...args, {
         name: 'warns',
         aliases: ['ws', 'warnings'],
-        description: 'Check a certain users warnings',
+        description: 'Kiểm tra một số cảnh báo người dùng nhất định',
         category: 'Moderation',
-        usage: '<user>',
-        examples: [ 'warnings @Peter' ],
+        usage: '<người dùng>',
+        examples: [ 'warnings @Yuunya' ],
         guildOnly: true,
         botPermission: ['ADD_REACTIONS'],
         userPermissions: ['KICK_MEMBERS'],
@@ -46,10 +46,7 @@ module.exports = class extends Command {
                         .then(result => console.log(result))
                         .catch(err => console.error(err));
     
-                    return message.channel
-                        .send(
-                            'This server was not in our database! We have added it, please retype this command.'
-                        )
+                    return message.reply('Máy chủ này không có trong cơ sở dữ liệu của chúng tôi! Chúng tôi đã thêm nó, vui lòng nhập lại lệnh này.')
                         .then(m => m.delete({ timeout: 10000 }));
                 }
             }
@@ -81,7 +78,7 @@ module.exports = class extends Command {
     
     
         for (let i = 0; warnDoc.warnings.length > i; i++) {
-            data.push(`**Moderator:** ${await message.client.users.fetch(warnDoc.moderator[i])}\n**Reason:** ${warnDoc.warnings[i]}\n**Date:** ${moment(warnDoc.date[i]).format("dddd, MMMM Do YYYY")}\n**Warning ID:** ${i + 1}\n`)
+            data.push(`**Người điều hành:** ${await message.client.users.fetch(warnDoc.moderator[i])}\n**Lý do:** ${warnDoc.warnings[i]}\n**Ngày tháng:** ${moment(warnDoc.date[i]).format("MM-DD-YYYY")}\n**ID cảnh báo:** ${i + 1}\n`)
         }
     
         const count = warnDoc.warnings.length;
@@ -108,14 +105,14 @@ module.exports = class extends Command {
 
               .addField(`${language.warnReason || 'unknown'}`, warnDoc.warnings[i], true)
               .addField(`${language.warnID || 'unknown'}`, `${warnDoc.warningID[i]}`, true)
-              .addField(`${language.warnDateIssued || 'unknown'}`, `${moment(warnDoc.date[i]).format("dddd, MMMM Do YYYY")}`);
+              .addField(`${language.warnDateIssued || 'unknown'}`, `${moment(warnDoc.date[i]).format("MM-DD-YYYY")}`);
             amount += 1;
           }
     
          
           return embed
             .setTitle(`${language.warnList} [${current} - ${max}]`)
-            .setDescription(`Showing \`${amount}\` of ${mentionedMember}'s \`${count}\` total warns.`);
+            .setDescription(`Hiển thị \`${amount}\` của ${mentionedMember}'s \`${count}\` tổng số cảnh báo.`);
         };
     
      

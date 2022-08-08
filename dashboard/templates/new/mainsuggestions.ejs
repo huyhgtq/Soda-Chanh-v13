@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap" rel="stylesheet">
 </head>
-<%- include("../partials/dashMenu", { bot, user, path, description, title: `Pogy - Dashboard`, arc, url})%>
+<%- include("../partials/dashMenu", { bot, user, path, description, title: `Soda Chan - Dashboard`, arc, url})%>
 
 
 
@@ -27,7 +27,7 @@
 <% if (guild.icon) {
  iconurl = "https://cdn.discordapp.com/icons/" + guild.id + "/" + guild.icon + ".png??size=512";
 } else {
- iconurl = "https://cdn.glitch.com/82fe990a-7942-42e3-9790-39807ccdb9f6%2Ficon-404-dark.png?v=1602427904949";
+ iconurl = "https://cdn.discordapp.com/attachments/893953110349852686/970760403976093716/soda_chan_new.png";
 }
 %>
 
@@ -82,11 +82,11 @@
     </div>
   </div>
 <% }  %>
-    <h2 class="suggestions-header" style="font-family: 'Cairo', sans-serif">Suggestion Channel</h2>
+    <h2 class="suggestions-header" style="font-family: 'Cairo', sans-serif">Kênh đề xuất</h2>
     <br>
-    <h5>Sets the suggestion Channel for the current Guild</h5>
+    <h5>Đặt Kênh gợi ý cho máy chủ của bạn</h5>
     <br>
-    <h3 style="font-family: 'Cairo', sans-serif" >Select Channel</h3>
+    <h3 style="font-family: 'Cairo', sans-serif" >Chọn kênh</h3>
 
            <div class="select-wrapper">
 <select class="select" name="suggestionChannel">
@@ -97,7 +97,7 @@
                                                     <% }); %>
                                                         <option>None</option>
                                                 <% } else { %>
-                                                    <option selected="selected">None</option>
+                                                    <option selected="selected">Không có</option>
                                                     <% guild.channels.cache.filter((ch) => ch.type === "text").forEach((ch) => { %>
                                                         <option>#<%= ch.name %></option>
                                                     <% }); %>
@@ -108,19 +108,19 @@
 
                   <div class="box-footer">
                                        
-                                            <button type="submit" name="saveChannel" class="save-button">Save</button>
+                                            <button type="submit" name="saveChannel" class="save-button">Lưu</button>
                                     
                                     </div>
                                     
   </div>
 
   <div class="suggestions" >
-<h2 class="suggestions-header" style="font-family: 'Cairo', sans-serif">Additional Settings</h2>
+<h2 class="suggestions-header" style="font-family: 'Cairo', sans-serif">Cài đặt thêm</h2>
     <br>
-    <h4>Additional Customizations for the guild.</h4>
+    <h4>Các tùy chỉnh bổ sung cho guild.</h4>
     <br>
 
- <h3 style="font-family: 'Cairo', sans-serif" >Log Channel</h3>
+ <h3 style="font-family: 'Cairo', sans-serif" >Ghi kênh</h3>
   <div class="select-wrapper">
 <select class="select" name="logChannel">
                            <% if(settings.suggestion.suggestionlogChannelID && bot.channels.cache.has(settings.suggestion.suggestionlogChannelID)){ %>
@@ -130,21 +130,21 @@
                                                     <% }); %>
                                                         <option>None</option>
                                                 <% } else { %>
-                                                    <option selected="selected">None</option>
+                                                    <option selected="selected">Không có</option>
                                                     <% guild.channels.cache.filter((ch) => ch.type === "text").forEach((ch) => { %>
                                                         <option>#<%= ch.name %></option>
                                                     <% }); %>
                                                 <% } %>                    
                                             </select>
 </div>
-<p>Allow Staff to decline / approve</p>
+<p>Cho phép Nhân viên từ chối / phê duyệt</p>
 <% if(settings.suggestion.decline == "true") {%>
 <input name="decline" class="input-switch" type="checkbox" id="switch1" checked></input><label class="label-switch"for="switch1">Toggle</label>
 <% } else { %>
 <input name="decline" class="input-switch" type="checkbox" id="switch1"></input><label class="label-switch"for="switch1">Toggle</label>
 <% } %>
 
-  <p>Delete Message after Suggestion</p>
+  <p>Xóa tin nhắn sau khi đề xuất</p>
 
 <% if(settings.suggestion.deleteSuggestion == "true") {%>
 <input name="deleteSuggestion" class="input-switch" type="checkbox" id="switch2" checked></input><label class="label-switch"for="switch2">Toggle</label>
@@ -161,13 +161,14 @@
 
     </div>
     
-<p style="background-color: #2f2f2f; color: #2f2f2f ">HELLOO :) you found a secret message, poggers</p>
+<p style="background-color: #2f2f2f; color: #2f2f2f ">HELLOO :) bạn đã tìm thấy một thông điệp bí mật, những người yêu thích</p>
 <% if(settings.isPremium == "false"){ %>
-<div class="premium"><h1>This is a Premium Feature</h1>
-<button class="save-button" type="button" onclick="window.location.href='/premium'">Unlock Now!</button>
+<div class="premium"><h1>Đây là một tính năng cao cấp</h1>
+<button class="save-button" type="button" onclick="window.location.href='/premium'">Mở khóa ngay bây giờ!</button>
 </div>
 <div class="customize" id="blur">
-<h2>Customize Your Embed</h2>
+<h2>Tùy chỉnh Embed của bạn</h2>
+
 <br>
 <p><input type="color" name="color" value="<%= settings.suggestion.suggestioncolor %>">&nbsp; Embed Color</p>
 <br>
@@ -177,16 +178,17 @@ max-height:200px; background-color: #2f2f2f; color: white;" ><%= settings.sugges
 <small id="textareaHide"class="form-text text-muted" style="color: white">0 characters remaining</small>
 <br>
 <br>
-<p><bold>Embed Footer</bold></p>
+<p><bold>Embed chân trang</bold></p>
+
 <input name="footer" class="form-control" value="<%= settings.suggestion.footer ||`Requested by {user_tag}`%>"style="background-color: #2f2f2f; width: 400px; color: white" type="text"/>
 <br>
-<p>Embed Timestamp</p>
+<p>Embed Dấu thời gian</p>
 <% if(settings.suggestion.timestamp == "true") {%>
 <input name="timestamp" class="input-switch" type="checkbox" id="switch3" checked></input><label class="label-switch"for="switch3">Toggle</label>
 <% } else { %>
 <input name="timestamp" class="input-switch" type="checkbox" id="switch3" ></input><label class="label-switch"for="switch3">Toggle</label>
 <% } %>
-<p>Choose your reaction</p>
+<p>Chọn phản ứng của bạn</p>
 <% if(settings.suggestion.reaction == "1") {%>
 <div class="form-check">
   <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
@@ -270,26 +272,27 @@ max-height:200px; background-color: #2f2f2f; color: white;" ><%= settings.sugges
 
 <% } else if(settings.isPremium == "true"){ %>
 <div class="customize">
-<h2>Customize Your Embed</h2>
+<h2>Tùy chỉnh Embed của bạn</h2>
 <br>
-<p><input type="color" name="color" value="<%= settings.suggestion.suggestioncolor %>">&nbsp; Embed Color</p>
+<p><input type="color" name="color" value="<%= settings.suggestion.suggestioncolor %>">&nbsp; Màu Embed</p>
 <br>
-<p><bold>Embed Description</bold></p>
+<p><bold>Embed miêu tả</bold></p>
 <textarea  name="description" id="myInput" placeholder="Your Description" rows="3" wrap="soft" class="col-12 form-control" maxlength="1024" type="text" style="max-width: 400px; min-width: 400px;
 max-height:200px; background-color: #2f2f2f; color: white;" ><%= settings.suggestion.description || `{suggestion}`%></textarea>
 <small id="textareaHide"class="form-text text-muted" style="color: white">0 characters remaining</small>
 <br>
 <br>
-<p><bold>Embed Footer</bold></p>
+<p><bold>Embed trang</bold></p>
+
 <input name="footer" class="form-control" value="<%= settings.suggestion.footer ||`Requested by {user_tag}`%>" style="background-color: #2f2f2f; width: 400px; color: white" type="text"/>
 <br>
-<p>Embed Timestamp</p>
+<p>Embed Dấu thời gian</p>
 <% if(settings.suggestion.timestamp == "true") {%>
 <input name="timestamp" class="input-switch" type="checkbox" id="switch3" checked></input><label class="label-switch"for="switch3">Toggle</label>
 <% } else { %>
 <input name="timestamp" class="input-switch" type="checkbox" id="switch3" ></input><label class="label-switch"for="switch3">Toggle</label>
 <% } %>
-<p>Choose your reaction</p>
+<p>Chọn phản ứng của bạn</p>
 <% if(settings.suggestion.reaction == "1") {%>
 <div class="form-check">
   <input value="1" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
@@ -368,7 +371,7 @@ max-height:200px; background-color: #2f2f2f; color: white;" ><%= settings.sugges
 </div>
 <% } %>
 <br>
-<button class="save-button" type="submit" name="premium">Save Changes</button>
+<button class="save-button" type="submit" name="premium">Lưu thay đổi</button>
 
 <% } %>
 </div>
@@ -380,7 +383,7 @@ max-height:200px; background-color: #2f2f2f; color: white;" ><%= settings.sugges
 
 </div>
 <% } else { %>
-<p class="no-js">Make sure the guild has 1 channel, So please create a channel before accessing our dashboard</p>
+<p class="no-js">Đảm bảo Server có 1 kênh, Vì vậy, vui lòng tạo kênh trước khi truy cập trang tổng quan của chúng tôi</p>
 <% } %>
 
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>

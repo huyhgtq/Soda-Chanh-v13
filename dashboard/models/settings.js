@@ -7,4 +7,4 @@ const guildSettingSchema = new Schema({
   prefix: { type: String, default: "!" }
 });
 
-module.exports = model("guild_settings", guildSettingSchema);
+module.exports = model("Server_settings", guildSettingSchema);

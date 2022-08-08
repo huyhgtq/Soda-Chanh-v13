@@ -1,15 +1,17 @@
 const Command = require('../../structures/Command');
 const ms = require('ms')
 const Guild = require('../../database/schemas/Guild');
-const { MessageEmbed } = require('discord.js');
+const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
 const moment = require('moment');
+require("moment-duration-format");
+
 module.exports = class extends Command {
   constructor(...args) {
     super(...args, {
       name: 'uptime',
       aliases: [ 'ut', 'uptime'],
       cooldown: 2,
-      description: 'Sends you Pogy\'s Uptime!',
+      description: 'Thời gian hoạt động của Soda Chan!',
       category: 'Information',
     });
   }
@@ -21,9 +23,8 @@ module.exports = class extends Command {
       });
     
       const language = require(`../../data/language/${guildDB.language}.json`)
-      
-      
-      let uptime = this.client.shard ? await this.client.shard.broadcastEval('this.uptime') : this.client.uptime;
+
+		let uptime = this.client.shard ? await this.client.shard.broadcastEval('this.uptime') : this.client.uptime;
       if (uptime instanceof Array) {
         uptime = uptime.reduce((max, cur) => Math.max(max, cur), -Infinity);
       }
@@ -48,13 +49,41 @@ module.exports = class extends Command {
       else if (seconds) {
         uptime = `${seconds} seconds`;
       }
-   // const date = moment().subtract(days, 'ms').format('dddd, MMMM Do YYYY');
-       const embed = new MessageEmbed()
-
-      .setDescription(`${language.uptime1} \`${uptime}\`.`) 
-.setFooter(`Shard #${message.guild.shardID}`)
-      .setColor(message.guild.me.displayHexColor);
-    message.channel.send(embed);
-
-    }
+      
+ try {
+   const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
+   const date = new Date();
+   const timestamp = date.getTime() - Math.floor(client.uptime);
+   const embed = new MessageEmbed() // Prettier
+    .setTitle(
+     `<:uptime:965816130914644018> Uptime`,
+     message.guild.iconURL({
+      dynamic: true,
+      format: "png",
+     })
+    )
+    .addField(`⏱ Uptime`, `\`\`\`${uptime}\`\`\``)
+    .setTimestamp()
+    .setFooter(
+     `${language.requested} ${message.author.username}`, message.author.displayAvatarURL({ dynamic: true })
+    )
+    .setColor("RANDOM");
+   if ('https://sodachan.tk/stats') {
+    embed.addField(`<:online:965815224156454943> Servers Status`, "```" + 'https://sodachan.tk/stats' + "```");
+    const row = new MessageActionRow().addComponents(
+     new MessageButton() // Prettier
+      .setURL(`https://sodachan.tk/stats`)
+      .setEmoji('<:online:965815224156454943>')
+      .setLabel("Check server status")
+      .setStyle("LINK")
+    );
+    message.reply({ embeds: [embed], components: [row] });
+   } else {
+    message.reply({ embeds: [embed] });
+   }
+  } catch (err) {
+   console.log(err);
+   this.client.emit(error, message);
+  }
+ }
 };

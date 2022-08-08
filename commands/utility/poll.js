@@ -17,7 +17,7 @@ module.exports = class extends Command {
     constructor(...args) {
       super(...args, {
         name: 'poll',
-        description: 'Create a poll within the discord server!',
+        description: 'Tạo một cuộc thăm dò ý kiến trong máy chủ của bạn!',
         category: 'Utility',
         cooldown: 3,
         botPermission: ["ADD_REACTIONS"],
@@ -47,28 +47,28 @@ let client = message.client
 let embedValid = new MessageEmbed()
 .setAuthor(message.author.tag, message.author.displayAvatarURL())
 .setDescription(`${language.poll1.replace(/{prefix}/g, `${prefix}`)}`)
-.setFooter('https://pogy.xyz')
+.setFooter('https://sodachan.tk/')
 .setColor(message.guild.me.displayHexColor)
 
 let embedValid2 = new MessageEmbed()
 .setAuthor(message.author.tag, message.author.displayAvatarURL())
 .setDescription(`__**${language.poll2}**${language.poll1.replace(/{prefix}/g, `${prefix}`)}`)
-.setFooter('https://pogy.xyz')
+.setFooter('https://sodachan.tk/')
 .setColor(message.guild.me.displayHexColor)
 
 
         if (!pollTitle) {
-            return message.channel.send(embedValid).catch(err => console.log(err));
+            return message.reply({ embeds: [embedValid] }).catch(err => console.log(err));
         }
 
         pollParameters.replace(`{${pollTitle}}`, '');
         const pollsArray = pollParameters.match(squareRegex);
 
         if (!pollsArray) {
-            return message.channel.send(embedValid).catch(() => {});
+            return message.reply({ embeds: [embedValid] }).catch(() => {});
         }
         else if (pollsArray.length > 20) {
-            return message.channel.send(embedValid2).catch(() => {});
+            return message.reply({ embeds: [embedValid2] }).catch(() => {});
         }
 
         let i = 0;
@@ -83,22 +83,19 @@ const text = args.slice(0).join(' ')
             color: 'BLUE',
             title: pollTitle,
             description: pollString,
-            footer: {
-                text: timedPoll ? `${language.poll3} ${moment(Date.now() + ms(timedPoll)).format('LLLL')}` : '',
-            },
+            footer: {text: timedPoll ? `${language.poll3} ${moment(Date.now() + ms(timedPoll)).format('LLLL')}` : '', },
         };
 
         
-let msg = await message.channel.send({ embed: embed }).catch(() => {});
+let msg = await message.reply({ embeds: [embed] }).catch(() => {});
 
         if (timedPoll) {
           if(guildDB.isPremium === "false"){
 if(msg){
 msg.delete().catch(()=>{})
 }
-message.channel.send(new MessageEmbed().setColor(message.guild.me.displayHexColor).setDescription(`${message.client.emoji.fail} Slow down here, timed polls is only for premium guilds.\n\n[Check Premium Here](https://pogy.xyz/premium)`))
-            return;
-          }
+message.reply({ embeds: [new MessageEmbed().setColor(message.guild.me.displayHexColor).setDescription(`${message.client.emoji.fail} Hãy chậm lại ở đây, các cuộc thăm dò theo thời gian chỉ dành cho các máy chủ cao cấp.\n\n[Kiểm tra Premium tại đây](https://sodachan.tk/premium/)`)]})
+	return; }
            
 
             const pollDoc = new pollModel({
@@ -109,7 +106,7 @@ message.channel.send(new MessageEmbed().setColor(message.guild.me.displayHexColo
                 title: pollTitle
             });
 
-            await pollDoc.save().catch(err => console.log(`Poll error on pollDoc.save: ${err}`));
+            await pollDoc.save().catch(err => console.log(`Lỗi thăm dò ý kiến trong cuộc thăm dò ý pollDoc.save: ${err}`));
         }
 
 

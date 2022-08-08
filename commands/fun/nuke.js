@@ -6,7 +6,7 @@ module.exports = class extends Command {
     constructor(...args) {
       super(...args, {
         name: 'nuke',
-        description: 'nuke a server (FAKE) !',
+        description: 'nuke một máy chủ (FAKE)!',
         category: 'Fun',
         cooldown: 3
       });

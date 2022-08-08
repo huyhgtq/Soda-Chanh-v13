@@ -10,10 +10,10 @@ module.exports = class extends Command {
       super(...args, {
         name: 'softban',
         aliases: [ 'sb', 'sban'],
-        description: 'Softban the specified user from the guild',
+        description: 'Softban người dùng được chỉ định từ máy chủ',
         category: 'Moderation',
-        usage: '<user> [reason]',
-        examples: [ 'softban @Peter Breaking the rules' ],
+        usage: '<người dùng> [lý do]',
+        examples: [ 'softban @Yuunya Phá vỡ các quy tắc' ],
         guildOnly: true,
         botPermission: ['BAN_MEMBERS'],
         userPermission: ['BAN_MEMBERS'],
@@ -41,7 +41,7 @@ const settings = await Guild.findOne({
         .then(result => console.log(result))
         .catch(err => console.error(err));
 
-        return message.channel.send('This server was not in our database! We have added it, please retype this command.').then(m => m.delete({timeout: 10000}));
+        return message.reply('Máy chủ này không có trong cơ sở dữ liệu của chúng tôi! Chúng tôi đã thêm nó, vui lòng nhập lại lệnh này.').then(m => m.delete({timeout: 10000}));
     }
 });
 
@@ -54,24 +54,24 @@ const language = require(`../../data/language/${guildDB.language}.json`)
 const member = message.mentions.members.last() || message.guild.members.cache.get(args[0]);
 
 if (!member)
-return message.channel.send( new MessageEmbed()
+return message.reply({ embeds: [new MessageEmbed()
 .setDescription(`${client.emoji.fail} | ${language.softbanNoUser}`)
-.setColor(client.color.red));
+.setColor(client.color.red)]});
 
 if (member === message.member) 
-return message.channel.send( new MessageEmbed()
+return message.reply({ embeds: [new MessageEmbed()
 .setDescription(`${client.emoji.fail} | ${language.softbanSelfUser}`)
-.setColor(client.color.red));
+.setColor(client.color.red)]});
 
 if (member.roles.highest.position >= message.member.roles.highest.position)
-return message.channel.send( new MessageEmbed()
+return message.reply({ embeds: [new MessageEmbed()
 .setDescription(`${client.emoji.fail} | ${language.softbanEqualRole}`)
-.setColor(client.color.red));
+.setColor(client.color.red)]});
 
 if (!member.bannable)
-return message.channel.send( new MessageEmbed()
+return message.reply({ embeds: [new MessageEmbed()
 .setDescription(`${client.emoji.fail} | ${language.softbanNotBannable}`)
-.setColor(client.color.red));
+.setColor(client.color.red)]});
 
 let reason = args.slice(1).join(' ');
 if (!reason) reason = language.softbanNoReason;
@@ -82,10 +82,10 @@ await message.guild.members.unban(member.user, `${reason} / ${language.softbanRe
 
 const embed = new MessageEmbed()
 
-.setDescription(`${client.emoji.success} | ${language.softbanSuccess} **${member.user.tag}** ${logging && logging.moderation.include_reason === "true" ?`\n\n**Reason:** ${reason}`:``}`)
+.setDescription(`${client.emoji.success} | ${language.softbanSuccess} **${member.user.tag}** ${logging && logging.moderation.include_reason === "true" ?`\n\n**Lý do:** ${reason}`:``}`)
 .setColor(client.color.green)
 
-message.channel.send(embed)
+message.reply({ embeds: [embed]})
 .then(async(s)=>{
           if(logging && logging.moderation.delete_reply === "true"){
             setTimeout(()=>{
@@ -122,15 +122,15 @@ if (!reason) reason = `${language.noReasonProvided}`;
 if (reason.length > 1024) reason = reason.slice(0, 1021) + '...';
 
 const logEmbed = new MessageEmbed()
-.setAuthor(`Action: \`Soft Ban\` | ${member.user.tag} | Case #${logcase}`, member.user.displayAvatarURL({ format: 'png' }))
-.addField('User', member, true)
-.addField('Moderator', message.member, true)
-.addField('Reason', reason, true)
+.setAuthor(`Hoạt động: \`Soft Ban\` | ${member.user.tag} | Trường hợp #${logcase}`, member.user.displayAvatarURL({ format: 'png' }))
+.addField('Người dùng', member, true)
+.addField('Người điều hành', message.member, true)
+.addField('Lý do', reason, true)
 .setFooter(`ID: ${member.id}`)
 .setTimestamp()
 .setColor(color)
 
-channel.send(logEmbed).catch((e)=>{console.log(e)})
+channel.send({ embeds: [logEmbed]}).catch((e)=>{console.log(e)})
 
 logging.moderation.caseN = logcase + 1
 await logging.save().catch(()=>{})

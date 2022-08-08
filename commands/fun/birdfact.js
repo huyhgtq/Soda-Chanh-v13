@@ -7,7 +7,7 @@ module.exports = class extends Command {
       super(...args, {
         name: 'birdfact',
         aliases: [ 'birdfacts', 'bf' ],
-        description: 'Generate a random useless bird facts',
+        description: 'Tạo ra một dữ kiện ngẫu nhiên về loài chim vô dụng',
         category: 'Fun',
         cooldown: 3
       });
@@ -16,15 +16,15 @@ module.exports = class extends Command {
     async run(message) {
       const data = await fetch("https://some-random-api.ml/facts/bird").then(res => res.json()).catch(()=>{})
 
-      if (!data) return message.channel.send(`The API is currently down, come back later!`)
+      if (!data) return message.reply(`The API is currently down, come back later!`)
     
       const { fact } = data
 
-      message.channel.send( new MessageEmbed()
+      message.reply({ embeds: [ new MessageEmbed()
 
 .setColor(message.client.color.blue)
 .setDescription(`${fact}`)
          .setFooter("/some-random-api/bird") 
-      )
+      ]})
     }
 };

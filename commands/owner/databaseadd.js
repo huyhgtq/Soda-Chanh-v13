@@ -5,7 +5,7 @@ module.exports = class extends Command {
       super(...args, {
         name: 'databaseadd',
         aliases: [ 'adatabase' ],
-        description: 'Add database',
+        description: 'Thêm cơ sở dữ liệu',
         category: 'Owner',
         ownerOnly: true
       });
@@ -35,7 +35,7 @@ module.exports = class extends Command {
     }
     })
 
-   message.channel.send(`Done!`)
+   message.reply(`Xong!`)
 
     }
 };

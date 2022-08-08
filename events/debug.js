@@ -2,7 +2,10 @@ const muteModel = require('../models/mute');
 const Event = require('../structures/Event');
 const Discord = require('discord.js');
 const config = require('../config.json');
-const webhookClient = new Discord.WebhookClient(config.webhook_id, config.webhook_url);
+const webhookClient = new Discord.WebhookClient({ 
+id: `${config.webhook_id}`,
+token: `${config.webhook_url}`});
+
 const logger = require('../utils/logger');
 const Maintenance = require('../database/schemas/maintenance')
 let number = 1
@@ -15,31 +18,21 @@ let embed;
   
   if(info.includes('hit')){
 
-
 number = ++number
 
 embed = `${info} - ${number}`;
 logger.info(info, { label: 'Debug' })
 
-
 if(number >= 10){
-  embed = `${info} - ${number} - SAFE MODE REACHED <@710465231779790849>`;
+  embed = `${info} - ${number} - SAFE MODE REACHED`;
   console.log('Safe mode reached - Turning maintenance mode on.')
-  maintenance.toggle = "true"
+  maintenance.toggle = "false"
   await maintenance.save();
   process.exit(1);
- 
 }
-
 const lmao = new Discord.MessageEmbed()
 .setDescription(embed)
 .setColor('RED')
-
-
-webhookClient.send(lmao)
-  }
-  
-  
-
-    }
+webhookClient.send({ embeds: [lmao] });
+  }}
 }

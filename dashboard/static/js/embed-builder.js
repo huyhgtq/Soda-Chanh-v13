@@ -17,41 +17,41 @@ window.onload = () => {
             hex = hex.replace('#', '').match(/.{1,2}/g)
             return [parseInt(hex[0], 16), parseInt(hex[1], 16), parseInt(hex[2], 16), 1];
         }, json = {
-            content: "This is a Message Embed <:success:788438144818217000>\nEverything is _Customizable_ including **Emojis**\nYou can~~not~~ also do `this`.```py\nAnd ('this')```",
+            content: "Đây là một tin nhắn được Embed <:1718puppycatheartbreak:897809802045046844>\nMọi thứ đều _Customizable_ bao gồm **Emojis**\nBạn có thể~~không~~cũng được`cái này`.```py\nVà ('cái này')```",
             embed: {
-                title: "Hello! :wave:",
-                description: "You can use [links](https://pogy.xyz) or emojis :smile: :eyes:\n```\nAnd also code blocks\n```",
+                title: "Xin chào! :wave:",
+                description: "Bạn có thể dùng [links](https://sodachan.tk/) hoặc biểu tượng cảm xúc <:846311130292813834:875240341178028062> <:2981_TowaWink:897802966243889164>\n```\nVà cả khối mã\n```",
                 color: 4321431,
                 timestamp: new Date().toISOString(),
-                url: "https://pogy.xyz",
+                url: "https://sodachan.tk/",
                 author: {
-                    name: "Author name",
-                    url: "https://pogy.xyz",
-                    icon_url: "https://i.imgur.com/sGUVicW.png"
+                    name: "Tên tác giả",
+                    url: "https://sodachan.tk/",
+                    icon_url: "https://i.imgur.com/8hQAol3.png"
                 },
                 thumbnail: {
-                    url: "https://blog.logomyway.com/wp-content/uploads/2020/12/discord-mascot.png"
+                    url: "https://cdn.discordapp.com/attachments/893953110349852686/902272462471987200/dasdaweqweq.png"
                 },
                 image: {
-                    url: "https://1000logos.net/wp-content/uploads/2020/10/Discord-logo.png"
+                    url: "https://cdn.discordapp.com/attachments/893953110349852686/894130150155878400/thumb.png"
                 },
                 footer: {
-                    text: "This is a footer text",
-                    icon_url: "https://i.imgur.com/sGUVicW.png"
+                    text: "Đây là một văn bản chân trang",
+                    icon_url: "https://i.imgur.com/8hQAol3.png"
                 },
                 fields: [
                     {
-                        name: "Field 1, ~~dolor~~",
-                        value: "This is ***Pog***"
+                        name: "Field 1, ~~SodaChan~~",
+                        value: "Đây là ***YuuNya***"
                     },
                     {
                         name: "Field 2",
-                        value: "You can use custom emojis  <:poggers:790133942095183873>",
+                        value: "Bạn có thể sử dụng biểu tượng cảm xúc tùy chỉnh  <:4644dontyell:902557150138740776>",
                         inline: false
                     },
                     {
                         name: "Inline field",
-                        value: "Fields can be inline",
+                        value: "Các trường có thể nằm trong dòng",
                         inline: true
                     },
                     {
@@ -66,7 +66,7 @@ window.onload = () => {
                     },
                     {
                         name: "Another field",
-                        value: "> Nope, didn't forget about code blocks",
+                        value: "> Không, đừng quên về khối mã",
                         inline: false
                     }
                 ]
@@ -706,7 +706,7 @@ var command = document.getElementById("custom-command").value;
 if(!command) return error("provide a custom command!", 4000)
 if(command.length > 30) return error("Command length exceeds 30 characters.", 4000);
 
-  error('Successfully saved command, if not saved, <a href="https://pogy.xyz/embeds">read here</a>', 10000)
+  error('Successfully saved command, if not saved, <a href="https://sodachan.tk/embeds">read here</a>', 10000)
         e.preventDefault();
         $.ajax({
             type: "POST",

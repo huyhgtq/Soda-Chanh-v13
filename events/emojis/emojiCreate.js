@@ -35,11 +35,11 @@ if(color == "#000000") color = emoji.client.color.green;
 
 
     const embed = new discord.MessageEmbed()
-    .setDescription(`🆕 ***Emoji Created***`)
-    .addField('Emoji Name', emoji.name, true)
-    .addField('Emoji', emoji, true)
-    .addField('Full ID', `\`<:${emoji.name}:${emoji.id}>\``, true)
-    .setFooter(`Emoji ID: ${emoji.id}`)
+    .setDescription(`🆕 ***Đã tạo biểu tượng cảm xúc***`)
+    .addField('Tên biểu tượng cảm xúc', `${emoji.name}`)
+    .addField('Biểu tượng cảm xúc', `${emoji}`)
+    .addField('ID đầy đủ', `\`<:${emoji.name}:${emoji.id}>\``, true)
+    .setFooter(`Biểu tượng cảm xúc ID: ${emoji.id}`)
     .setTimestamp()
     .setColor(color)
 
@@ -47,7 +47,7 @@ if(color == "#000000") color = emoji.client.color.green;
     if(channelEmbed &&
       channelEmbed.viewable &&
       channelEmbed.permissionsFor(emoji.guild.me).has(['SEND_MESSAGES', 'EMBED_LINKS'])){
-            channelEmbed.send(embed).catch(()=>{})
+            channelEmbed.send({ embeds: [embed] }).catch(()=>{})
       }
 
 

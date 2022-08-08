@@ -7,10 +7,10 @@ module.exports = class extends Command {
     constructor(...args) {
       super(...args, {
         name: 'clyde',
-        description: 'Sends a clyde message!',
+        description: 'Gửi tin nhắn clyde!',
         category: 'Images',
         usage: '<text>',
-        examples: [ 'clyde hey discord!' ],
+        examples: [ 'clyde Soda Chanh' ],
         cooldown: 5
       });
     }
@@ -26,24 +26,24 @@ module.exports = class extends Command {
 
      
 let text = args.slice(0).join(" ")
-if(!text) return message.channel.send(new discord.MessageEmbed().setColor(client.color.red).setDescription(`${client.emoji.fail} ${language.changeErrorValid}`));
+if(!text) return message.reply({ embeds: [new discord.MessageEmbed().setColor(client.color.red).setDescription(`${client.emoji.fail} ${language.changeErrorValid}`)]});
 
-  if(text.length > 60) return message.channel.send(new discord.MessageEmbed().setColor(client.color.red).setDescription(`${client.emoji.fail} ${language.clydeError}`));
+  if(text.length > 60) return message.reply({ embeds: [new discord.MessageEmbed().setColor(client.color.red).setDescription(`${client.emoji.fail} ${language.clydeError}`)]});
 
 try {
-let msg = await message.channel.send(language.generating);
+let msg = await message.reply(language.generating);
 
 
 const data = await fetch(
     `https://nekobot.xyz/api/imagegen?type=clyde&text=${text}`
   ).then((res) => res.json());
   msg.delete({timeout: 500})
-  message.channel.send(new discord.MessageEmbed().setColor(client.color.blue).setImage(data.message))
+  message.reply({ embeds: [new discord.MessageEmbed().setColor(client.color.blue).setImage(data.message)]})
 
   
   } catch (err) {
     console.log(`${err}, command name: clyde`)
-    message.channel.send(language.clydeError)
+    message.reply(language.clydeError)
   }
 
     

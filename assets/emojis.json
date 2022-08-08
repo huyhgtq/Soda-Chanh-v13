@@ -1,29 +1,29 @@
 {
-  "image":"<:image_emoji:788427949509836840>",
-  "currency":"<:currency_emoji:788428132683350058>",
+  "image":"<:5711camera:897803498492665886> ",
+  "currency":"<a:money:897799936299663361>",
 
-  "games":"<:games_emoji:788428825745817611> ",
-  "admin":"<:admin_emoji:788429031926005790> ",
-  "configs":"<:configs_emoji:788427972628447293>  ",
-  "utils":"<:utils_emoji:788429328039280661> ", 
-  "success": "<:success:788438144818217000>  ",
+  "games":"<a:4995brawlstarsdanceparty:897804363886657577>",
+  "admin":"<:4923peepookadmins:897805580507439134>",
+  "configs":"<:1520blurplesettings:897797967262654494>",
+  "utils":"<:5050_Settings:897799316394115092> ", 
+  "success": "<a:success:897805951812399136>",
 
-  "green":"<:greensquare:803527870609489931> ",
-  "red":"<:redsquare:803527843661217802>",
+  "green":"<:2311Online:897806949737979954>",
+  "red":"<:2311offline:897806790866141194>",
 
-  "dot": "<:purple_pogy_dot:788726274940076082> ",
-  "fail": "<:fail:790491137289879583>  ",
+  "dot": "<a:7436online:897807399904239647>",
+  "fail": "<:3595failed:897808592143540254> ",
 
-  "misc": "<:speaker:790146754645196800> ",
-  "mod": "<:moderation_emoji:788428121375768586>",
+  "misc": "<a:6723_GoogleVoice:897809142654332948>",
+  "mod": "<a:3534pepemods:897809435135725578>",
 
-  "pogger1": "<:poggerz:790987235591323659> ",
-  "heartbreak":"<:heartbreak:790987215324184606> ",
+  "pogger1": "<a:8885pepewobblerpoggers:897809632033112084>",
+  "heartbreak":"<:1718puppycatheartbreak:897809802045046844> ",
   
-  "lock": "<:lock:790494601189261323>  ",
-  "unlock": "<:unlock:790494567753187338> ",
+  "lock": "<:lock:897744034955661322>",
+  "unlock": "<:unlock:897743524651470859>",
 
-  "owner": "<:owner:790146744348442624>  ",
+  "owner": "<:2981_TowaWink:897802966243889164>",
 
   "discord_employee":"<:discordemployee:790152842382934038>  ",
   "discord_partner": "<:partnered:790152935152680960>",
@@ -38,27 +38,34 @@
   "verified_developer": "<:verifieddev:790152986382303253> ",
 
 
-  "online": "<:online:790132184018059304> ",
-  "idle": "<:Idle:790132098806972426>  ",
-  "offline": "<:offline:790132057523093515>  ",
-  "dnd": "<:donotdisturb:790132081136893962> ",
-  "verify":"<:success:788438144818217000>",
+  "online": "<a:7436online:897807399904239647>",
+  "idle": "<a:6362idle:897810882346774549>",
+  "offline": "<a:2390offlineinvisible:897811065897910283>",
+  "dnd": "<a:3915donotdisturb1:897811235825942538>",
+  "verify":"<a:2610discordverifygradient:897811382144217129>",
 
-  "voice": "<:speaker:790146754645196800> ",
+  "voice": "<:3527blurplevoicechannel:897810697533140993> ",
 
   "pong": "<:online:790132184018059304>",
 
-  "altdetector":"<:alt:826845773656096838>",
-  "applications":"<:form:826846790208716831>",
-  "config":"<:configs_emoji:788427972628447293>",
-  "utility":"<:utils_emoji:788429328039280661>",
-  "economy":"<:currency_emoji:788428132683350058>",
-  "fun":"<:fun_emoji:788428109980368916> ",
-  "images":"<:image_emoji:788427949509836840>",
-  "information":"<:information_emoji:788428196528914472> ",
-  "moderation":"<:moderation_emoji:788428121375768586>",
-  "nsfw":"<:nsfw:826845810024644659> ",
-  "reactionrole":"<:reaction_roles:826845827191406694>",
-  "tickets":"<:ticket:826845944669536266>"
+  "altdetector":"<:card:897796287062212649>",
+  "applications":"<a:6803pepenotes:897797012735557672>",
+  "config":"<:1520blurplesettings:897797967262654494> ",
+  "utility":"<:5050_Settings:897799316394115092> ",
+  "economy":"<a:money:897799936299663361>",
+  "fun":"<:5484ingame:897801727884029982>",
+  "images":"<:4352camera:897802001407172618>",
+  "information":"<:1498cutebook:897590090023469076>",
+  "moderation":"<:3446blurplecertifiedmoderator:897802541981659168>",
+  "nsfw":"<:529peach_100978:897589006898962473> ",
+  "reactionrole":"<:5142chibikeqingthink:897588873104871465>",
+  "tickets":"<:ticket:826845944669536266>",
+  "game":"<:4644dontyell:902557150138740776>",
+  "voice":"<:voice:964740187320123412>",
+  "activities":"<:activechat:966912423330189363>",
+  "random":"<:random:971442734114164776>"
 
+
+
+	
 }

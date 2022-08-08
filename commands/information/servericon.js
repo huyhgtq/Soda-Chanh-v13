@@ -6,7 +6,7 @@ module.exports = class extends Command {
       super(...args, {
         name: 'servericon',
         aliases: ["sicon"],
-        description: 'Display\'s the current Server Icon',
+        description: 'Hiển thị biểu tượng máy chủ hiện tại',
         category: 'Information',
         cooldown: 3
       });
@@ -27,7 +27,7 @@ module.exports = class extends Command {
       .setFooter(message.author.tag,  message.author.displayAvatarURL({ dynamic: true }))
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
-    message.channel.send(embed);
+		message.reply({ embeds: [embed]})
 
     }
 };

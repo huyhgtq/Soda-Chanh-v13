@@ -1,5 +1,5 @@
 
-<%- include("partials/head", { bot, user, path, title: "Pogy - Redeem" }) %>
+<%- include("partials/head", { bot, user, path, title: "Soda chanh - Redeem" }) %>
 <link rel="icon"
     type="image/png"
     href="<%domain%>/logo.png">
@@ -9,8 +9,8 @@
    <div class="container-contact">
             <div class="wrap-contact">
                 
-                    <span class="contact-form-title">Already Premium</span>
-                    <h4><%= guild.name %> Is already a premium guild.</h4>
+                    <span class="contact-form-title">Đã cao cấp</span>
+                    <h4><%= guild.name %> Đã là một máy chủ cao cấp.</h4>
 
 </div>
 </div>
@@ -18,8 +18,8 @@
    <div class="container-contact">
             <div class="wrap-contact">
                 
-                <span class="contact-form-title">Congrats!</span>
-                    <h4><%= guild.name %> Is now a premium guild!</h4>
+                <span class="contact-form-title">Chúc mừng!!</span>
+                    <h4><%= guild.name %> Bây giờ là một máy chủ cao cấp!</h4>
 
 </div>
 </div>
@@ -32,18 +32,18 @@
    <div class="container-contact">
             <div class="wrap-contact">
                 
-                    <span class="contact-form-title">Guild: <%= guild.name %></span>
+                    <span class="contact-form-title">máy chủ: <%= guild.name %></span>
 <div class="wrapper">
 
   
 <ol class="ProgressBar">
   <li class="ProgressBar-step">
     <svg class="ProgressBar-icon"><use xlink:href="#checkmark-bold"/></svg>
-    <span class="ProgressBar-stepLabel">Summary</span>
+    <span class="ProgressBar-stepLabel">Bản tóm tắt</span>
   </li>
   <li class="ProgressBar-step">
     <svg class="ProgressBar-icon"><use xlink:href="#checkmark-bold"/></svg>
-    <span class="ProgressBar-stepLabel">Redeem</span>
+    <span class="ProgressBar-stepLabel">Nhận Premium</span>
   </li>
 
 </ol>
@@ -54,18 +54,18 @@
 
       <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>  
 <div id="1">         
-<h3 id="table-heading">Order Summary</h3>
+<h3 id="table-heading">Tóm tắt theo thứ tự</h3>
 <table aria-labelledby="table-heading">
 	<tr>
-		<th scope="row">1 Year Premium (1 Server)</th>
+		<th scope="row">1 năm Premium (1 máy chủ)</th>
 		<td>29.99$</td>
 	</tr>
 	<tr>
-		<th scope="row">Free Coupon</th>
+		<th scope="row">Phiếu giảm giá miễn phí</th>
 		<td>-29.99$</td>
 	</tr>
 	<tr>
-		<th scope="row">Total</th>
+		<th scope="row">Tổng cộng</th>
 		<td>0$</td>
 	</tr>
 </table>
@@ -74,22 +74,22 @@
 <div style="display: none" id="2">
 
 <h5 style="padding-left: 40px" class="table">
-You are currently purchasing Premium to <%=guild.name%>, as you will not be able to go back when redeemed. Finally, to redeem Premium Please click on the button Below! 
+Bạn hiện đang mua Premium cho máy chủ <%=guild.name%>, vì bạn sẽ không thể quay lại khi đã đổi. Cuối cùng, để đổi Premium Vui lòng nhấp vào nút Bên dưới! 
 </h5>
 <div style="padding-top: 20px"></div>
 <p style="color: red" id="understand"></p>
 <div class="custom-control custom-checkbox mb-1">
     <input type="checkbox" class="custom-control-input" id="customCheck">
-    <label class="custom-control-label" for="customCheck"> I Understand that the following action is irreversible</label>
+    <label class="custom-control-label" for="customCheck"> Tôi hiểu rằng hành động sau đây là không thể thay đổi</label>
 </div>
 <div style="padding-top: 40px"></div>
-<button id="button" type="button" name="form">Redeem</button>
+<button id="button" type="button" name="form">Đổi</button>
 <div style="padding-top: 120px"></div>
 </div>
 
 <p style="text-align: center; padding-top: 20px;">
-  <button id="previous" type="button">Previous</button>
-  <button id="advance" type="button">Next</button>
+  <button id="previous" type="button">Quay lại</button>
+  <button id="advance" type="button">Kế tiếp</button>
 </p>
 <svg xmlns="http://www.w3.org/2000/svg">
   <symbol id="checkmark-bold" viewBox="0 0 24 24">

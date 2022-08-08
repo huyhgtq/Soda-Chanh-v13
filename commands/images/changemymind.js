@@ -8,10 +8,10 @@ module.exports = class extends Command {
       super(...args, {
         name: 'changemymind',
         aliases: ['chmm'],
-        description: 'Sends a changemymind Text!',
+        description: 'Cố gắng thay đổi suy nghĩ của tôi!!',
         category: 'Images',
         usage: '<text>',
-        examples: [ 'changemymind Poggers' ],
+        examples: [ 'changemymind Soda' ],
         cooldown: 5
       });
     }
@@ -27,18 +27,18 @@ module.exports = class extends Command {
       
       try {
         let text = args.slice(0).join(" ")
-    if(!text) return message.channel.send(new discord.MessageEmbed().setColor(client.color.red).setDescription(`${client.emoji.fail} ${language.changeErrorValid}`));
+    if(!text) return message.reply({ embeds: [new discord.MessageEmbed().setColor(client.color.red).setDescription(`${client.emoji.fail} ${language.changeErrorValid}`)]});
     
      
-    if(text.length > 85)  return message.channel.send(new discord.MessageEmbed().setColor(client.color.red).setDescription(`${client.emoji.fail} ${language.changeErrorCharacter}`));
+    if(text.length > 85)  return message.reply({ embeds: [new discord.MessageEmbed().setColor(client.color.red).setDescription(`${client.emoji.fail} ${language.changeErrorCharacter}`)]});
   
-    let msg = await message.channel.send(new discord.MessageEmbed().setColor(client.color.green).setDescription(language.generating))
+    let msg = await message.reply({ embeds: [new discord.MessageEmbed().setColor(client.color.green).setDescription(language.generating)]})
    
         const data = await fetch(
             `https://nekobot.xyz/api/imagegen?type=changemymind&text=${text}`
           ).then((res) => res.json());
           msg.delete({timeout: 500})
-          message.channel.send(new discord.MessageEmbed().setColor(client.color.blue).setImage(data.message))
+          message.reply({ embeds: [new discord.MessageEmbed().setColor(client.color.blue).setImage(data.message)]})
       
       } catch (err) {
         console.log(`${err}, command name: changemymind`)

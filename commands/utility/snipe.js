@@ -7,7 +7,7 @@ module.exports = class extends Command {
     constructor(...args) {
       super(...args, {
         name: 'snipe',
-        description: 'Snipe Messages in the channel',
+        description: 'Snipe Tin nhắn trong kênh',
         category: 'Utility',
         usage: [ 'snipe' ],
         cooldown: 5,
@@ -37,14 +37,14 @@ const no = new MessageEmbed()
         .setFooter(message.guild.name)
         .setTimestamp()
         .setColor(message.guild.me.displayHexColor)
-        .setDescription(`${message.client.emoji.fail} | Couldn't find any deleted message in **${channel.name}**`)
+        .setDescription(`${message.client.emoji.fail} | Không thể tìm thấy bất kỳ tin nhắn đã xóa nào trong **${channel.name}**`)
 
 if(!snipe){
-  return message.channel.send(no)
+  return message.reply({ embeds: [no] })
 }
 
 if(snipe.message.length < 1){
-  return message.channel.send(no)
+  return message.reply({ embeds: [no] })
 }
 
 const data = []
@@ -56,19 +56,19 @@ const data = []
         .setColor(message.guild.me.displayHexColor)
 
 for (let i = 0; snipe.message.length  > i; i++) {
-            data.push(`**${i + 1}-**\n**User:** ${await message.client.users.fetch(snipe.tag[i]) || 'Unknown'}\n**Message:** ${snipe.message[i] || 'None'}\n**image:** \`${snipe.image[i] || 'none'}\``)
+            data.push(`**${i + 1}-**\n**Người dùng:** ${await message.client.users.fetch(snipe.tag[i]) || 'không xác định'}\n**Tin nhắn:** ${snipe.message[i] || 'Không'}\n**hình ảnh:** \`${snipe.image[i] || 'không'}\``)
 
-            embed.addField(`Message ${i + 1}`, `**User:** ${await message.client.users.fetch(snipe.tag[i]) || 'Unknown'}\n**Message:** ${snipe.message[i] || 'None'}\n**image:** \`${snipe.image[i] || 'none'}\``, true)
+            embed.addField(`Tin nhắn ${i + 1}`, `**Người dùng:** ${await message.client.users.fetch(snipe.tag[i]) || 'không xác định'}\n**Tin nhắn:** ${snipe.message[i] || 'Không'}\n**Hình ảnh:** \`${snipe.image[i] || 'không'}\``, true)
 
         };
         
-        if(data.length < 1) return message.channel.send(no);
+        if(data.length < 1) return message.reply({ embeds: [no] })
 
         
 
-        message.channel.send(embed).catch(async(err)=>{
+       message.reply({ embeds: [embed] }).catch(async(err)=>{
           await snipe.deleteOne().catch(()=>{})
-          message.channel.send(`The embed contained a huge field that couldn't fit as this is the reason i failed to send the embed. I have resetted the database as you can try rerunning the command again.`)
+          message.reply(`Nội dung nhúng chứa một trường lớn không thể vừa vặn vì đây là lý do khiến tôi không gửi được nội dung nhúng. Tôi đã đặt lại cơ sở dữ liệu vì bạn có thể thử chạy lại lệnh một lần nữa.`)
         })
     }
 };

@@ -10,9 +10,9 @@ module.exports = class extends Command {
       super(...args, {
         name: 'slowmode',
         aliases: [ 'sm' ],
-        description: 'Enables slowmode in a channel with the specified rate',
+        description: 'Bật chế độ làm chậm trong một kênh với tốc độ được chỉ định',
         category: 'Moderation',
-        usage: 'slowmode [channel mention/ID] <rate> [reason]',
+        usage: 'slowmode [đề cập kênh / ID] <tỷ lệ> [Lý do]',
         examples: [ 'slowmode #general 10' ],
         guildOnly: true,
         botPermission: ['SEND_MESSAGES', 'EMBED_LINKS', 'MANAGE_CHANNELS'],
@@ -44,7 +44,7 @@ module.exports = class extends Command {
         .then(result => console.log(result))
         .catch(err => console.error(err));
 
-        return message.channel.send('This server was not in our database! We have added it, please retype this command.').then(m => m.delete({timeout: 10000}));
+        return message.reply('Máy chủ này không có trong cơ sở dữ liệu của chúng tôi! Chúng tôi đã thêm nó, vui lòng nhập lại lệnh này.').then(m => m.delete({timeout: 10000}));
     }
 });
   const logging = await Logging.findOne({ guildId: message.guild.id })
@@ -62,63 +62,63 @@ const language = require(`../../data/language/${guildDB.language}.json`)
       index--;
     }
 
-    if (channel.type != 'text' || !channel.viewable) return message.channel.send( new MessageEmbed()
+    if (channel.type != 'text' || !channel.viewable) return message.reply({ embeds: [ new MessageEmbed()
     .setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true }))
-    .setTitle(`${fail} Slow Mode Error`)
-    .setDescription(`I can't view the provided channel`)
+    .setTitle(`${fail} Chế độ chậm lỗi `)
+    .setDescription(`Tôi không thể xem kênh được cung cấp`)
     .setTimestamp()
-    .setFooter('https://pogy.xyz')
-    .setColor(message.guild.me.displayHexColor));
+    .setFooter('https://sodachan.tk/')
+    .setColor(message.guild.me.displayHexColor)]});
       
     const rate = args[index];
-    if (!rate || rate < 0 || rate > 59) return message.channel.send( new MessageEmbed()
+    if (!rate || rate < 0 || rate > 59) return message.reply({ embeds: [new MessageEmbed()
     .setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true }))
-    .setTitle(`${fail} Slow Mode Error`)
-    .setDescription(` Please provide a rate limit between 0 and 59 seconds`)
+    .setTitle(`${fail} Chế độ chậm lỗi `)
+    .setDescription(`Vui lòng cung cấp giới hạn tốc độ từ 0 đến 59 giây`)
     .setTimestamp()
-    .setFooter('https://pogy.xyz')
-    .setColor(message.guild.me.displayHexColor));
+    .setFooter('https://sodachan.tk/')
+    .setColor(message.guild.me.displayHexColor)]});
     
   
     const number =  parseInt(rate);
     if(isNaN(number)){
-      return message.channel.send( new MessageEmbed()
+      return message.reply({ embeds: [new MessageEmbed()
     .setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true }))
-    .setTitle(`${fail} Slow Mode Error`)
-    .setDescription(` Please provide a rate limit between 0 and 59 seconds`)
+    .setTitle(`${fail} Chế độ chậm lỗi `)
+    .setDescription(`Vui lòng cung cấp giới hạn tốc độ từ 0 đến 59 giây`)
     .setTimestamp()
-    .setFooter('https://pogy.xyz')
-    .setColor(message.guild.me.displayHexColor));
+    .setFooter('https://sodachan.tk/')
+    .setColor(message.guild.me.displayHexColor)]});
     };
 
 
 
     if (!channel.permissionsFor(message.guild.me).has(['MANAGE_CHANNELS']))
-      return message.channel.send( new MessageEmbed()
+      return message.reply({ embeds: [new MessageEmbed()
       .setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true }))
-      .setTitle(`${fail} Slow Mode Error`)
-      .setDescription(` Please make sure I have the **Manage Channels** Permission`)
+      .setTitle(`${fail} Chế độ chậm lỗi `)
+      .setDescription(`Hãy đảm bảo rằng tôi có quyền **Quản lý kênh**`)
       .setTimestamp()
-      .setFooter('https://pogy.xyz')
-      .setColor(message.guild.me.displayHexColor));
+      .setFooter('https://sodachan.tk/')
+      .setColor(message.guild.me.displayHexColor)]});
 
     let reason = args.slice(index + 1).join(' ');
-    if (!reason) reason = 'No Reason was Provided';
+    if (!reason) reason = 'Không có lý do nào được cung cấp';
     if (reason.length > 1024) reason = reason.slice(0, 1021) + '...';
     
     await channel.setRateLimitPerUser(rate, reason); // set channel rate
     const status = (channel.rateLimitPerUser) ? 'enabled' : 'disabled';
     const embed = new MessageEmbed()
       .setTitle('Slowmode')
-      .setFooter(`To disable set the rate to 0`)
+      .setFooter(`Để tắt, hãy đặt tỷ lệ thành 0`)
       .setTimestamp()
       .setColor('GREEN');
 
     if (rate === '0') {
-      message.channel.send(new MessageEmbed()
-        .setDescription(`${success} Slow Mode was successfuly disabled${logging && logging.moderation.include_reason === "true" ?`\n\n**Reason:** ${reason}`:``}`)
+      message.reply({ embeds: [new MessageEmbed()
+        .setDescription(`${success} Chế độ chậm đã được tắt thành công${logging && logging.moderation.include_reason === "true" ?`\n\n**Lý do:** ${reason}`:``}`)
         .setColor(message.guild.me.displayHexColor)
-      ).then(async(s)=>{
+      ]}).then(async(s)=>{
           if(logging && logging.moderation.delete_reply === "true"){
             setTimeout(()=>{
             s.delete().catch(()=>{})
@@ -130,10 +130,10 @@ const language = require(`../../data/language/${guildDB.language}.json`)
 
     } else {
 
-      message.channel.send(new MessageEmbed()
-        .setDescription(`${success} | Slow Mode was successfuly enabled to **1 msg /${rate}s** ${logging && logging.moderation.include_reason === "true" ?`\n\n**Reason:** ${reason}`:``}`)
+      message.reply({ embeds: [new MessageEmbed()
+        .setDescription(`${success} | Chế độ Chậm đã được bật thành công **1 tin nhắn /${rate}s** ${logging && logging.moderation.include_reason === "true" ?`\n\n**Lý do:** ${reason}`:``}`)
         .setColor(message.guild.me.displayHexColor)
-      ).then(async(s)=>{
+      ]}).then(async(s)=>{
           if(logging && logging.moderation.delete_reply === "true"){
             setTimeout(()=>{
             s.delete().catch(()=>{})
@@ -172,14 +172,14 @@ if (!reason) reason = `${language.noReasonProvided}`;
 if (reason.length > 1024) reason = reason.slice(0, 1021) + '...';
 
 const logEmbed = new MessageEmbed()
-.setAuthor(`Action: \`Slow Mode\` | ${message.author.tag} | Case #${logcase}`, message.author.displayAvatarURL({ format: 'png' }))
-.addField('User', message.member, true)
-.addField('Reason', reason, true)
+.setAuthor(`Hoạt động: \`Slow Mode\` | ${message.author.tag} | Trường hợp #${logcase}`, message.author.displayAvatarURL({ format: 'png' }))
+.addField('Người dùng', message.member, true)
+.addField('Lý do', reason, true)
 .setFooter(`ID: ${message.author.id}`)
 .setTimestamp()
 .setColor(color)
 
-channel.send(logEmbed).catch(()=>{})
+channel.send({ embeds: [logEmbed]}).catch(()=>{})
 
 logging.moderation.caseN = logcase + 1
 await logging.save().catch(()=>{})

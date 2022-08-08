@@ -8,8 +8,8 @@ module.exports = class extends Command {
     constructor(...args) {
       super(...args, {
         name: 'addpremium',
-        aliases: [ 'apremium' ],
-        description: 'Add a premium code.',
+        aliases: [ 'apremium', 'addcode' ],
+        description: 'Thêm mã cao cấp.',
         category: 'Owner',
         ownerOnly: true
       });
@@ -23,9 +23,9 @@ module.exports = class extends Command {
 
 const plans = ["month", "year"]
 
-if(!args[0]) return message.channel.send(`Provide a Plan!\n${plans.join(" - ")}`)
+if(!args[0]) return message.reply(`Cung cấp một kế hoạch!\n${plans.join(" - ")}`)
 
-if(!plans.includes(args[0])) return message.channel.send(`Provide a Plan!\n${plans.join(" - ")}`)
+if(!plans.includes(args[0])) return message.reply(`Cung cấp một kế hoạch!\n${plans.join(" - ")}`)
 
 let expiresAt;
 
@@ -71,10 +71,9 @@ array.push(`\`${i + 1}-\` ${code}`)
 }
   }
 
-  message.channel.send(new Discord.MessageEmbed()
+  message.reply({ embeds: [new Discord.MessageEmbed()
   .setColor(message.client.color.green)
-  .setDescription(`**Generated ${array.length} Premium Code(s)**\n\n${array.join("\n")}\n\n**Type:** ${args[0]}\n**Expires:** ${moment(expiresAt).format("dddd, MMMM Do YYYY")}`)
-  )
+  .setDescription(`**Đã tạo ${array.length} Mã cao cấp(s)**\n\n${array.join("\n")}\n\n**Thể loại:** ${args[0]}\n**Hết hạn:** ${moment(expiresAt).format("MM-DD-YYYY")}`)]})
       
     }
 }

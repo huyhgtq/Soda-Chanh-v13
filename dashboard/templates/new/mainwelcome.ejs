@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap" rel="stylesheet">
 </head>
-<%- include("../partials/dashMenu", { bot,user, path, description, title: `Pogy - Dashboard`, arc, url})%>
+<%- include("../partials/dashMenu", { bot,user, path, description, title: `Soda Chan - Dashboard`, arc, url})%>
 
 
 
@@ -28,7 +28,7 @@
 <% if (guild.icon) {
  iconurl = "https://cdn.discordapp.com/icons/" + guild.id + "/" + guild.icon + ".png??size=512";
 } else {
- iconurl = "https://cdn.glitch.com/82fe990a-7942-42e3-9790-39807ccdb9f6%2Ficon-404-dark.png?v=1602427904949";
+ iconurl = "https://cdn.discordapp.com/attachments/893953110349852686/970760403976093716/soda_chan_new.png";
 }
 %>
 
@@ -83,13 +83,13 @@
     </div>
   </div>
 <% }  %>
-    <h2 class="welcomediv-header" style="font-family: 'Cairo', sans-serif">Welcome Channel</h2>
-    <p><br><code>{user}</code> - Mentions the person joining/leaving
-        <br><code>{guild}</code> - The server's name
-        <br><code>{user_tag}</code> - The person's User Tag
-        <br><code>{memberCount}</code> - The total number of members<br><a href="/variables" style="font-size: 12px; color: red"><br>check more here</a></p>
+    <h2 class="welcomediv-header" style="font-family: 'Cairo', sans-serif">Kênh Chào mừng</h2>
+    <p><br><code>{user}</code> - Đề cập đến người tham gia / rời khỏi
+        <br><code>{guild}</code> - Tên máy chủ
+        <br><code>{user_tag}</code> - Tag người dùng 
+        <br><code>{memberCount}</code> - Tổng số thành viên<br><a href="/variables" style="font-size: 12px; color: rgb(208, 255, 0)"><br>kiểm tra thêm ở đây</a></p>
 <hr style="height:1px;border-width:0;color:#222222;background-color:#222222">
-    <h3 style="font-family: 'Cairo', sans-serif" >Welcome Channel</h3>
+    <h3 style="font-family: 'Cairo', sans-serif" >Kênh</h3>
 
 <select class="select" name="welcomeChannel">
                                                 <% if(bot.channels.cache.has(welcome.welcomeChannel)){ %>
@@ -115,7 +115,7 @@
                                                          <% } %>
                                                     
                                                     <% }); %>
-   <option selected>None</option>
+   <option selected>Không có</option>
                                                 
 
                                                 <% } %>
@@ -123,19 +123,19 @@
 
 <div class="box-footer">
                                     
-                                            <button type="submit" name="welcomeSave" class="save-button">Save</button>
+                                            <button type="submit" name="welcomeSave" class="save-button">Lưu</button>
                                       
                                     </div>
                                     <br>
                                     <br>
                                     <br>
-                                        <h2 class="welcomediv-header" style="font-family: 'Cairo', sans-serif">Leave Channel</h2>
-    <p><br><code>{user}</code> - Mentions the person joining/leaving
-        <br><code>{guild}</code> - The server's name
-        <br><code>{user_tag}</code> - The person's User Tag
-        <br><code>{memberCount}</code> - The total number of members<br><a href="/variables"  style="font-size: 12px; color: red"><br>check more here</a></p>
+                                        <h2 class="welcomediv-header" style="font-family: 'Cairo', sans-serif">Rời khỏi kênh</h2>
+    <p><br><code>{user}</code> - Đề cập đến người tham gia / rời khỏi
+        <br><code>{guild}</code> - Tên máy chủ
+        <br><code>{user_tag}</code> - Tag người dùng
+        <br><code>{memberCount}</code> - Tổng số thành viên<br><a href="/variables"  style="font-size: 12px; color: rgb(208, 255, 0)"><br>kiểm tra thêm ở đây</a></p>
 <hr style="height:1px;border-width:0;color:#222222;background-color:#222222">
-    <h3 style="font-family: 'Cairo', sans-serif" >Leave Channel</h3>
+    <h3 style="font-family: 'Cairo', sans-serif" >Kênh</h3>
         <div class="select-wrapper">
 <select class="select" name="leaveChannel">
                                                 <% if(bot.channels.cache.has(leave.leaveChannel)){ %>
@@ -161,7 +161,7 @@
                                                          <% } %>
                                                     
                                                     <% }); %>
-   <option selected>None</option>
+   <option selected>Không có</option>
                                                 
 
                                                 <% } %>
@@ -169,12 +169,12 @@
 </div>
 <div class="box-footer">
                                     
-                                            <button type="submit" name="leaveSave" class="save-button">Save</button>
+                                            <button type="submit" name="leaveSave" class="save-button">Lưu</button>
                                       
                                     </div>
 </div>
   <div class="welcomediv" id="welcomediv">
-<h2 class="welcomediv-header" style="font-family: 'Cairo', sans-serif">Welcome Message</h2>
+<h2 class="welcomediv-header" style="font-family: 'Cairo', sans-serif">Tin nhắn chào mừng</h2>
 <br>
 <div id="textareaID">
 
@@ -184,14 +184,14 @@ max-height:200px; background-color: #2f2f2f; color: white;  "  name="welcomeMess
 <br>
 <br>
 </div>
-<p>Embed Message</p>
+<p>Tin nhắn Embed</p>
 <% if(welcome.welcomeEmbed == "true") {%>
 <input name="isEmbed" class="input-switch" type="checkbox" id="switch" onclick="myFunction()" checked></input><label class="label-switch"for="switch">Toggle</label>
 <% } else {%>
 <input name="isEmbed" class="input-switch" type="checkbox" id="switch" onclick="myFunction()"/><label class="label-switch"for="switch" >Toggle</label>
 <% } %>
 <p style="display: flex;
-  align-items: center;">DM the user  &nbsp<i class="fa fa-info-circle" data-toggle="tooltip" title="Choose whether the user recieves the message or the welcome channel" style="font-size: 20px" id='dmhover'></i></p>
+  align-items: center;">Gửi tin nhắn cho người dùng &nbsp<i class="fa fa-info-circle" data-toggle="tooltip" title="Chọn xem người dùng nhận được tin nhắn hay kênh chào mừng" style="font-size: 20px" id='dmhover'></i></p>
 <% if(welcome.welcomeDM == "true") {%>
 <input name="dmUser" class="input-switch" type="checkbox" id="switch2" checked></input><label class="label-switch"for="switch2">Toggle</label>
 <% } else {%>
@@ -201,10 +201,10 @@ max-height:200px; background-color: #2f2f2f; color: white;  "  name="welcomeMess
 <br>
 
 <% if(welcome.welcomeToggle == "true"){ %>
-                                            <button type="submit" name="welcomeDisable" class="btn btn-danger">Disable</button>
-                                            <button type="submit" name="welcomeUpdate" class="btn btn-primary pull-right">Update</button>
+                                            <button type="submit" name="welcomeDisable" class="btn btn-danger">Vô hiệu hóa</button>
+                                            <button type="submit" name="welcomeUpdate" class="btn btn-primary pull-right">Cập nhật</button>
                                         <% } else { %>
-                                            <button type="submit" name="welcomeEnable" class="btn btn-success">Enable</button>
+                                            <button type="submit" name="welcomeEnable" class="btn btn-success">Cho phép</button>
                                         <% } %>
                                    <button type='button' class="btn btn-danger" onclick="document.getElementById('myInput').value = ''">Clear</button>
                                     </div>
@@ -360,7 +360,7 @@ max-height:200px; background-color: #2f2f2f; color: white;  "  name="welcomeMess
 
 <br>
 
-<h2 class="welcomediv-header" style="font-family: 'Cairo', sans-serif">Leave Message</h2>
+<h2 class="welcomediv-header" style="font-family: 'Cairo', sans-serif">Để lại tin nhắn</h2>
 <br>
 <div id="textareaID2">
 
@@ -370,14 +370,14 @@ max-height:200px; background-color: #2f2f2f; color: white;  "  ><%= (leave.leave
 <br>
 <br>
 </div>
-<p>Embed Message</p>
+<p>Tin nhắn Embed</p>
 <% if(leave.leaveEmbed == "true") {%>
 <input name="leaveEmbed" class="input-switch" type="checkbox" id="switch7" onclick="myFunction2()" checked></input><label class="label-switch"for="switch7">Toggle</label>
 <% } else {%>
 <input name="leaveEmbed" class="input-switch" type="checkbox" id="switch7" onclick="myFunction2()"/><label class="label-switch"for="switch7" >Toggle</label>
 <% } %>
 <p style="display: flex;
-  align-items: center;">DM the user  &nbsp<i class="fa fa-info-circle" data-toggle="tooltip" title="Choose whether the user recieves the message or the Leave Channel" style="font-size: 20px" id='dmhover'></i></p>
+  align-items: center;">Gửi tin nhắn cho người dùng  &nbsp<i class="fa fa-info-circle" data-toggle="tooltip" title="Chọn xem người dùng nhận được tin nhắn hay Kênh Rời khỏi" style="font-size: 20px" id='dmhover'></i></p>
 <% if(leave.leaveDM == "true") {%>
 <input name="leaveDM" class="input-switch" type="checkbox" id="switch4" checked></input><label class="label-switch"for="switch4">Toggle</label>
 <% } else {%>
@@ -387,10 +387,10 @@ max-height:200px; background-color: #2f2f2f; color: white;  "  ><%= (leave.leave
 <br>
 
 <% if(leave.leaveToggle == "true"){ %>
-                                            <button type="submit" name="leaveDisable" class="btn btn-danger">Disable</button>
-                                            <button type="submit" name="leaveUpdate" class="btn btn-primary pull-right">Update</button>
+                                            <button type="submit" name="leaveDisable" class="btn btn-danger">Vô hiệu hóa</button>
+                                            <button type="submit" name="leaveUpdate" class="btn btn-primary pull-right">Cập nhật</button>
                                         <% } else { %>
-                                            <button type="submit" name="leaveEnable" class="btn btn-success">Enable</button>
+                                            <button type="submit" name="leaveEnable" class="btn btn-success">Cho phép</button>
                                         <% } %>
                                    <button type='button' class="btn btn-danger" onclick="document.getElementById('myInput').value = ''">Clear</button>
                                     </div>

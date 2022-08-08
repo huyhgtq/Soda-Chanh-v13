@@ -5,7 +5,7 @@ module.exports = class extends Command {
     constructor(...args) {
       super(...args, {
         name: 'reddit',
-        description: 'Get a random photo from specified subreddit',
+        description: 'Nhận một bức ảnh ngẫu nhiên từ subreddit được chỉ định',
         category: 'Images',
         cooldown: 2
       });
@@ -14,7 +14,7 @@ module.exports = class extends Command {
     async run(message, args) {
       try {
         if (args.length < 1) {
-          return message.channel.send('Please give me a subreddit!')
+          return message.channel.send('Hãy cho tôi một subreddit!')
         }
 
         var subreddits = [
@@ -25,7 +25,7 @@ module.exports = class extends Command {
   
         const data = await fetch(`https://meme-api.herokuapp.com/gimme/${reddit}`).then(res => res.json())
 
-        if(data.nsfw) return message.channel.send(`${message.client.emoji.fail} The selected subreddit is 18+. please consider using an NSFW Channel!`)
+        if(data.nsfw) return message.channel.send(`${message.client.emoji.fail} Subreddit được chọn là 18+. vui lòng xem xét sử dụng Kênh NSFW!`)
       
         const { title, postLink, url, subreddit } = data
   
@@ -40,13 +40,13 @@ module.exports = class extends Command {
             footer: { text: `/reddit/${subreddit}` }
           }
         }).catch(() => {
-          message.channel.send(`Could not find that subreddit!`)
+          message.channel.send(`Không thể tìm thấy subreddit đó!`)
         });
 
 
       } catch(error) {
 
-        message.channel.send(`Could not find that subreddit!`)
+        message.channel.send(`Không thể tìm thấy subreddit đó!`)
       }
     }
 };

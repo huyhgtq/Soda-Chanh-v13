@@ -5,11 +5,14 @@ https://github.com/Glitchii  -->
 
 <html lang="en">
     <head>
+    <link rel="icon"
+    type="image/png"
+    href="<%=domain%>/logo.png"> 
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
         <link rel="icon" type="image/png" href="<%= hostname %>/logo.png" />
-        <title>Pogy - Embed Builder</title>
+        <title>Soda Chan - Embed Builder</title>
         <link rel="stylesheet" href="<%=domain%>/css/embed-css.css" />
         <script>
             const guildID = "<%= guild.id %>";
@@ -52,7 +55,7 @@ To view the page please enable javascript in your browser
                         <p>JSON</p>
                     </div>
                     <div class="clear">
-                        <svg title="clear everything" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000" xml:space="preserve">
+                        <svg title="clear" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000" xml:space="preserve">
                             <g>
                                 <path
                                     d="M740.4,401.4c-46-25.4-92.5-49.9-139.1-74.2c-36.3-18.9-73.3-19.2-110-0.9c-22,11-38.8,27.5-50.4,49.9c116.5,62,232.2,123.6,348.7,185.6c2.2-5.1,4.4-9.3,6-13.7C816.7,491.3,794.5,431.2,740.4,401.4z" style="fill: #fff;"  ></path>
@@ -105,13 +108,18 @@ To view the page please enable javascript in your browser
 
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
                 <div class="dropdown" style="float: right;">
-                    <button class="dropbtn">Go back</button>
+                    <button class="dropbtn">Quay lại</button>
                     <div class="dropdown-content">
                         <a href="/">Home</a>
                         <a href="/dashboard">Dashboard</a>
                         <a style="color: #ff5151;" href="/logout">Logout</a>
                     </div>
-                </div>
+                  </div>
+                    <div class="bTop">
+                                <h2>LƯU Ý     </h2>
+                                <p class="desc">Nếu gặp phải lỗi Hãy làm mới embed [để tránh trường hợp gặp phải lỗi lần nữa]</p>
+                                <p class="desc">cái chổi thần kỳ ở trên á</p>
+                            </div>
 
                 <div class="top item">
                     <div class="gui"></div>
@@ -191,7 +199,7 @@ To view the page please enable javascript in your browser
                     <div class="contents">
                         <img src="<%= domain %>/logo.png" class="avatar" alt=" " />
                         <h2>
-                            <span class="username" role="button">Pogy</span><span class="botTag"><span class="botText" style="top: 1.12px;">✓ BOT</span></span>
+                            <span class="username" role="button">Soda Chan</span><span class="botTag"><span class="botText" style="top: 1.12px;">✓ BOT</span></span>
                             <span class="timeText"></span>
                         </h2>
                     </div>
@@ -260,16 +268,16 @@ To view the page please enable javascript in your browser
                         </div>
                     </div>
                     <div class="hook">
-                        <h5>Or Save as Custom Command</h5>
+                        <h5>Hoặc Lưu dưới dạng Lệnh Tùy chỉnh</h5>
                         <div class="custom">
                         <input  placeholder="Custom Command" value="" id="custom-command" class="custom-text" />
-                        <button class="webhook-button-custom" id="save-custom">Save</button>
+                        <button class="webhook-button-custom" id="save-custom">Lưu</button>
                         </div>
-                        <h5>Or Send to webhook</h5>
+                        <h5>Hoặc gửi đến webhook</h5>
                         <input type="password" name="webhook" id="webhook" value="" placeholder="https://discord.com/api/webhooks/..." class="webhook-text" />
                         <div class="webhook">
-                            <button class="webhook-button" id="sendWebhook" name="sendWebhook">Send Webhook</button>
-                            <button type="button" id="copy" class="webhook-button2">Copy JSON</button>
+                            <button class="webhook-button" id="sendWebhook" name="sendWebhook">Gửi Webhook</button>
+                            <button type="button" id="copy" class="webhook-button2">Sao chép JSON</button>
                         </div>
                     </div>
                 </div>
@@ -277,7 +285,7 @@ To view the page please enable javascript in your browser
         </div>
     </body>
 </html>
-<title>Pogy - Embed</title>
+<title>Soda Chan - Embed</title>
 <% } else { %>
-<p class="no-js">Make sure the guild has 1 channel, So please create a channel before accessing our dashboard</p>
+<p class="no-js">Đảm bảo máy chủ có 1 kênh, Vì vậy, vui lòng tạo kênh trước khi truy cập trang tổng quan của chúng tôi</p>
 <% } %>

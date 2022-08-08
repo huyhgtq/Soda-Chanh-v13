@@ -16,7 +16,7 @@
 
 
 </head>
-<%- include("../partials/dashMenu", { bot, user, path, description, title: `Pogy - Dashboard`, arc, url})%>
+<%- include("../partials/dashMenu", { bot, user, path, description, title: `Soda Chan - Dashboard`, arc, url})%>
 
 
 
@@ -28,7 +28,7 @@
 <% if (guild.icon) {
  iconurl = "https://cdn.discordapp.com/icons/" + guild.id + "/" + guild.icon + ".png??size=512";
 } else {
- iconurl = "https://cdn.glitch.com/82fe990a-7942-42e3-9790-39807ccdb9f6%2Ficon-404-dark.png?v=1602427904949";
+ iconurl = "https://cdn.discordapp.com/attachments/893953110349852686/970760403976093716/soda_chan_new.png";
 }
 %>
 
@@ -126,12 +126,12 @@
 
  
   ">
-<h3 class="rr-box-title">Main Settings</h3>
-<p style="padding-left: 40px;">Pick Your reaction Role Settings in the guild.</p>
+<h3 class="rr-box-title">Cài đặt chính</h3>
+<p style="padding-left: 40px;">Chọn Cài đặt vai trò reaction của bạn trong guild.</p>
 
   <div style="padding-top: 30px">
 </div>
-<p style="padding-left: 40px;">Reaction role Log</p>
+<p style="padding-left: 40px;">Nhật ký vai trò phản ứng</p>
  <select class="select" name="reactionroleslog">
              <% if(settings.reactionLogs && bot.channels.cache.has(settings.reactionLogs)){ %>
                                                     <option selected="selected">#<%= bot.channels.cache.get(settings.reactionLogs).name %></option>
@@ -140,7 +140,7 @@
                                                     <% }); %>
                                                         <option>None</option>
                                                 <% } else { %>
-                                                    <option selected="selected">None</option>
+                                                    <option selected="selected">Không có</option>
                                                     <% guild.channels.cache.filter((ch) => ch.type === "text").forEach((ch) => { %>
                                                         <option>#<%= ch.name %></option>
                                                     <% }); %>
@@ -161,7 +161,7 @@
 
   <div class="row" style="color: white;">
     <div class="col-md-4" style="text-align: center">
-    <label for="rr-color-1" class="form-label">Color</label>
+    <label for="rr-color-1" class="form-label">Màu sắc</label>
     <div>
     <input style="background-color: #fff; color: #2f2f2f; border: #222222;     display: inline-flex;
     margin: 4px;
@@ -172,7 +172,7 @@
         <div class="col-md-4">&nbsp;</div>
 
     <div class="col-md-4" style="text-align: center;  padding-bottom: 40px">
- RR Dms<% if(settings.isPremium == "false"){ %><a href="https://pogy.xyz/premium"><i style="font-size:14px; color: yellow" class="fa">&#xf006;</i></a><% } %>
+ RR Dms<% if(settings.isPremium == "false"){ %><a href="https://sodachan.tk/premium/"><i style="font-size:14px; color: yellow" class="fa">&#xf006;</i></a><% } %>
   <div style="padding-top: 4px">
 <% if(settings.reactionDM === true) { %>
   <input id="s1" name="rrDM" type="checkbox" class="switch" checked>
@@ -184,7 +184,7 @@
 
     </div>
   <div class="row justify-content-center" style="    padding-bottom: 10px;">
-<button class="save" name="save" type="submit">Save Changes</button>
+<button class="save" name="save" type="submit">Lưu thay đổi</button>
 </div>
 
 <br>
@@ -199,27 +199,27 @@
   border-radius: 5px;"></div>
 
 
-<h3 class="rr-box-title">Reset Reaction Roles</h3>
-<p style="padding-left: 40px; ">Resets the reaction role database for this guild.</p>
+<h3 class="rr-box-title">Đặt lại các vai trò phản ứng</h3>
+<p style="padding-left: 40px; ">Đặt lại cơ sở dữ liệu vai trò reaction cho máy chủ này.</p>
 <br>
 <br>
-<p style=" border-radius: 5px; background-color: #222222; color: #ed4337; padding-left: 40px; font-size: 18px;">Please note that this will disable every reaction role in <%= guild.name %>, as this action is irreversible.</p>
+<p style=" border-radius: 5px; background-color: #222222; color: #ed4337; padding-left: 40px; font-size: 18px;">Xin lưu ý rằng điều này sẽ vô hiệu hóa mọi vai reaction trong <%= guild.name %>, vì hành động này là không thể đảo ngược.</p>
 
 
 <div style="padding-top: 55px;"></div>
-<button id="reset_button" class="reset" type="button">Reset</button>
+<button id="reset_button" class="reset" type="button">Cài đặt lại</button>
 <div style="padding-top: 10px;"></div>
 </div>
 
 
 <div class="rr-box">
 <div class="col-md-4" style="background-color:#2f2f2f; box-shadow: 2px 2px 2px #2f2f2f; border-radius: 5px;  width: 45%; margin-right: 17px;">
-<h3 class="rr-box-title">Send Reaction Role</h3>
+<h3 class="rr-box-title">Gửi vai trò phản ứng</h3>
 
  
   <div style="padding-top: 30px">
 </div>
-<p style="padding-left: 40px">Channel</p>
+<p style="padding-left: 40px">Kênh</p>
 <select class="select" name="sendChannel">
          
                                                     <% guild.channels.cache.filter((ch) => ch.type === "text").forEach((ch) => { %>
@@ -228,7 +228,7 @@
                                               
 </select>
 <br>
-<p style="padding-left: 40px">Message ID</p>
+<p style="padding-left: 40px">ID tin nhắn</p>
 <div style="padding-left: 40px;
   padding-right: 40px;">
 <input maxlength="25" style="height: 40px; width: 100% !important;  background-color: #2f2f2f; color: white; border-radius: 7px; outline: none;
@@ -244,7 +244,7 @@ focus:outline-none" type="text" name="messageID"></input>
    <% }) %>
 </select>
 <br>
-<p style="padding-left: 40px">Role</p>
+<p style="padding-left: 40px">Vai trò</p>
 <select  name="role">
            
                                           
@@ -257,26 +257,26 @@ focus:outline-none" type="text" name="messageID"></input>
 
 </select>
 <br>
-<p style="padding-left: 40px">Type</p>
+<p style="padding-left: 40px">Loại</p>
 <div style="padding-left: 40px; color: white">
 
   <input type="radio" id="1" name="rr" value="1">
-  <label for="1">Type 1 - React adds the role, unreacting removes the role</label><br>
+  <label for="1">Loại 1 - React thêm vai trò, không phản hồi sẽ xóa vai trò</label><br>
 
   <input type="radio" id="2" name="rr" value="2">
-  <label for="2">Type 2 - Reacting will give the role but unreaction won't remove the role</label><br>
+  <label for="2">Loại 2 - Reaction sẽ mang lại vai trò nhưng không Reaction sẽ không loại bỏ vai trò</label><br>
 
   <input type="radio" id="3" name="rr" value="3">
-  <label for="3">Type 3 - Reacting will remove the role and unreacting won't give it back</label><br>
+  <label for="3">Loại 3 - Reaction sẽ loại bỏ vai trò và không Reaction sẽ không trả lại vai trò đó</label><br>
 
   <input type="radio" id="4" name="rr" value="4">
-  <label for="4">Type 4 - When reacting it will remove the role, unreacting will add the role</label><br>
+  <label for="4">Loại 4 - Khi Reaction, nó sẽ xóa vai trò, không Reaction sẽ thêm vai trò</label><br>
 
     <input type="radio" id="5" name="rr" value="5">
-  <label for="5">Type 5 - Same concept as number 3 but removes the user's reaction</label><br>
+  <label for="5">Loại 5 - Khái niệm tương tự như số 3 nhưng loại bỏ Reaction của người dùng</label><br>
 
     <input type="radio" id="6" name="rr" value="6">
-  <label for="6">Type 6 - React to recieve the role and react again to remove the role</label><br>
+  <label for="6">Loại 6 - Reaction để nhận vai trò và Reaction lại để xóa vai trò</label><br>
 
 
 
@@ -295,7 +295,7 @@ focus:outline-none" type="text" name="messageID"></input>
   
 
       <div class="row justify-content-center" style="    padding-bottom: 10px;">
-<button class="save" type="submit" name="send">Send</button>
+<button class="save" type="submit" name="send">Gửi</button>
 </div>
   </div>
 
@@ -306,7 +306,7 @@ focus:outline-none" type="text" name="messageID"></input>
 <div class="confirm" id="confirm">
   <div></div>
   <div id="confirm_box">
-    <div id="confirmMessage">Are You sure? This action cannot be undone</div>
+    <div id="confirmMessage"> Bạn có chắc không? Hành động này không thể được hoàn tác</div>
     <div>
       <button id="confirmYes" name="reset" class="confirm_button" type="confirm" value="Yes">Yes</button>
       <button id="confirmNo" class="confirm_button" onclick"myFunction2()" type="button" value="No" >No</button>
@@ -322,10 +322,10 @@ focus:outline-none" type="text" name="messageID"></input>
 </div>
 
 <% } else { %>
-<p class="no-js">Make sure the guild has 1 channel, So please create a channel before accessing our dashboard</p>
+<p class="no-js">Đảm Server hội có 1 kênh, Vì vậy, vui lòng tạo kênh trước khi truy cập trang tổng quan của chúng tôi</p>
 <% } %>
 <% } else { %>
-<p class="no-js">Make sure the guild has 1 Role, So please create a normal Role before accessing our dashboard</p>
+<p class="no-js">Đảm bảo Server có 1 Vai trò, Vì vậy, vui lòng tạo một Vai trò bình thường trước khi truy cập trang tổng quan của chúng tôi</p>
 <% } %>
 </div>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>

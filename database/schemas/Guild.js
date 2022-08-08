@@ -14,7 +14,7 @@ const guildConfigSchema = mongoose.Schema({
   prefix: {
     type: mongoose.SchemaTypes.String,
     required: true,
-    default: config.prefix || 'p!',
+    default: config.prefix || '!',
   },
   isPremium: {
     type: mongoose.SchemaTypes.String,
@@ -97,7 +97,7 @@ const guildConfigSchema = mongoose.Schema({
   footer:{
     type: mongoose.SchemaTypes.String,
     required: false,
-    default: `Suggested by {user_tag}`
+    default: `Được đề nghị bởi {user_tag}`
   },
   timestamp: {
     type: mongoose.SchemaTypes.String,

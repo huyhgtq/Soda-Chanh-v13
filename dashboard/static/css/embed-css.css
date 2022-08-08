@@ -1056,6 +1056,12 @@ body:not(.gui) .chooser>.back {
     margin-top: 5px;
 }
 
+.bTop .desc {
+    font-size: 10px;
+    opacity: .6;
+    margin-top: 5px;
+}
+
 .col {
     display: grid;
     grid-template-rows: 45% 45%;

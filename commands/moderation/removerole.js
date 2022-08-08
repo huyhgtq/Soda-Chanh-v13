@@ -10,10 +10,10 @@ module.exports = class extends Command {
       super(...args, {
         name: 'removerole',
         aliases: [ 'remrole' ],
-        description: 'Removes the specified role from the mentioned user',
+        description: 'Xóa vai trò được chỉ định khỏi người dùng được đề cập',
         category: 'Moderation',
         usage: '<user>',
-        examples: [ 'removerole @peter' ],
+        examples: [ 'removerole @yuunya' ],
         guildOnly: true,
         botPermission: ['MANAGE_ROLES'],
         userPermission: ['MANAGE_ROLES'],
@@ -43,7 +43,7 @@ const success = client.emoji.success;
         .then(result => console.log(result))
         .catch(err => console.error(err));
 
-        return message.channel.send('This server was not in our database! We have added it, please retype this command.').then(m => m.delete({timeout: 10000}));
+        return message.reply('Máy chủ này không có trong cơ sở dữ liệu của chúng tôi! Chúng tôi đã thêm nó, vui lòng nhập lại lệnh này.').then(m => m.delete({timeout: 10000}));
     }
 });
   const logging = await Logging.findOne({ guildId: message.guild.id })
@@ -58,53 +58,53 @@ const language = require(`../../data/language/${guildDB.language}.json`)
    let member = message.mentions.members.last() || message.guild.members.cache.get(args[0]);
 
      if (!member)
-      return message.channel.send( new MessageEmbed()
+      return message.reply({ embeds: [new MessageEmbed()
       .setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true }))
-      .setTitle(`${fail} Remove Role Error`)
-      .setDescription('Please provide a valid role')
+      .setTitle(`${fail} Xóa vai trò lỗi`)
+      .setDescription('Vui lòng cung cấp một vai trò hợp lệ')
       .setTimestamp()
-      .setFooter('https://pogy.xyz')
-      .setColor(message.guild.me.displayHexColor));
+      .setFooter('https://sodachan.tk/')
+      .setColor(message.guild.me.displayHexColor)]});
     if (member.roles.highest.position >= message.member.roles.highest.position)
-      return message.channel.send( new MessageEmbed()
+      return message.reply({ embeds: [new MessageEmbed()
       .setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true }))
-      .setTitle(`${fail} Remove Role Error`)
-      .setDescription('The Provided user has an equal or higher role.')
+      .setTitle(`${fail} Xóa vai trò lỗi`)
+      .setDescription('Người dùng được cung cấp có vai trò ngang bằng hoặc cao hơn.')
       .setTimestamp()
-      .setFooter('https://pogy.xyz')
-      .setColor(message.guild.me.displayHexColor));
+      .setFooter('https://sodachan.tk/')
+      .setColor(message.guild.me.displayHexColor)]});
 
       const role = getRoleFromMention(message, args[1]) || message.guild.roles.cache.get(args[1]) || message.guild.roles.cache.find(rl => rl.name.toLowerCase() === args.slice(1).join(' ').toLowerCase());
 
-    let reason = `The current feature doesn't need reasons`
-    if (!reason) reason = 'No Reason Provided';
+    let reason = `Tính năng hiện tại không cần lý do`
+    if (!reason) reason = 'Không cung cấp lý do';
     if (reason.length > 1024) reason = reason.slice(0, 1021) + '...';
     
     if (!role) 
-      return message.channel.send( new MessageEmbed()
+      return message.reply({ embeds: [new MessageEmbed()
       .setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true }))
-      .setTitle(`${fail} Remove Role Error`)
-      .setDescription('Please provide a valid role')
+      .setTitle(`${fail} Xóa vai trò lỗi`)
+      .setDescription('Vui lòng cung cấp một vai trò hợp lệ')
       .setTimestamp()
-      .setFooter('https://pogy.xyz')
-      .setColor(message.guild.me.displayHexColor));
+      .setFooter('https://sodachan.tk/')
+      .setColor(message.guild.me.displayHexColor)]});
     else if (!member.roles.cache.has(role.id))
-      return message.channel.send( new MessageEmbed()
+      return message.reply({ embeds: [new MessageEmbed()
       .setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true }))
-      .setTitle(`${fail} Remove Role Error`)
-      .setDescription(`The provided user does not have the role.`)
+      .setTitle(`${fail} Xóa vai trò lỗi`)
+      .setDescription(`Người dùng được cung cấp không có vai trò.`)
       .setTimestamp()
-      .setFooter('https://pogy.xyz')
-      .setColor(message.guild.me.displayHexColor));
+      .setFooter('https://sodachan.tk/')
+      .setColor(message.guild.me.displayHexColor)]});
     else {
       try {
 
-        await member.roles.remove(role, [`Role Remove / Responsible User: ${message.author.tag}`]);
+        await member.roles.remove(role, [`Xóa vai trò / Người dùng có trách nhiệm: ${message.author.tag}`]);
         const embed = new MessageEmbed()
       
-          .setDescription(` ${success} | Removed **${role.name}** from **${member.user.tag}**`)
+          .setDescription(` ${success} | Loại bỏ **${role.name}** từ **${member.user.tag}**`)
           .setColor(message.guild.me.displayHexColor);
-        message.channel.send(embed)
+        message.reply({ embeds: [embed]})
         .then(async(s)=>{
           if(logging && logging.moderation.delete_reply === "true"){
             setTimeout(()=>{
@@ -136,14 +136,14 @@ let logcase = logging.moderation.caseN
 if(!logcase) logcase = `1`
 
 const logEmbed = new MessageEmbed()
-.setAuthor(`Action: \`Remove Role\` | ${member.user.tag} | Case #${logcase}`, member.user.displayAvatarURL({ format: 'png' }))
-.addField('User', member, true)
-.addField('Moderator', message.member, true)
+.setAuthor(`Hoạt động: \`Remove Role\` | ${member.user.tag} | Trường hợp #${logcase}`, member.user.displayAvatarURL({ format: 'png' }))
+.addField('Người dùng', member, true)
+.addField('Người điều hành', message.member, true)
 .setFooter(`ID: ${member.id}`)
 .setTimestamp()
 .setColor(color)
 
-channel.send(logEmbed).catch(()=>{})
+channel.send({ embeds: [logEmbed]}).catch(()=>{})
 
 logging.moderation.caseN = logcase + 1
 await logging.save().catch(()=>{})
@@ -156,13 +156,13 @@ await logging.save().catch(()=>{})
 
       } catch (err) {
 
-        message.channel.send( new MessageEmbed()
+        message.reply({ embeds: [new MessageEmbed()
       .setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true }))
-      .setTitle(`${fail} Remove Role Error`)
-      .setDescription(`Unable to remove the User's Role, please check the role hiarchy and make sure My role is above the provided user.`)
+      .setTitle(`${fail} Xóa vai trò lỗi`)
+      .setDescription(`Không thể xóa Vai trò của người dùng, vui lòng kiểm tra chế độ phân biệt vai trò và đảm bảo Vai trò của tôi ở trên người dùng được cung cấp.`)
       .setTimestamp()
-      .setFooter('https://pogy.xyz')
-      .setColor(message.guild.me.displayHexColor));
+      .setFooter('https://sodachan.tk/')
+      .setColor(message.guild.me.displayHexColor)]});
       }
     }  
     }

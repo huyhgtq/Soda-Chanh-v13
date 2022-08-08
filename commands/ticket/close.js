@@ -13,7 +13,8 @@ module.exports = class extends Command {
     super(...args, {
       name: "closeticket",
       aliases: ["close", "ticketclose", "tclose"],
-      description: "Close an Opened Ticket!",
+      description: "Đóng một vé đã mở!",
+	  disabled: true,
       category: "Tickets",
       cooldown: 3,
       botPermission: ['MANAGE_CHANNELS']
@@ -27,13 +28,11 @@ module.exports = class extends Command {
         guildId: message.guild.id
       });
   
-   if (!message.channel.name.startsWith('ticket-')) return message.channel.send(new MessageEmbed().setColor('PURPLE').setTitle('Close a ticket').setDescription(`Unable to close ticket, it seems like you aren't in any ticket channel.`)
-        .setFooter('https://pogy.xyz')
+   if (!message.channel.name.startsWith('ticket-')) return message.channel.send(new MessageEmbed().setColor('RED').setTitle('Đóng vé').setDescription(`Không thể đóng vé, có vẻ như bạn không tham gia bất kỳ kênh đặt vé nào.`)
+        .setFooter('https://sodachan.tk/')
         .setTimestamp()).then(m => {
           message.delete().catch(()=>{})
-        setTimeout(() => {
-            m.delete().catch(()=>{})
-        }, 10000);
+			  .setTimeout(() => { m.delete().catch(()=>{})}, 10000);
       });
 
  await reactionTicket.findOne({
@@ -49,12 +48,12 @@ module.exports = class extends Command {
 
 
       let reason = args.slice(0).join(" ")
-      if(!reason) reason = "No reason Was Provided"
+      if(!reason) reason = "Không có lý do được cung cấp"
 
 const role = message.guild.roles.cache.get(db.supportRoleID);
 if(db.ticketClose == "false"){
 if(role){
-if(!message.member.roles.cache.find(r => r.name.toLowerCase() === role.name.toLowerCase())) return message.channel.send(new discord.MessageEmbed().setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ format: 'png' })).setDescription(`${message.client.emoji.fail} Only users with the support team role Can Close this Ticket`).setFooter('https://pogy.xyz').setTimestamp().setColor('RED'));
+if(!message.member.roles.cache.find(r => r.name.toLowerCase() === role.name.toLowerCase())) return message.channel.send(new discord.MessageEmbed().setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ format: 'png' })).setDescription(`${message.client.emoji.fail} Chỉ những người dùng có vai trò trong nhóm hỗ trợ mới có thể đóng vé này`).setFooter('https://sodachan.tk/').setTimestamp().setColor('RED'));
 }
 };
 
@@ -102,8 +101,8 @@ let color2 = db.ticketLogColor
 
 let closeEmbed = new MessageEmbed()
       .setColor(color2)
-      .setTitle("Ticket Closed")
-      .addField("Information" , `**User:** ${message.author}\n**Ticket Channel:** #${message.channel.name}\n**Reason:** ${reason}\n**Date:** ${moment(new Date()).format("dddd, MMMM Do YYYY")}\n**Transcript:** [here](https://pogy.xyz/paste/${ticketID})`)
+      .setTitle("Vé đã đóng")
+      .addField("Thông tin" , `**Người dùng:** ${message.author}\n**Kênh vé:** #${message.channel.name}\n**Lý do:** ${reason}\n**Ngày tháng:** ${moment(new Date()).format("MM-DD-YYYY")}\n**Lịch sử:** [here](https://sodachan.tk/paste/${ticketID})`)
 
   channelReact.send(closeEmbed).catch(()=>{})
   message.author.send(closeEmbed).catch(()=>{})

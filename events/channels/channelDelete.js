@@ -39,17 +39,17 @@ if(color == "#000000") color = message.client.color.red;
 
 
     const embed = new discord.MessageEmbed()
-    .setDescription(`:wastebasket: ***Channel Deleted***`)
-    .addField('Channel Type', message.type, true)
-    .addField('Channel Name', message.name, true)
-    .setFooter(`Channel ID: ${message.id}`)
+    .setDescription(`***Kênh đã bị xóa***`)
+    .addField('Loại kênh', `${message.type}`)
+    .addField('Tên kênh', `${message.name}`)
+    .setFooter(`kênh ID: ${message.id}`)
     .setTimestamp()
     .setColor(color)
 
     if(channelEmbed &&
       channelEmbed.viewable &&
       channelEmbed.permissionsFor(message.guild.me).has(['SEND_MESSAGES', 'EMBED_LINKS'])){
-            channelEmbed.send(embed).catch(()=>{})
+            channelEmbed.send({ embeds: [embed] }).catch(()=>{})
                    cooldown.add(message.guild.id);
             setTimeout(()=>{
 cooldown.delete(message.guild.id)

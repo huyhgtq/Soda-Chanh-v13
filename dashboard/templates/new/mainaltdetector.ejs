@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap" rel="stylesheet">
 </head>
-<%- include("../partials/dashMenu", { bot, user, path, description, title: `Pogy - Dashboard`, arc, url})%>
+<%- include("../partials/dashMenu", { bot, user, path, description, title: `Soda Chan - Dashboard`, arc, url})%>
 
 
 
@@ -28,7 +28,7 @@
 <% if (guild.icon) {
  iconurl = "https://cdn.discordapp.com/icons/" + guild.id + "/" + guild.icon + ".png??size=512";
 } else {
- iconurl = "https://cdn.glitch.com/82fe990a-7942-42e3-9790-39807ccdb9f6%2Ficon-404-dark.png?v=1602427904949";
+ iconurl = "https://cdn.discordapp.com/attachments/893953110349852686/970760403976093716/soda_chan_new.png";
 }
 %>
 
@@ -84,7 +84,7 @@
     </div>
   </div>
 <% }  %>
-    <h2 class="altdetector-header" style="font-family: 'Cairo', sans-serif">Main Settings</h2>
+    <h2 class="altdetector-header" style="font-family: 'Cairo', sans-serif">Cài đặt chính</h2>
   <br>
   <br>
     <p style="color: white">Log Channel</p>
@@ -132,7 +132,7 @@
 </select>
 <br>
 <br>
-<p>Whitelist certain User IDs (seperate with a comma)</p>
+<p>Whitelist một số ID người dùng nhất định (phân tách bằng dấu phẩy)</p>
 <textarea  style="max-width: 400px; min-width: 400px;
 max-height:200px; background-color: #2f2f2f; color: white;  "  name="id" placeholder="ID1, ID2, ID3" rows="3" wrap="soft" class="col-12 form-control" maxlength="1024" type="text"><%= alt.allowedAlts.join(", ") %></textarea>
 
@@ -143,8 +143,8 @@ max-height:200px; background-color: #2f2f2f; color: white;  "  name="id" placeho
                                            <% if(alt.altToggle === true){ %>
                                      
 <br>
-                                            <button type="submit" name="disable" class="disable">Disable</button>
-                                            <button type="submit" name="update" class="update">Update</button>
+                                            <button type="submit" name="disable" class="disable">Vô hiệu hóa</button>
+                                            <button type="submit" name="update" class="update">cập nhật</button>
                                         <% } else { %>
                                                                                 <br>
                                         <br>
@@ -168,11 +168,11 @@ max-height:200px; background-color: #2f2f2f; color: white;  "  name="id" placeho
 </div>
 
 <% } else { %>
-<p class="no-js">Make sure the guild has 1 category and 1 channel.</p>
+<p class="no-js">Đảm bảo Server có 1 danh mục và 1 kênh.</p>
 <% } %>
 
 <% } else { %>
-<p class="no-js">Make sure the guild has 1 category and 1 channel.</p>
+<p class="no-js">Đảm bảo Server có 1 danh mục và 1 kênh.</p>
 <% } %>
 
 

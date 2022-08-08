@@ -37,17 +37,17 @@ const role = oldMember.roles.cache.difference(newMember.roles.cache).first();
 
   if (oldMember.roles.cache.size < newMember.roles.cache.size) {
     const roleAddembed = new discord.MessageEmbed()
-    .setAuthor(`${newMember.user.tag} | Role add`, newMember.user.displayAvatarURL({ dynamic: true }))
+    .setAuthor(`${newMember.user.tag} | Thêm vai trò`, newMember.user.displayAvatarURL({ dynamic: true }))
     .setTimestamp()
     .setColor(colorGreen)
         .setFooter(`ID: ${newMember.id}`)
-    .setDescription(`**Added Roles**\n Role: ${role}\n User: ${newMember}\n\n ${newMember} Was given the **${role.name}** Role.`);
+    .setDescription(`**Đã thêm vai trò**\n Role: ${role}\n Người dùng: ${newMember}\n\n ${newMember} Đã được trao cho **${role.name}** vai trò.`);
  
        
     if(channelEmbed &&
       channelEmbed.viewable &&
       channelEmbed.permissionsFor(newMember.guild.me).has(['SEND_MESSAGES', 'EMBED_LINKS'])){
-              channelEmbed.send(roleAddembed).catch(()=>{});
+              channelEmbed.send({ embeds: [roleAddembed]}).catch(()=>{});
                             cooldown.add(newMember.guild.id)
               setTimeout(()=>{
               cooldown.delete(newMember.guild.id)
@@ -62,17 +62,17 @@ const role = oldMember.roles.cache.difference(newMember.roles.cache).first();
 if (oldMember.roles.cache.size > newMember.roles.cache.size) {
 
   const roleRemoveembed = new discord.MessageEmbed()
-    .setAuthor(`${newMember.user.tag} | Role Remove`, newMember.user.displayAvatarURL({ dynamic: true }))
+    .setAuthor(`${newMember.user.tag} | Xóa vai trò`, newMember.user.displayAvatarURL({ dynamic: true }))
     .setTimestamp()
     .setColor(colorRed)
-        .setFooter(`ID: ${newMember.id}`)
-    .setDescription(`**Removed Roles**\n Role: ${role}\n User: ${newMember}\n\n The **${role.name}** role was removed from ${newMember}`);
+    .setFooter(`ID: ${newMember.id}`)
+    .setDescription(`**Đã loại bỏ vai trò**\n Vai trò: ${role}\n Người dùng: ${newMember}\n\n Role **${role.name}** đã bị xóa khỏi ${newMember}`);
     
     
        if(channelEmbed &&
       channelEmbed.viewable &&
       channelEmbed.permissionsFor(newMember.guild.me).has(['SEND_MESSAGES', 'EMBED_LINKS'])){
-              channelEmbed.send(roleRemoveembed).catch(()=>{});
+              channelEmbed.send({ embeds: [roleRemoveembed]}).catch(()=>{});
                             cooldown.add(newMember.guild.id)
               setTimeout(()=>{
               cooldown.delete(newMember.guild.id)
@@ -94,17 +94,17 @@ const oldNickname = oldMember.nickname || '`None`';
 const newNickname = newMember.nickname || '`None`';
 
 const nicknameEmbed = new discord.MessageEmbed()
-    .setAuthor(`${newMember.user.tag} | Nickname Update`, newMember.user.displayAvatarURL({ dynamic: true }))
+    .setAuthor(`${newMember.user.tag} | Cập nhật biệt hiệu`, newMember.user.displayAvatarURL({ dynamic: true }))
     .setTimestamp()
     .setFooter(`ID: ${newMember.id}`)
     .setColor(colorYellow)
-    .setDescription(`**Nickname Update**\n ${newMember}'s **nickname** was changed.`)
-    .addField('Nickname', `${oldNickname} --> ${newNickname}`);
+    .setDescription(`**Cập nhật biệt hiệu**\n ${newMember}'s **tên nick** đã thay đổi.`)
+    .addField('Tên nick', `${oldNickname} --> ${newNickname}`);
 
     if(channelEmbed &&
       channelEmbed.viewable &&
       channelEmbed.permissionsFor(newMember.guild.me).has(['SEND_MESSAGES', 'EMBED_LINKS'])){
-              channelEmbed.send(nicknameEmbed).catch(()=>{});
+              channelEmbed.send({ embeds: [nicknameEmbed] }).catch(()=>{});
               cooldown.add(newMember.guild.id)
               setTimeout(()=>{
               cooldown.delete(newMember.guild.id)

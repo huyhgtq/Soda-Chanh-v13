@@ -8,9 +8,9 @@ module.exports = class extends Command {
     constructor(...args) {
       super(...args, {
         name: 'vaporwave',
-        description: 'Vaporwavefies a text.',
+        description: 'Tạo hơi nước cho văn bản.',
         category: 'Fun',
-        examples: [ 'vaporwave POG' ]
+        examples: [ 'vaporwave Soda' ]
       });
     }
 
@@ -22,12 +22,12 @@ module.exports = class extends Command {
       
         const language = require(`../../data/language/${guildDB.language}.json`)
 
-      if (!args[0]) return message.channel.send(`${language.whatdoIsay}`);
+      if (!args[0]) return message.reply(`${language.whatdoIsay}`);
 
       const vaporwavefied = args.toString().split('').map(char => {
         const code = char.charCodeAt(0)
         return code >= 33 && code <= 126 ? String.fromCharCode((code - 33) + 65281) : char
       }).join('').replace(/，/g, '  ')
-      message.channel.send(new discord.MessageEmbed().setDescription(vaporwavefied).setColor(message.client.color.blue));
+     message.reply({ embeds: [new discord.MessageEmbed().setDescription(vaporwavefied).setColor(message.client.color.blue)]});
     }
 };

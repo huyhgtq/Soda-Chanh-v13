@@ -9,10 +9,11 @@ const jsonconfig = require('../config.json');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const Strategy = require("passport-discord").Strategy;
-const premiumWeb = new Discord.WebhookClient(jsonconfig.webhook_id, jsonconfig.webhook_url);
+const premiumWeb = new Discord.WebhookClient({
+  id: `${jsonconfig.webhook_id}`, 
+  token: `${jsonconfig.webhook_url}`  });
 const config = require("../config");
 const ejs = require("ejs");
-
 
 const ShortUrl = require('../models/ShortUrl.js');
 const { mem, cpu, os } = require('node-os-utils');
@@ -22,7 +23,7 @@ const random = new randoStrings;
 const sendingEmbed = new Set();
 const bodyParser = require("body-parser");
 const { readdirSync } = require('fs');
-const { WebhookClient, MessageEmbed } = require('discord.js');
+const { WebhookClient, MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
 const DBL = require('@top-gg/sdk');
 const mongoose = require('mongoose');
 const User = require('../database/schemas/User');
@@ -42,7 +43,9 @@ const fs = require('fs');
 const Application = require("../models/application/application.js");
 const customCommand = require('../database/schemas/customCommand.js');
 //dont touch here
-const Hook = new WebhookClient(jsonconfig.webhook_id, jsonconfig.webhook_url);
+const Hook = new WebhookClient({ 
+id:'946108503959945266',
+token: '97OdfbCrO5z_vSzzJ9yoNaqlqHdFniWwd7LYpsh5Yzct5ZqbbrXmNoHxXKA5OCk5FvWd' });
 //
 
 let rgx = /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/;
@@ -165,11 +168,13 @@ app.use(session({
     // Callback endpoint.
     app.get("/callback", passport.authenticate("discord", {
       failWithError: true,
-      failureFlash: "There was an error logging you in!",
+      failureFlash: "Có một lỗi đang đăng nhập cho bạn!",
       failureRedirect: "/",
     }), async (req, res) => {
 
-      const loginLogs = new Discord.WebhookClient(config.webhook_id, config.webhook_url);;
+      const loginLogs = new WebhookClient({ 
+id:'915528248522317864',
+token: '8Iv7NhunoAuKG8jevqGIITMKuCUOsyGaA6wxmLDkkJFNtgHmn4D4ylYMKT_x9nooDKPx' });
 
 
       try {
@@ -186,7 +191,7 @@ app.use(session({
             const login = new MessageEmbed()
               .setColor('GREEN')
               .setTitle(`Login Logs`)
-              .setDescription(`\nUser: ${member.tag}\`(${member.id})\`\nTime: ${moment(new Date()).format("dddd, MMMM Do YYYY HH:mm:ss")} `);
+              .setDescription(`\nNgười dùng: ${member.tag}\`(${member.id})\`\nThời gian: ${moment(new Date()).format("MM-DD-YYYY")} `);
 
             loginLogs.send({
               username: 'Login Logs',
@@ -203,7 +208,7 @@ app.use(session({
             const login = new MessageEmbed()
               .setColor('GREEN')
               .setTitle(`Login Logs`)
-              .setDescription(`\nUser: ${member.tag}\`(${member.id})\`\nTime: ${moment(new Date()).format("dddd, MMMM Do YYYY HH:mm:ss")} `);
+              .setDescription(`\nNgười dùng:: ${member.tag}\`(${member.id})\`\nThời gian: ${moment(new Date()).format("MM-DD-YYYY")} `);
 
             loginLogs.send({
               username: 'Login Logs',
@@ -284,12 +289,14 @@ res.redirect(`https://discord.com/oauth2/authorize?client_id=${clientID}&redirec
       const member = await client.users.fetch(req.user.id);
         if (member) {
 
-          const logoutLogs = new WebhookClient('', '')
+          const logoutLogs = new Discord.WebhookClient({
+  id: `915529646504812574`, 
+  token: `BMHX9E1kk9a6Jggy1I5wCmSgFf_qD4G5VOcd0-eIFXjvR0eK3wv9_AuKog2DUMoNVbvp`  });
 
           const logout = new MessageEmbed()
             .setColor('RED')
             .setTitle(`Logout Logs`)
-            .setDescription(`\nUser: ${member.tag}\`(${member.id})\`\nTime: ${moment(new Date()).format("dddd, MMMM Do YYYY HH:mm:ss")} `);
+            .setDescription(`\nUser: ${member.tag}\`(${member.id})\`\nTime: ${moment(new Date()).format("MM-DD-YYYY")} `);
 
           logoutLogs.send({
             username: 'Logout Logs',
@@ -333,7 +340,7 @@ res.redirect(`https://discord.com/oauth2/authorize?client_id=${clientID}&redirec
 
   app.get('/url/:shortUrl', async (req, res) => {
   const shortUrl = await ShortUrl.findOne({ short: req.params.shortUrl })
-  if (shortUrl == null) return res.send('Invalid url Provided')
+  if (shortUrl == null) return res.send('URL không hợp lệ được cung cấp')
 
   shortUrl.clicks++
   shortUrl.save()
@@ -382,8 +389,8 @@ res.redirect(`https://discord.com/oauth2/authorize?client_id=${clientID}&redirec
        }
        
         renderTemplate(res, req, "paste.ejs", {
-        expires: moment(paste.expiresAt).format("dddd, MMMM Do YYYY HH:mm:ss"),
-        created: moment(paste.createdAt).format("dddd, MMMM Do YYYY HH:mm:ss"),
+        expires: moment(paste.expiresAt).format("MM-DD-YYYY"),
+        created: moment(paste.createdAt).format("MM-DD-YYYY"),
         paste: paste.paste,
         id: paste._id,
         db: paste,
@@ -418,8 +425,8 @@ res.redirect(`https://discord.com/oauth2/authorize?client_id=${clientID}&redirec
        }
        
         renderTemplate(res, req, "paste.ejs", {
-        expires: moment(form.expiresAt).format("dddd, MMMM Do YYYY HH:mm:ss"),
-        created: moment(form.createdAt).format("dddd, MMMM Do YYYY HH:mm:ss"),
+        expires: moment(form.expiresAt).format("MM-DD-YYYY"),
+        created: moment(form.createdAt).format("MM-DD-YYYY"),
         db: form,
         id: form._id,
         type: "form"
@@ -566,36 +573,36 @@ let embed;
 
   if(data[i + 1]){
 
-    form.paste.push(`Question #${i + 1} - ${db.questions[i]}`)
-    form.paste2.push(`${data[i + 1] || 'Not Answered'}`)
+    form.paste.push(`Câu hỏi #${i + 1} - ${db.questions[i]}`)
+    form.paste2.push(`${data[i + 1] || 'Không có câu trả lời'}`)
 
     
 
     embed = new MessageEmbed()
-    .setTitle(`A new Form was Submitted`)
-    .setDescription(`**Link:** [${domain}/paste/${ticketID}](${domain}/paste/${ticketID})\n\n[or click here](${domain}/paste/${ticketID})\n\n**Form ID**: \`${ticketID}\`\n\n**Submitted by:** ${member} **(${member.user.tag} - ${member.id})**\n**Time:** ${moment(new Date()).format("dddd, MMMM Do YYYY HH:mm:ss")}`)
-    .setFooter('https://pogy.xyz')
+    .setTitle(`Một biểu mẫu mới đã được đệ trình`)
+    .setDescription(`**Liên kết:** [${domain}/paste/${ticketID}](${domain}/paste/${ticketID})\n\n[hoặc bấm vào đây](${domain}/paste/${ticketID})\n\n**ID biểu mẫu**: \`${ticketID}\`\n\n**Gửi bởi:** ${member} **(${member.user.tag} - ${member.id})**\n**Thời gian:** ${moment(new Date()).format("MM-DD-YYYY")}`)
+    .setFooter({text: 'https://sodachan.tk/'})
     .setColor('GREEN')
 
   } else {
 
 
-    form.paste.push(`Question #${i + 1} - ${db.questions[i]}`)
-    form.paste2.push(`Not Answered`)
+    form.paste.push(`Câu hỏi #${i + 1} - ${db.questions[i]}`)
+    form.paste2.push(`Không có câu trả lời`)
     
    
 
     embed = new MessageEmbed()
-    .setTitle(`A new Form was Submitted`)
-    .setDescription(`**Link:** [${domain}/paste/${ticketID}](${domain}/paste/${ticketID})\n\n[or click here](${domain}/paste/${ticketID})\n\n**Form ID**: \`${ticketID}\`\n\n**Submitted by:** ${member} **(${member.user.tag} - ${member.id})**\n**Time:** ${moment(new Date()).format("dddd, MMMM Do YYYY HH:mm:ss")}`)
-    .setFooter('https://pogy.xyz')
+    .setTitle(`Một biểu mẫu mới đã được đệ trình`)
+    .setDescription(`**Liên kết:** [${domain}/paste/${ticketID}](${domain}/paste/${ticketID})\n\n[hoặc bấm vào đây](${domain}/paste/${ticketID})\n\n**ID biểu mẫu**: \`${ticketID}\`\n\n**Gửi bởi:** ${member} **(${member.user.tag} - ${member.id})**\n**Thời gian:** ${moment(new Date()).format("MM-DD-YYYY")}`)
+    .setFooter({text: 'https://sodachan.tk/'})
     .setColor('GREEN')
   }
 
 
 
 }
-member.send(new MessageEmbed().setColor('GREEN').setFooter(`Powered by https://pogy.xyz`).setTitle(`Application #${ticketID}`).setDescription(`Hey ${member.user.username}! Your form was Submitted and ready to be judged.\n\n**Form ID**: \`${ticketID}\`\n**Time:** ${moment(new Date()).format("dddd, MMMM Do YYYY HH:mm:ss")}`)).catch(()=>{});
+member.send ({ embeds: [new MessageEmbed().setColor('GREEN').setFooter({text:`Powered by https://pogy.xyz`}).setTitle(`Ứng dụng #${ticketID}`).setDescription(`Hey ${member.user.username}! Biểu mẫu của bạn đã được gửi và sẵn sàng để được đánh giá.\n\n ** id mẫu **: \`${ticketID}\`\n**Thời gian:** ${moment(new Date()).format("MM-DD-YYYY")}`)]}).catch(()=>{});
 
 await form.save().catch(()=>{})
 channel.send(embed)
@@ -603,7 +610,7 @@ channel.send(embed)
 
       renderTemplate(res, req, "appealMain.ejs", {
         guild: guild,
-        alert: `Your form has been recieved`,
+        alert: `Biểu mẫu của bạn đã được nhận`,
         id: `Form #${ticketID}`,
         app: db,
         settings: storedSettings,
@@ -614,7 +621,7 @@ channel.send(embed)
 
           renderTemplate(res, req, "appealMain.ejs", {
         guild: guild,
-        alert: `There was an error sending your Form.`,
+        alert: `Có một lỗi gửi biểu mẫu của bạn.`,
         app: db,
         settings: storedSettings,
       });
@@ -636,7 +643,7 @@ channel.send(embed)
     // Dashboard endpoint.
     app.get("/dashboard", checkAuth, (req, res) => {
 
-      const server = client.guilds.cache.get('758566519440408597');
+      const server = client.guilds.cache.get('893953109334843422');
       let user = server.members.cache.has(req.user.id);
 
 
@@ -725,13 +732,21 @@ if(maintenance && maintenance.toggle == "true") {
 
 
 
-const expires = moment(Date.now() + (2592000000 * 12)).format("dddd, MMMM Do YYYY HH:mm:ss");
 
+const expires = moment(Date.now() + (2592000000 * 12)).format("MM-DD-YYYY");
+ const row = new MessageActionRow().addComponents(
+     new MessageButton() // Prettier
+      .setURL(`https://discord.gg/2mHgQQz3GN`)
+      .setEmoji('<:contacts:970173466441572393>')
+      .setLabel("liên hệ với tôi")
+      .setStyle("LINK")
+    );
  let ID = uniqid(undefined, ``);
 const date = require('date-and-time');
 const now = new Date();
-let DDate = date.format(now, 'YYYY/MM/DD HH:mm:ss');
- member.send(new Discord.MessageEmbed().setDescription(`**Congratulations!**\n\n**${guild.name}** Is now a premium guild! Thanks a ton!\n\nIf you have any questions please contact me [here](https://discord.gg/FqdH4sfKBg)\n\n__**Reciept:**__\n**Reciept ID:** ${ID}\n**Redeem Date:** ${DDate}\n**Guild Name:** ${guild.name}\n**Guild ID:** ${guild.id}\n\n**Please make sure to keep this information safe, you might need it if you ever wanna refund / transfer servers.**\n\n**Expires At:** ${expires}`).setColor('GREEN').setFooter(guild.name)).catch(()=>{});
+let DDate = date.format(now, 'MM-DD-YYYY');
+ member.send({ embeds: [new Discord.MessageEmbed()
+			 .setDescription(`**Xin chúc mừng!**\n\n**${guild.name}** Bây giờ là một máy chủ cao cấp! Cảm ơn rất nhiều!\n\nNếu bạn có bất kỳ câu hỏi, xin vui lòng liên hệ với tôi \n\n__**Biên lai:**__\n**ID biên nhận:** ${ID}\n**Đổi ngày:** ${DDate}\n**Tên máy chủ:** ${guild.name}\n**ID máy chủ:** ${guild.id}\n\n**Hãy đảm bảo giữ thông tin này an toàn, bạn có thể cần thông tin này nếu bạn muốn hoàn lại tiền / chuyển máy chủ.**\n\n**Hết hạn vào:** ${expires}`).setColor('GREEN').setFooter(guild.name)], components: [row]}).catch(()=>{});
 
   storedSettings.isPremium = "true";
        storedSettings.premium.redeemedBy.id = member.id;
@@ -743,17 +758,17 @@ let DDate = date.format(now, 'YYYY/MM/DD HH:mm:ss');
        await storedSettings.save().catch(()=>{})
 
 const embedPremium = new Discord.MessageEmbed()
-      .setDescription(`**Premium Subscription**\n\n**${member.user.tag}** Redeemed a code in **${guild.name}**\n\n **Reciept ID:** ${ID}\n**Redeem Date:** ${DDate}\n**Guild Name:** ${guild.name}\n**Guild ID:** ${guild.id}\n**Redeemer Tag:** ${member.user.tag}\n**Redeemer ID:** ${member.user.id}\n\n**Expires At:** ${expires}`)
+      .setDescription(`**Đăng ký cao cấp**\n\n**${member.user.tag}** Đã đổi một mã trong **${guild.name}**\n\n **ID biên lai:** ${ID}\n**Đổi vào ngày:** ${DDate}\n**Tên máy chủ:** ${guild.name}\n**ID máy chủ:** ${guild.id}\n**Thẻ đổi quà:** ${member.user.tag}\n**ID người đổi:** ${member.user.id}\n\n**Hết hạn vào:** ${expires}`)
       .setColor(guild.me.displayHexColor)
 
 premiumWeb.send({
-        username: 'Pogy Premium',
+        username: 'Soda chanh Premium',
         avatarURL: `${domain}/logo.png`,
         embeds: [embedPremium],
       });
       renderTemplate(res, req, "redeemguild.ejs", {
         guild: guild,
-        alert: `${guild.name} Is now a premium guild!!`,
+        alert: `${guild.name} Bây giờ là một máy chủ cao cấp!!`,
         settings: storedSettings,
       });
 
@@ -838,15 +853,47 @@ if(maintenance && maintenance.toggle == "true") {
      
       renderTemplate(res, req, "./new/mainpage.ejs", {
         guild: guild,
-        alert: `Dashboard might be a little bit buggy due to discord intent problems.`,
+        alert: `Bảng điều khiển có thể là một chút lỗi do các vấn đề về ý định bất hòa.`,
         join1:join1.length || 0,
         join2: join2.length || 0,
         leave1: leave1.length || 0,
         leave2: leave2.length || 0,
         nickname: guild.me.nickname || guild.me.user.username,
         settings: storedSettings,
-      });
-
+      });	
+        await fetch_stats(client, guild, function (stats) {
+        if (!stats) {
+         res.status(403);
+         return errorPage(req, res, "No server statistics, please refresh the page...");
+        }
+        const joins_array = JSON.parse(stats.joins);
+        const leaves_array = JSON.parse(stats.leaves);
+        let total_joins = 0;
+        let total_leaves = 0;
+        let joins = new Array();
+        let leaves = new Array();
+        for (let el of Object.entries(joins_array)) {
+         if (el[0].replaceAll("/", "-") == `${moment().year()}-${moment().format("MM")}-${moment().date() + 1}`) break;
+         joins.push([el[0].replaceAll("/", "-"), el[1]]);
+         total_joins += parseInt(el[1]);
+        }
+        for (let el of Object.entries(leaves_array)) {
+         if (el[0].replaceAll("/", "-") == `${moment().year()}-${moment().format("MM")}-${moment().date() + 1}`) break;
+         leaves.push([el[0].replaceAll("/", "-"), el[1]]);
+         total_leaves += parseInt(el[1]);
+        }
+        renderTemplate(res, req, "/new/mainpage.ejs", {
+         guild: guild,
+         perms: Permissions,
+         joins: joins,
+         total_joins: parseInt(total_joins),
+         total_leaves: parseInt(total_leaves),
+         alert: "Your changes have been saved! ✅",
+         leaves: leaves,
+         guild_owner: owner,
+         csrfToken: req.csrfToken(),
+        });
+       })
     });
 
     app.post("/dashboard/:guildID", checkAuth, async (req, res) => {
@@ -953,7 +1000,7 @@ if(maintenance && maintenance.toggle == "true") {
         join2: join2.length || 0,
         leave1: leave1.length || 0,
         leave2: leave2.length || 0,
-            alert: "Prefix length exceeds 5 characters ❌",
+            alert: "Độ dài prefix vượt quá 5 ký tự ❌",
             settings: storedSettings,
           });
           return;
@@ -965,7 +1012,7 @@ if(maintenance && maintenance.toggle == "true") {
 
 
       if (data.language) {
-        const languages = ["english", "french", "spanish"]
+        const languages = ["english", "french", "spanish", "vietnamese"]
         let language = data.language
         if (!language) language = "english";
         if (!languages.includes(language)) language = "english";
@@ -987,10 +1034,36 @@ if(maintenance && maintenance.toggle == "true") {
         leave1: leave1.length || 0,
         leave2: leave2.length || 0,
         nickname: nickname,
-        alert: "Your changes have been saved! ✅",
+        alert: "Các thay đổi của bạn đã được lưu lại! ✅",
         settings: storedSettings,
       });
+      const joins_array = JSON.parse(stats.joins);
+    const leaves_array = JSON.parse(stats.leaves);
+    let total_joins = 0;
+    let total_leaves = 0;
+    let joins = new Array();
+    let leaves = new Array();
+    for (let el of Object.entries(joins_array)) {
+     if (el[0].replaceAll("/", "-") == `${moment().year()}-${moment().format("MM")}-${moment().date() + 1}`) break;
+     joins.push([el[0].replaceAll("/", "-"), el[1]]);
+     total_joins += parseInt(el[1]);
+    }
+    for (let el of Object.entries(leaves_array)) {
+     if (el[0].replaceAll("/", "-") == `${moment().year()}-${moment().format("MM")}-${moment().date() + 1}`) break;
+     leaves.push([el[0].replaceAll("/", "-"), el[1]]);
+     total_leaves += parseInt(el[1]);
+    }
+    renderTemplate(res, req, "/server/server.ejs", {
+     guild: guild,
+     perms: Permissions,
+     joins: joins,
+     total_joins: parseInt(total_joins),
+     total_leaves: parseInt(total_leaves),
+     leaves: leaves,
+     guild_owner: owner,
+     csrfToken: req.csrfToken(),
     });
+   });
 
     //applications
      app.get("/dashboard/:guildID/applications", checkAuth, async (req, res) => {
@@ -1145,7 +1218,7 @@ appSettings.dm = false
       await appSettings.save().catch(()=>{})
       renderTemplate(res, req, "./new/mainapp.ejs", {
         guild: guild,
-        alert: `Your Changes have been saved ✅`,
+        alert: `Các thay đổi của bạn đã được lưu lại ✅`,
         app: appSettings,
         settings: storedSettings,
       });
@@ -1428,7 +1501,7 @@ if(maintenance && maintenance.toggle == "true") {
 
             renderTemplate(res, req, "./new/mainwelcome.ejs", {
               guild: guild,
-              alert: `Please make sure to save the welcome Channel first ❌`,
+              alert: `Vui lòng đảm bảo lưu kênh chào mừng trước ❌`,
               settings: storedSettings,
               welcome: welcomeSettings,
               leave: leaveSettings,
@@ -1450,7 +1523,7 @@ if(maintenance && maintenance.toggle == "true") {
 
             renderTemplate(res, req, "./new/mainwelcome.ejs", {
               guild: guild,
-              alert: `Please make sure to save the welcome Channel first ❌`,
+              alert: `Vui lòng đảm bảo lưu kênh chào mừng trước ❌`,
               settings: storedSettings,
               welcome: welcomeSettings,
               leave: leaveSettings,
@@ -1464,7 +1537,7 @@ if(maintenance && maintenance.toggle == "true") {
 
               renderTemplate(res, req, "./new/mainwelcome.ejs", {
                 guild: guild,
-                alert: `Please make sure text length is below 2000❌`,
+                alert: `Vui lòng đảm bảo độ dài văn bản dưới 2000 ❌`,
                 settings: storedSettings,
                 welcome: welcomeSettings,
                 leave: leaveSettings,
@@ -1478,7 +1551,7 @@ if(maintenance && maintenance.toggle == "true") {
 
             renderTemplate(res, req, "./new/mainwelcome.ejs", {
               guild: guild,
-              alert: `Please Provide me with a text ❌`,
+              alert: `Vui lòng cung cấp cho tôi một văn bản ❌`,
               settings: storedSettings,
               welcome: welcomeSettings,
               leave: leaveSettings,
@@ -1524,7 +1597,7 @@ if(maintenance && maintenance.toggle == "true") {
 
               renderTemplate(res, req, "./new/mainwelcome.ejs", {
                 guild: guild,
-                alert: `Please make sure the author length is below 200❌`,
+                alert: `Vui lòng đảm bảo chiều dài của tác giả dưới 200❌`,
                 settings: storedSettings,
                 welcome: welcomeSettings,
                 leave: leaveSettings,
@@ -1552,7 +1625,7 @@ if(maintenance && maintenance.toggle == "true") {
             } else {
               renderTemplate(res, req, "./new/mainwelcome.ejs", {
                 guild: guild,
-                alert: `Please make sure this is a valid URL❌`,
+                alert: `Vui lòng đảm bảo đây là URL hợp lệ ❌`,
                 settings: storedSettings,
                 welcome: welcomeSettings,
                 leave: leaveSettings,
@@ -1575,7 +1648,7 @@ if(maintenance && maintenance.toggle == "true") {
             } else {
               renderTemplate(res, req, "./new/mainwelcome.ejs", {
                 guild: guild,
-                alert: `Please make sure this is a valid URL❌`,
+                alert: `Vui lòng đảm bảo đây là URL hợp lệ ❌`,
                 settings: storedSettings,
                 welcome: welcomeSettings,
                 leave: leaveSettings,
@@ -1597,7 +1670,7 @@ if(maintenance && maintenance.toggle == "true") {
 
               renderTemplate(res, req, "./new/mainwelcome.ejs", {
                 guild: guild,
-                alert: `Please make sure your title is under 200 characters long❌`,
+                alert: `Vui lòng đảm bảo tiêu đề của bạn dài dưới 200 ký tự ❌`,
                 settings: storedSettings,
                 welcome: welcomeSettings,
                 leave: leaveSettings,
@@ -1611,7 +1684,7 @@ if(maintenance && maintenance.toggle == "true") {
           } else {
             renderTemplate(res, req, "./new/mainwelcome.ejs", {
               guild: guild,
-              alert: `Please make sure to include a title❌`,
+              alert: `Vui lòng đảm bảo bao gồm một tiêu đề ❌`,
               settings: storedSettings,
               welcome: welcomeSettings,
               leave: leaveSettings,
@@ -1630,7 +1703,7 @@ if(maintenance && maintenance.toggle == "true") {
             } else {
               renderTemplate(res, req, "./new/mainwelcome.ejs", {
                 guild: guild,
-                alert: `Invalid Link Provided ❌`,
+                alert: `Liên kết không hợp lệ được cung cấp ❌`,
                 settings: storedSettings,
                 welcome: welcomeSettings,
                 leave: leaveSettings,
@@ -1649,7 +1722,7 @@ if(maintenance && maintenance.toggle == "true") {
 
               renderTemplate(res, req, "./new/mainwelcome.ejs", {
                 guild: guild,
-                alert: `Make sure the description is below 2000 characters long ❌`,
+                alert: `Đảm bảo mô tả dài dưới 2000 ký tự ❌`,
                 settings: storedSettings,
                 welcome: welcomeSettings,
                 leave: leaveSettings,
@@ -1663,7 +1736,7 @@ if(maintenance && maintenance.toggle == "true") {
 
             renderTemplate(res, req, "./new/mainwelcome.ejs", {
               guild: guild,
-              alert: `Please provide a description ❌`,
+              alert: `Vui lòng cung cấp mô tả ❌`,
               settings: storedSettings,
               welcome: welcomeSettings,
               leave: leaveSettings,
@@ -1683,7 +1756,7 @@ if(maintenance && maintenance.toggle == "true") {
             } else {
               renderTemplate(res, req, "./new/mainwelcome.ejs", {
                 guild: guild,
-                alert: `Please provide a valid thumbnail❌`,
+                alert: `Vui lòng cung cấp một hình thu nhỏ hợp lệ ❌`,
                 settings: storedSettings,
                 welcome: welcomeSettings,
                 leave: leaveSettings,
@@ -1707,7 +1780,7 @@ if(maintenance && maintenance.toggle == "true") {
 
               renderTemplate(res, req, "./new/mainwelcome.ejs", {
                 guild: guild,
-                alert: `Make sure the footer is under 1000 characters long ❌`,
+                alert: `Đảm bảo chân trang dài dưới 1000 ký tự ❌`,
                 settings: storedSettings,
                 welcome: welcomeSettings,
                 leave: leaveSettings,
@@ -1734,7 +1807,7 @@ if(maintenance && maintenance.toggle == "true") {
             } else {
               renderTemplate(res, req, "./new/mainwelcome.ejs", {
                 guild: guild,
-                alert: `Invalid Footer Icon ❌`,
+                alert: `Biểu tượng chân trang không hợp lệ ❌`,
                 settings: storedSettings,
                 welcome: welcomeSettings,
                 leave: leaveSettings,
@@ -1803,7 +1876,7 @@ if(maintenance && maintenance.toggle == "true") {
 
             renderTemplate(res, req, "./new/mainwelcome.ejs", {
               guild: guild,
-              alert: `Please make sure to save the welcome Channel first ❌`,
+              alert: `Vui lòng đảm bảo lưu kênh chào mừng trước ❌`,
               settings: storedSettings,
               welcome: welcomeSettings,
               leave: leaveSettings,
@@ -1823,7 +1896,7 @@ if(maintenance && maintenance.toggle == "true") {
             await welcomeSettings.save().catch(() => { });
             renderTemplate(res, req, "./new/mainwelcome.ejs", {
               guild: guild,
-              alert: `Please make sure to save the welcome Channel first ❌`,
+              alert: `Vui lòng đảm bảo lưu kênh chào mừng trước ❌`,
               settings: storedSettings,
               welcome: welcomeSettings,
               leave: leaveSettings,
@@ -1837,7 +1910,7 @@ if(maintenance && maintenance.toggle == "true") {
 
               renderTemplate(res, req, "./new/mainwelcome.ejs", {
                 guild: guild,
-                alert: `Please make sure text length is below 2000❌`,
+                alert: `Vui lòng đảm bảo độ dài văn bản dưới 2000❌`,
                 settings: storedSettings,
                 welcome: welcomeSettings,
                 leave: leaveSettings,
@@ -1851,7 +1924,7 @@ if(maintenance && maintenance.toggle == "true") {
 
             renderTemplate(res, req, "./new/mainwelcome.ejs", {
               guild: guild,
-              alert: `Please Provide me with a text ❌`,
+              alert: `Vui lòng cung cấp cho tôi một văn bản ❌`,
               settings: storedSettings,
               welcome: welcomeSettings,
               leave: leaveSettings,
@@ -1895,7 +1968,7 @@ if(maintenance && maintenance.toggle == "true") {
 
               renderTemplate(res, req, "./new/mainwelcome.ejs", {
                 guild: guild,
-                alert: `Please make sure the author length is below 200❌`,
+                alert: `Vui lòng đảm bảo chiều dài của tác giả dưới 200❌`,
                 settings: storedSettings,
                 welcome: welcomeSettings,
                 leave: leaveSettings,
@@ -1923,7 +1996,7 @@ if(maintenance && maintenance.toggle == "true") {
             } else {
               renderTemplate(res, req, "./new/mainwelcome.ejs", {
                 guild: guild,
-                alert: `Please make sure this is a valid URL❌`,
+                alert: `Vui lòng đảm bảo đây là URL hợp lệ❌`,
                 settings: storedSettings,
                 welcome: welcomeSettings,
                 leave: leaveSettings,
@@ -1946,7 +2019,7 @@ if(maintenance && maintenance.toggle == "true") {
             } else {
               renderTemplate(res, req, "./new/mainwelcome.ejs", {
                 guild: guild,
-                alert: `Please make sure this is a valid URL❌`,
+                alert: `Vui lòng đảm bảo đây là URL hợp lệ❌`,
                 settings: storedSettings,
                 welcome: welcomeSettings,
                 leave: leaveSettings,
@@ -1967,7 +2040,7 @@ if(maintenance && maintenance.toggle == "true") {
 
               renderTemplate(res, req, "./new/mainwelcome.ejs", {
                 guild: guild,
-                alert: `Please make sure your title is under 200 characters long❌`,
+                alert: `Vui lòng đảm bảo tiêu đề của bạn dài dưới 200 ký tự❌`,
                 settings: storedSettings,
                 welcome: welcomeSettings,
                 leave: leaveSettings,
@@ -1981,7 +2054,7 @@ if(maintenance && maintenance.toggle == "true") {
           } else {
             renderTemplate(res, req, "./new/mainwelcome.ejs", {
               guild: guild,
-              alert: `Please make sure to include a title❌`,
+              alert: `Vui lòng đảm bảo bao gồm một tiêu đề❌`,
               settings: storedSettings,
               welcome: welcomeSettings,
               leave: leaveSettings,
@@ -2000,7 +2073,7 @@ if(maintenance && maintenance.toggle == "true") {
             } else {
               renderTemplate(res, req, "./new/mainwelcome.ejs", {
                 guild: guild,
-                alert: `Invalid Link Provided ❌`,
+                alert: `Liên kết không hợp lệ được cung cấp ❌`,
                 settings: storedSettings,
                 welcome: welcomeSettings,
                 leave: leaveSettings,
@@ -2019,7 +2092,7 @@ if(maintenance && maintenance.toggle == "true") {
 
               renderTemplate(res, req, "./new/mainwelcome.ejs", {
                 guild: guild,
-                alert: `Make sure the description is below 2000 characters long ❌`,
+                alert: `Đảm bảo mô tả dài dưới 200 ký tự ❌`,
                 settings: storedSettings,
                 welcome: welcomeSettings,
                 leave: leaveSettings,
@@ -2033,7 +2106,7 @@ if(maintenance && maintenance.toggle == "true") {
 
             renderTemplate(res, req, "./new/mainwelcome.ejs", {
               guild: guild,
-              alert: `Please provide a description ❌`,
+              alert: `Vui lòng cung cấp mô tả ❌`,
               settings: storedSettings,
               welcome: welcomeSettings,
               leave: leaveSettings,
@@ -2053,7 +2126,7 @@ if(maintenance && maintenance.toggle == "true") {
             } else {
               renderTemplate(res, req, "./new/mainwelcome.ejs", {
                 guild: guild,
-                alert: `Please provide a valid thumbnail❌`,
+                alert: `Vui lòng cung cấp một hình thu nhỏ hợp lệ❌`,
                 settings: storedSettings,
                 welcome: welcomeSettings,
                 leave: leaveSettings,
@@ -2078,7 +2151,7 @@ if(maintenance && maintenance.toggle == "true") {
             } else {
               renderTemplate(res, req, "./new/mainwelcome.ejs", {
                 guild: guild,
-                alert: `Please provide a valid image❌`,
+                alert: `Vui lòng cung cấp một hình ảnh hợp lệ❌`,
                 settings: storedSettings,
                 welcome: welcomeSettings,
                 leave: leaveSettings,
@@ -2102,7 +2175,7 @@ if(maintenance && maintenance.toggle == "true") {
 
               renderTemplate(res, req, "./new/mainwelcome.ejs", {
                 guild: guild,
-                alert: `Make sure the footer is under 1000 characters long ❌`,
+                alert: `Đảm bảo chân trang dài dưới 1000 ký tự ❌`,
                 settings: storedSettings,
                 welcome: welcomeSettings,
                 leave: leaveSettings,
@@ -2129,7 +2202,7 @@ if(maintenance && maintenance.toggle == "true") {
             } else {
               renderTemplate(res, req, "./new/mainwelcome.ejs", {
                 guild: guild,
-                alert: `Invalid Footer Icon ❌`,
+                alert: `Biểu tượng chân trang không hợp lệ ❌`,
                 settings: storedSettings,
                 welcome: welcomeSettings,
                 leave: leaveSettings,
@@ -2184,7 +2257,7 @@ if(maintenance && maintenance.toggle == "true") {
       await leaveSettings.save().catch(() => { })
       renderTemplate(res, req, "./new/mainwelcome.ejs", {
         guild: guild,
-        alert: `Your Changes have been saved! ✅`,
+        alert: `Các thay đổi của bạn đã được lưu lại! ✅`,
         settings: storedSettings,
         welcome: welcomeSettings,
         leave: leaveSettings,
@@ -2570,7 +2643,7 @@ mod.mute_role = null;
 
       renderTemplate(res, req, "./new/mainmoderation.ejs", {
         guild: guild,
-        alert: `Auto Punish has been disabled ✅`,
+        alert: `Tự động trừng phạt đã bị vô hiệu hóa ✅`,
         settings: storedSettings,
         mod: mod,
       });
@@ -2584,7 +2657,7 @@ mod.mute_role = null;
 
       renderTemplate(res, req, "./new/mainmoderation.ejs", {
         guild: guild,
-        alert: `Ban Message has been disabled ✅`,
+        alert: `Ban tin nhắn đã bị vô hiệu hóa ✅`,
         settings: storedSettings,
         mod: mod,
       });
@@ -2600,7 +2673,7 @@ if(message.length > 1999){
 
  renderTemplate(res, req, "./new/mainmoderation.ejs", {
         guild: guild,
-        alert: `Please Provide a message under 2000 characters long`,
+        alert: `Vui lòng cung cấp một tin nhắn dài dưới 2000 ký tự`,
         settings: storedSettings,
         mod: mod,
       });
@@ -2610,7 +2683,7 @@ if(message.length > 1999){
 } else {
       renderTemplate(res, req, "./new/mainmoderation.ejs", {
         guild: guild,
-        alert: `Please Provide a message`,
+        alert: `Vui lòng cung cấp một tin nhắn`,
         settings: storedSettings,
         mod: mod,
       });
@@ -2624,7 +2697,7 @@ mod.ban_message.message = data.dm_message
 
       renderTemplate(res, req, "./new/mainmoderation.ejs", {
         guild: guild,
-        alert: `Your changes have been saved ✅`,
+        alert: `Các thay đổi của bạn đã được lưu lại ✅`,
         settings: storedSettings,
         mod: mod,
       });
@@ -2856,7 +2929,7 @@ if(maintenance && maintenance.toggle == "true") {
       renderTemplate(res, req, "./new/mainlogging.ejs", {
         guild: guild,
         log: logSettings,
-        alert: `Your changes have been saved ✅`,
+        alert: `Các thay đổi của bạn đã được lưu lại ✅`,
         settings: storedSettings,
       });
 
@@ -3007,7 +3080,7 @@ logSettings.server_events.dashboard = false
       renderTemplate(res, req, "./new/mainlogging.ejs", {
         guild: guild,
         log: logSettings,
-        alert: `Your changes have been saved ✅`,
+        alert: `Các thay đổi của bạn đã được lưu lại ✅`,
         settings: storedSettings,
       });
 
@@ -3075,7 +3148,7 @@ logSettings.member_events.role_update = false
       renderTemplate(res, req, "./new/mainlogging.ejs", {
         guild: guild,
         log: logSettings,
-        alert: `Your changes have been saved ✅`,
+        alert: `Các thay đổi của bạn đã được lưu lại ✅`,
         settings: storedSettings,
       });
 
@@ -3152,7 +3225,7 @@ logSettings.message_events.purged = false
       renderTemplate(res, req, "./new/mainlogging.ejs", {
         guild: guild,
         log: logSettings,
-        alert: `Your changes have been saved ✅`,
+        alert: `Các thay đổi của bạn đã được lưu lại ✅`,
         settings: storedSettings,
       });
 
@@ -3294,7 +3367,7 @@ if(maintenance && maintenance.toggle == "true") {
 
         await storedSettings.save().catch(() => { });
 
-        renderTemplate(res, req, "./new/mainautorole.ejs", { guild: guild, settings: storedSettings, sticky: stickySettings, alert: "Successfuly disabled the autorole Module ✅" });
+        renderTemplate(res, req, "./new/mainautorole.ejs", { guild: guild, settings: storedSettings, sticky: stickySettings, alert: "Đã vô hiệu hóa thành công mô -đun vai trò tự động ✅" });
         return;
 
       }
@@ -3328,7 +3401,7 @@ if(maintenance && maintenance.toggle == "true") {
         await storedSettings.save().catch(() => { });
         await stickySettings.save().catch(() => { });
 
-        renderTemplate(res, req, "./new/mainautorole.ejs", { guild: guild, settings: storedSettings, sticky: stickySettings, alert: "Successfuly disabled the sticky role Module ✅" });
+        renderTemplate(res, req, "./new/mainautorole.ejs", { guild: guild, settings: storedSettings, sticky: stickySettings, alert: "Tắt thành công mô -đun vai trò dính ✅" });
         return;
 
       }
@@ -3338,7 +3411,7 @@ if(maintenance && maintenance.toggle == "true") {
       renderTemplate(res, req, "./new/mainautorole.ejs", {
         guild: guild,
         sticky: stickySettings,
-        alert: `Your Changes have been saved ✅`,
+        alert: `Các thay đổi của bạn đã được lưu lại ✅`,
         settings: storedSettings,
       });
     });
@@ -3449,7 +3522,7 @@ if (resultsHeheLol === '0' || !results || !results.length){
 
       renderTemplate(res, req, "./new/mainreactionroles.ejs", {
         guild: guild,
-        alert: `The current guild doesn't have any existing reaction Role to delete.`,
+        alert: `Máy chủ hiện tại không có bất kỳ vai trò phản ứng hiện có nào để xóa.`,
         emojiArray: EmojiArray,
         settings: storedSettings,
       });
@@ -3459,7 +3532,7 @@ if (resultsHeheLol === '0' || !results || !results.length){
 
     renderTemplate(res, req, "./new/mainreactionroles.ejs", {
         guild: guild,
-        alert: `Succesfuly wiped ${resultsHeheLol} ${resultsHehe} ✅`,
+        alert: `Xóa sạch thành công ${resultsHeheLol} ${resultsHehe} ✅`,
         emojiArray: EmojiArray,
         settings: storedSettings,
       });
@@ -3498,7 +3571,7 @@ if(Object.prototype.hasOwnProperty.call(data, "send")){
 
     renderTemplate(res, req, "./new/mainreactionroles.ejs", {
         guild: guild,
-        alert: `Please Provide me with a valid Channel`,
+        alert: `Vui lòng cung cấp cho tôi một kênh hợp lệ`,
         emojiArray: EmojiArray,
         settings: storedSettings,
       });
@@ -3518,7 +3591,7 @@ let message;
 
         renderTemplate(res, req, "./new/mainreactionroles.ejs", {
         guild: guild,
-        alert: `Please Provide me with a valid message ID`,
+        alert: `Vui lòng cung cấp cho tôi một id tin nhắn hợp lệ`,
         emojiArray: EmojiArray,
         settings: storedSettings,
       }); 
@@ -3527,7 +3600,7 @@ let message;
  } else {
     renderTemplate(res, req, "./new/mainreactionroles.ejs", {
         guild: guild,
-        alert: `Please Provide me with a valid message ID`,
+        alert: `Vui lòng cung cấp cho tôi một id tin nhắn hợp lệ`,
         emojiArray: EmojiArray,
         settings: storedSettings,
       });
@@ -3545,7 +3618,7 @@ let message;
 
  renderTemplate(res, req, "./new/mainreactionroles.ejs", {
         guild: guild,
-        alert: `Please Provide me with a valid Emoji`,
+        alert: `Vui lòng cung cấp cho tôi một biểu tượng cảm xúc hợp lệ`,
         emojiArray: EmojiArray,
         settings: storedSettings,
       });
@@ -3561,7 +3634,7 @@ if(roleValid){
 
  renderTemplate(res, req, "./new/mainreactionroles.ejs", {
         guild: guild,
-        alert: `Please Provide me with a valid  Role`,
+        alert: `Vui lòng cung cấp cho tôi một vai trò hợp lệ`,
         emojiArray: EmojiArray,
         settings: storedSettings,
       });
@@ -3583,7 +3656,7 @@ await reactP.reactionCreate(client, guild.id , message.id, role, emoji, "false",
 
  renderTemplate(res, req, "./new/mainreactionroles.ejs", {
         guild: guild,
-        alert: `Succesfully Created reaction role ✅`,
+        alert: `Vai trò phản ứng được tạo thành công ✅`,
         emojiArray: EmojiArray,
         settings: storedSettings,
       });
@@ -3639,7 +3712,7 @@ storedSettings.reactionDM = true
       await storedSettings.save().catch(()=>{})
       renderTemplate(res, req, "./new/mainreactionroles.ejs", {
         guild: guild,
-        alert: `Your Changes have been saved ✅`,
+        alert: `Các thay đổi của bạn đã được lưu lại ✅`,
         emojiArray: EmojiArray,
         settings: storedSettings,
       });
@@ -3801,11 +3874,11 @@ if(maintenance && maintenance.toggle == "true") {
         let guild = client.guilds.cache.get(req.body.guild),
           channel = guild && guild.channels.cache.get(req.body.to),
           data = req.body.json;
-        if (!guild || !channel || !data) return res.status(400).send('Some data is missing');
+        if (!guild || !channel || !data) return res.status(400).send('Một số dữ liệu bị thiếu');
         const fetchmember = await guild.members.fetch(user.id);
-        if (!fetchmember || !fetchmember.hasPermission('ADMINISTRATOR')) return res.status(403).send("You don't have permission.");
-        if (!channel.permissionsFor(channel.guild.client.user).has("SEND_MESSAGES")) return res.status(403).send("I'm missing 'send message' permissions");
-        if (cooldownEmbed.has(guild.id)) return res.status(403).send("Slow Down!");
+        if (!fetchmember || !fetchmember.permissions.has('ADMINISTRATOR')) return res.status(403).send("Ai đó vừa liên lạc với chúng tôi!");
+        if (!channel.permissionsFor(channel.guild.client.user).has("SEND_MESSAGES")) return res.status(403).send("Tôi thiếu quyền 'gửi tin nhắn'");
+        if (cooldownEmbed.has(guild.id)) return res.status(403).send("Chậm lại!");
         try {
           await channel.send(data)
           cooldownEmbed.add(guild.id);
@@ -3875,16 +3948,18 @@ if(results.length >= 10) return;
 
 
       if (req.body.type === "report") {
-        const reportEmbed = new WebhookClient('', '');
-
+        const reportEmbed = new WebhookClient({
+  id: `915531496134172693`, 
+  token: `kpjA7OPSJH0HqdZLcIrobJVSCKF22W2g54TglzlJvtY9lMiX07h99q_hV8r8uyRi2_vb`  });
+		  
         const report = new MessageEmbed()
           .setColor('GREEN')
-          .setTitle(`Pogy Reports`)
-          .setDescription(`Someone just reported a user!\n\nUser: ${req.body.name}\`(${req.body.id})\`\nReported User: ${req.body.reported_user}\nReported User ID: ${req.body.reported_id}\nReason: \`${req.body.reason}\`\nProof: ${req.body.proof}`);
+          .setTitle(`Soda chanh Reports`)
+          .setDescription(`Ai đó vừa báo cáo một người dùng!\n\nNgười dùng: ${req.body.name}\`(${req.body.id})\`\nNgười dùng bị báo cáo: ${req.body.reported_user}\nID người dùng bị báo cáo: ${req.body.reported_id}\nLý do: \`${req.body.reason}\`\nBằng chứng: ${req.body.proof}`);
 
 
         reportEmbed.send({
-          username: 'Pogy Reports',
+          username: 'Soda chanh Reports',
           avatarURL: `${domain}/logo.png`,
           embeds: [report]
         });
@@ -3899,16 +3974,18 @@ if(results.length >= 10) return;
 
       if (req.body.type === 'contact') {
 
-        const contactEmbed = new WebhookClient('', '');
-
+        const contactEmbed = new WebhookClient({
+  id: `915530699140923402`, 
+  token: `EEQuh9rrVusSfMVj2GYrYcLEnK8x6WEtyy5E_1RZfE0HxR6Np8a7k5jf4alWJNx14wOU` });
+		  
         const contact = new MessageEmbed()
           .setColor('GREEN')
-          .setTitle(`Contact Form`)
-          .setDescription(`Someone just contacted us!\n\nUser: ${req.body.name}\`(${req.body.id})\`\nEmail: ${req.body.email}\nMessage: \`${req.body.msg}\``);
+          .setTitle(`Mẫu liên hệ`)
+          .setDescription(`Cơ sở dữ liệu được khởi động lại thành công!\n\nNgười dùng: ${req.body.name}\`(${req.body.id})\`\nEmail: ${req.body.email}\nTin nhắn: \`${req.body.msg}\``);
 
 
         contactEmbed.send({
-          username: 'Pogy Contact',
+          username: 'Soda chanh Contact',
           avatarURL: `${domain}/logo.png`,
           embeds: [contact]
         });
@@ -4022,7 +4099,7 @@ if(maintenance && maintenance.toggle == "true") {
 
         ticketSettingsNew = await TicketSettings.findOne({ guildID: guild.id });
 
-        renderTemplate(res, req, "./new/maintickets.ejs", { guild: guild, settings: storedSettings, ticket: ticketSettingsNew, alert: "Successfuly Resetted Database ✅" });
+        renderTemplate(res, req, "./new/maintickets.ejs", { guild: guild, settings: storedSettings, ticket: ticketSettingsNew, alert: "Cơ sở dữ liệu khởi động lại thành công ✅" });
 
 
         return;
@@ -4047,11 +4124,11 @@ if(maintenance && maintenance.toggle == "true") {
 
           if (data.ticketWelcomeMessage.length > 1024) {
 
-            ticketSettings.ticketWelcomeMessage = `Hey {user} Welcome to your ticket!
+            ticketSettings.ticketWelcomeMessage = `Này {user} Chào mừng đến với vé của bạn!
 
-Thank you for creating a ticket, the support team will be with you shortly.
-In the mean time, please explain your issue below`
-            renderTemplate(res, req, "./new/maintickets.ejs", { guild: guild, settings: storedSettings, ticket: ticketSettings, alert: "Make sure your description is less than 1024 characters long!" });
+Cảm ơn bạn đã tạo một vé, nhóm hỗ trợ sẽ sớm ở bên bạn.
+Trong lúc đó, vui lòng giải thích vấn đề của bạn dưới đây`
+            renderTemplate(res, req, "./new/maintickets.ejs", { guild: guild, settings: storedSettings, ticket: ticketSettings, alert: "Hãy chắc chắn rằng mô tả của bạn dài dưới 1024 ký tự!" });
 
             return;
           }
@@ -4061,12 +4138,12 @@ In the mean time, please explain your issue below`
         } else {
 
 
-          ticketSettings.ticketWelcomeMessage = `Hey {user} Welcome to your ticket!
+          ticketSettings.ticketWelcomeMessage = `Này {user} Chào mừng đến với vé của bạn!
 
-Thank you for creating a ticket, the support team will be with you shortly.
-In the mean time, please explain your issue below`;
+Cảm ơn bạn đã tạo một vé, nhóm hỗ trợ sẽ sớm ở bên bạn.
+Trong lúc đó, vui lòng giải thích vấn đề của bạn dưới đây`;
 
-          renderTemplate(res, req, "./new/maintickets.ejs", { guild: guild, settings: storedSettings, ticket: ticketSettings, alert: "Make sure to Include a ticket description!" });
+          renderTemplate(res, req, "./new/maintickets.ejs", { guild: guild, settings: storedSettings, ticket: ticketSettings, alert: "Hãy chắc chắn bao gồm một mô tả vé!" });
 
           return;
         };
@@ -4150,7 +4227,7 @@ In the mean time, please explain your issue below`;
           let numbers = [`1`, `2`, `3`, `4`, `5`];
           if (!numbers.includes(data.ticketLimit)) {
 
-            renderTemplate(res, req, "./new/maintickets.ejs", { guild: guild, settings: storedSettings, ticket: ticketSettings, alert: "Invalid Number ❌" });
+            renderTemplate(res, req, "./new/maintickets.ejs", { guild: guild, settings: storedSettings, ticket: ticketSettings, alert: "Số không hợp lệ ❌" });
 
             return;
           }
@@ -4213,7 +4290,7 @@ In the mean time, please explain your issue below`;
         await ticketSettings.save().catch(() => { });
         await storedSettings.save().catch(() => { });
 
-        renderTemplate(res, req, "./new/maintickets.ejs", { guild: guild, settings: storedSettings, ticket: ticketSettings, alert: "Successfuly disabled the ticket Module ✅" });
+        renderTemplate(res, req, "./new/maintickets.ejs", { guild: guild, settings: storedSettings, ticket: ticketSettings, alert: "Đã vô hiệu hóa thành công mô -đun vé ✅" });
         return;
 
       }
@@ -4228,7 +4305,7 @@ In the mean time, please explain your issue below`;
 
 
         if (sendingEmbed.has(guild.id)) {
-          renderTemplate(res, req, "./new/maintickets.ejs", { guild: guild, settings: storedSettings, ticket: ticketSettings, alert: "Slow Down! ❌" });
+          renderTemplate(res, req, "./new/maintickets.ejs", { guild: guild, settings: storedSettings, ticket: ticketSettings, alert: "Chậm lại! ❌" });
           return;
         };
 
@@ -4243,7 +4320,7 @@ In the mean time, please explain your issue below`;
             let reactionTitle = data.reactionTitle;
             if (reactionTitle.length > 200) {
 
-              renderTemplate(res, req, "./new/maintickets.ejs", { guild: guild, settings: storedSettings, ticket: ticketSettings, alert: "Make sure your title is not that long! ❌" });
+              renderTemplate(res, req, "./new/maintickets.ejs", { guild: guild, settings: storedSettings, ticket: ticketSettings, alert: "Hãy chắc chắn rằng tiêu đề của bạn không dài như vậy! ❌" });
 
               return;
             }
@@ -4251,7 +4328,7 @@ In the mean time, please explain your issue below`;
             let reactionDescription = data.reactionDescription;
             if (reactionDescription.length > 1024) {
 
-              renderTemplate(res, req, "./new/maintickets.ejs", { guild: guild, settings: storedSettings, ticket: ticketSettings, alert: "Make sure your description is not that long! ❌" });
+              renderTemplate(res, req, "./new/maintickets.ejs", { guild: guild, settings: storedSettings, ticket: ticketSettings, alert: "Hãy chắc chắn rằng mô tả của bạn không dài như vậy! ❌" });
 
               return;
             }
@@ -4267,7 +4344,7 @@ In the mean time, please explain your issue below`;
 
               ticketSettings.ticketToggle = false;
 
-              renderTemplate(res, req, "./new/maintickets.ejs", { guild: guild, settings: storedSettings, ticket: ticketSettings, alert: "Make sure your embed is correct ❌" });
+              renderTemplate(res, req, "./new/maintickets.ejs", { guild: guild, settings: storedSettings, ticket: ticketSettings, alert: "Đảm bảo rằng bạn đã nhúng là chính xác ❌" });
               return;
             }
 
@@ -4283,13 +4360,13 @@ In the mean time, please explain your issue below`;
             }
 
             if (storedSettings.isPremium == "false") {
-              ticketSettings.ticketFooter = "Powered by Pogy.xyz";
+              ticketSettings.ticketFooter = "Powered by sodachan.tk";
             } else {
               let checkFooter2 = req.body["reactionfooterEmbed"];
               if (checkFooter2) {
 
                 if (data.reactionfooterEmbed.length > 140) {
-                  renderTemplate(res, req, "./new/maintickets.ejs", { guild: guild, settings: storedSettings, ticket: ticketSettings, alert: "Make sure your footer is not that long! ❌" });
+                  renderTemplate(res, req, "./new/maintickets.ejs", { guild: guild, settings: storedSettings, ticket: ticketSettings, alert: "Hãy chắc chắn rằng chân trang của bạn không dài như vậy! ❌" });
                   return;
                 };
 
@@ -4303,11 +4380,11 @@ In the mean time, please explain your issue below`;
 
 
             let checkFooter = req.body["reactionfooterEmbed"];
-            let reactionFooter = "Powered by Pogy.xyz";
+            let reactionFooter = "Powered by sodachan.tk";
 
 
 
-            let footer = "Powered by Pogy.xyz";
+            let footer = "Powered by sodachan.tk";
             if (storedSettings.isPremium == "true") footer = reactionFooter;
 
 
@@ -4320,7 +4397,7 @@ In the mean time, please explain your issue below`;
               .setDescription(reactionDescription)
 
             if (storedSettings.isPremium == "false") {
-              ticketEmbed.setFooter(`Powered by Pogy.xyz`)
+              ticketEmbed.setFooter({text : `Powered by sodachan.tk`})
             } else {
 
               if (checkFooter) {
@@ -4430,7 +4507,7 @@ In the mean time, please explain your issue below`;
 
             if (!data.messageID || data.messageID.length < 1) {
 
-              renderTemplate(res, req, "./new/maintickets.ejs", { guild: guild, settings: storedSettings, ticket: ticketSettings, alert: "Could not find the following Message " });
+              renderTemplate(res, req, "./new/maintickets.ejs", { guild: guild, settings: storedSettings, ticket: ticketSettings, alert: "Không thể tìm thấy thông báo sau " });
               return;
             }
 
@@ -4441,7 +4518,7 @@ In the mean time, please explain your issue below`;
 
             } catch {
 
-              renderTemplate(res, req, "./new/maintickets.ejs", { guild: guild, settings: storedSettings, ticket: ticketSettings, alert: "Could not find the following Message " });
+              renderTemplate(res, req, "./new/maintickets.ejs", { guild: guild, settings: storedSettings, ticket: ticketSettings, alert: "Không thể tìm thấy thông báo sau " });
 
               return;
             }
@@ -4515,7 +4592,7 @@ In the mean time, please explain your issue below`;
               settings: storedSettings,
               ticket: ticketSettings,
               guild: guild,
-              alert: "Succesfuly reacted to the message! ✅"
+              alert: "Phản ứng thành công với thông điệp! ✅"
             });
             return;
           }
@@ -4530,7 +4607,7 @@ In the mean time, please explain your issue below`;
             settings: storedSettings,
             ticket: ticketSettings,
             guild: guild,
-            alert: "Succesfuly sent the Embed ✅"
+            alert: "Đã gửi thành công ✅"
           });
           return;
         }
@@ -4546,7 +4623,7 @@ In the mean time, please explain your issue below`;
           settings: storedSettings,
           ticket: ticketSettings,
           guild: guild,
-          alert: "Succesfuly switched to Message Ticketing ✅"
+          alert: "Chuyển thành công sang Tickets tin nhắn ✅"
         });
 
         return;
@@ -4562,7 +4639,7 @@ In the mean time, please explain your issue below`;
           settings: storedSettings,
           ticket: ticketSettings,
           guild: guild,
-          alert: "Succesfuly switched to Reaction Ticketing ✅"
+          alert: "Chuyển thành công sang Tickets phản ứng ✅"
         });
         return;
       }
@@ -4580,7 +4657,7 @@ In the mean time, please explain your issue below`;
           settings: storedSettings,
           ticket: ticketSettings,
           guild: guild,
-          alert: "Succesfuly switched to Reaction Ticketing ✅"
+          alert: "Chuyển thành công sang Tickets phản ứng ✅"
         });
         return;
       }
@@ -4597,7 +4674,7 @@ In the mean time, please explain your issue below`;
           settings: storedSettings,
           ticket: ticketSettings,
           guild: guild,
-          alert: "Succesfuly switched to message Ticketing ✅"
+          alert: "Chuyển thành công sang Tickets tin nhắn ✅"
         });
         return;
       }
@@ -4606,7 +4683,7 @@ In the mean time, please explain your issue below`;
       await storedSettings.save().catch(() => { });
       renderTemplate(res, req, "./new/maintickets.ejs", {
         guild: guild,
-        alert: `Your changes have been saved ✅`,
+        alert: `Các thay đổi của bạn đã được lưu lại ✅`,
         ticket: ticketSettings,
         settings: storedSettings,
       });
@@ -4749,7 +4826,7 @@ if(maintenance && maintenance.toggle == "true") {
             if (data.description.length > 1024) {
               renderTemplate(res, req, "./new/mainsuggestions.ejs", {
                 guild: guild,
-                alert: `Make sure the description is less than 1024 characters long ❌`,
+                alert: `Đảm bảo mô tả dài nhỏ hơn 1024 ký tự ❌`,
                 settings: storedSettings,
               });
               return;
@@ -4768,7 +4845,7 @@ if(maintenance && maintenance.toggle == "true") {
             if (data.footer.length > 1024) {
               renderTemplate(res, req, "./new/mainsuggestions.ejs", {
                 guild: guild,
-                alert: `Make sure the footer is less than 1024 characters long ❌`,
+                alert: `Đảm bảo trang dài dưới 1024 ký tự❌`,
                 settings: storedSettings,
               });
               return;
@@ -4811,7 +4888,7 @@ if(maintenance && maintenance.toggle == "true") {
       await storedSettings.save().catch(() => { })
       renderTemplate(res, req, "./new/mainsuggestions.ejs", {
         guild: guild,
-        alert: `Your changes have been saved ✅`,
+        alert: `Các thay đổi của bạn đã được lưu lại ✅`,
         settings: storedSettings,
       });
     });
@@ -4975,7 +5052,7 @@ if(maintenance && maintenance.toggle == "true") {
           if (con.length > 10) {
             renderTemplate(res, req, "./new/mainaltdetector.ejs", {
               guild: guild,
-              alert: `ID length exceeds 10 `,
+              alert: `Id vượt quá 10 `,
               settings: storedSettings,
               alt: altSettings
             });
@@ -4987,7 +5064,7 @@ if(maintenance && maintenance.toggle == "true") {
           if (con.length > 50) {
             renderTemplate(res, req, "./new/mainaltdetector.ejs", {
               guild: guild,
-              alert: `ID length exceeds 50 `,
+              alert: `Id vượt quá 50 `,
               settings: storedSettings,
               alt: altSettings
             });
@@ -5015,7 +5092,7 @@ if(maintenance && maintenance.toggle == "true") {
 
       renderTemplate(res, req, "./new/mainaltdetector.ejs", {
         guild: guild,
-        alert: `Your changes have been saved ✅`,
+        alert: `Các thay đổi của bạn đã được lưu lại ✅`,
         settings: storedSettings,
         alt: altSettings
       });
@@ -5173,16 +5250,17 @@ if(maintenance && maintenance.toggle == "true") {
       await storedSettings.save().catch(() => { })
       renderTemplate(res, req, "./new/mainreports.ejs", {
         guild: guild,
-        alert: `Your changes have been saved  ✅`,
+        alert: `Các thay đổi của bạn đã được lưu lại  ✅`,
         settings: storedSettings,
       });
     });
 
     //
 
+  
     app.get('/dblwebhook', async (req, res) => {
 
-      res.send(`Top.gg API is currently working!`)
+      res.send(`API Top.gg hiện đang hoạt động!`)
 
     });
 
@@ -5194,12 +5272,16 @@ if(maintenance && maintenance.toggle == "true") {
       }).then(res => res.json());           
 
 
-      const msg = new Discord.MessageEmbed()
-        .setAuthor('Voting System', `${domain}/logo.png`)
+    const msg = new Discord.MessageEmbed()
+        .setAuthor('Hệ thống Voting', `${domain}/logo.png`)
         .setColor('#7289DA')
-        .setTitle(`${apiUser.username} Just Voted`)
-        .setDescription(`Thank you **${apiUser.username}#${apiUser.discriminator}** (${apiUser.id}) for voting **Pogy**!`)
-      Hook.send(msg);
+        .setTitle(`${apiUser.username} Vừa mới vote cho SODA CHANH `)
+        .setDescription(`Cảm ơn bạn **${apiUser.username}#${apiUser.discriminator}** (${apiUser.id}) đã vote cho **SODA CHANH**!`)
+		.addField(
+        `\u200b`, 
+        `**[Bạn có thể bình chọn cho SODA CHANH bằng cách nhấp vào đây](https://top.gg/bot/830459482634453022/vote)**` 
+      );
+      Hook.send({ embeds: [msg]});
 
       const userSettings = await User.findOne({ discordId: req.vote.user })
       if (!userSettings) return User.create({ discordId: req.vote.user, votes: 1, lastVoted: Date.now() });
@@ -5211,10 +5293,10 @@ let voteUser = await client.users.fetch(apiUser.id);
      let voteNumber = userSettings.votes;
      if(!voteNumber) voteNumber = 0
       if (voteUser) {
-        voteUser.send(new Discord.MessageEmbed()
+        voteUser.send({ embeds: [new Discord.MessageEmbed()
           .setColor('#7289DA')
-          .setTitle(`Thanks for Voting!`)
-          .setDescription(`Thank you **${apiUser.username}#${apiUser.discriminator}** (${apiUser.id}) for voting **Pogy**! \n\nVote #${voteNumber + 1}`));
+          .setTitle(`Cảm ơn đã đã vote cho bọn mình!`)
+          .setDescription(`Cảm ơn bạn **${apiUser.username}#${apiUser.discriminator}** (${apiUser.id}) để bỏ phiếu **SODA CHANH**! \n\nSố lần vote #${voteNumber + 1}`)]});
 
       };
 
@@ -5244,7 +5326,7 @@ let voteUser = await client.users.fetch(apiUser.id);
       }
     });
 
-    app.listen(config.port, null, null, () => console.log(`Dashboard is up and running on port ${config.port}.`));
+    app.listen(config.port, null, null, () => console.log(`Trang tổng quan đã được thiết lập và đang chạy trên cổng ${config.port}.`));
 
 
     const d = moment.duration(client.uptime);
@@ -5254,7 +5336,7 @@ let voteUser = await client.users.fetch(apiUser.id);
     const seconds = (d.seconds() == 1) ? `${d.seconds()}` : `${d.seconds()}`;
 
 if(config.datadogApiKey){
-  metrics.init({ apiKey: jsonconfig.datadogApiKey, host: 'pogy', prefix: 'pogy.' });
+  metrics.init({ apiKey: jsonconfig.datadogApiKey, host: 'soda', prefix: 'soda' });
   function collectMemoryStats() {
       var memUsage = process.memoryUsage();
       metrics.gauge('memory.rss', memUsage.rss);

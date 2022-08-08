@@ -13,10 +13,10 @@ module.exports = class extends Command {
       super(...args, {
         name: 'warnpurge',
         aliases: ['wp'],
-        description: 'Warns a member purge their specified messages',
+        description: 'Cảnh báo một thành viên đang xóa các tin nhắn được chỉ định của họ',
         category: 'Moderation',
         usage: '<user> [reason]',
-        examples: ['warnpurge @pogy 10.'],
+        examples: ['warnpurge @SodaChan 10.'],
         guildOnly: true,
       botPermission: ['SEND_MESSAGES', 'EMBED_LINKS', 'KICK_MEMBERS', 'MANAGE_MESSAGES'],
       userPermission: ['KICK_MEMBERS', 'MANAGE_MESSAGES'],
@@ -46,10 +46,7 @@ const settings = await Guild.findOne(
         .then(result => console.log(result))
         .catch(err => console.error(err));
 
-      return message.channel
-        .send(
-          'This server was not in our database! We have added it, please retype this command.'
-        )
+      return message.reply('Máy chủ này không có trong cơ sở dữ liệu của chúng tôi! Chúng tôi đã thêm nó, vui lòng nhập lại lệnh này.')
         .then(m => m.delete({ timeout: 10000 }));
     }
   }
@@ -64,38 +61,38 @@ const fail = client.emoji.fail;
 const success = client.emoji.success;
     const mentionedMember = message.mentions.members.last() || message.guild.members.cache.get(args[0])
     
-  if (!message.member.hasPermission('MANAGE_ROLES')) {
-      return message.channel.send(new Discord.MessageEmbed()
+  if (!message.member.permissions.has()('MANAGE_ROLES')) {
+      return message.reply({ embeds: [new Discord.MessageEmbed()
           .setDescription(`${client.emoji.fail} ${language.warnMissingPermission}`)
           .setTimestamp(message.createdAt)
-          .setColor(client.color.red))
+          .setColor(client.color.red)]})
   }
   else if (!mentionedMember) {
-      return message.channel.send(new Discord.MessageEmbed()
+      return message.reply({ embeds: [new Discord.MessageEmbed()
           .setDescription(`${client.emoji.fail} | ${language.warnMissingUser}`)
           .setTimestamp(message.createdAt)
-          .setColor(client.color.red))
+          .setColor(client.color.red)]})
   }
 
   const mentionedPotision = mentionedMember.roles.highest.position
   const memberPotision = message.member.roles.highest.position
 
   if (memberPotision <= mentionedPotision) {
-      return message.channel.send(new Discord.MessageEmbed()
+      return message.reply({ embeds: [new Discord.MessageEmbed()
       .setDescription(client.emoji.fail + " | " + language.warnHigherRole)
           .setTimestamp(message.createdAt)
-          .setColor(client.color.red))
+          .setColor(client.color.red)]})
   }
 
    const amount = parseInt(args[1]);
     if (isNaN(amount) === true || !amount || amount < 0 || amount > 100)
-      return message.channel.send( new MessageEmbed()
+      return message.reply({ embeds: [new MessageEmbed()
       .setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true }))
-      .setTitle(`${fail} Warn Purge Error`)
-      .setDescription(`Please Provide a message count between 1 - 100 messages`)
+      .setTitle(`${fail} Xóa cảnh báo lỗi`)
+      .setDescription(`Vui lòng cung cấp số lượng tin nhắn từ 1 - 100 tin nhắn`)
       .setTimestamp()
-      .setFooter('https://pogy.xyz')
-      .setColor(message.guild.me.displayHexColor));
+      .setFooter('https://sodachan.tk/')
+      .setColor(message.guild.me.displayHexColor)]});
 
     let reason = args.slice(2).join(' ');
     if (!reason) reason = 'No Reason Provided';
@@ -145,9 +142,9 @@ let warnID = random.password({
 
     const embed = new MessageEmbed()
    
-      .setDescription(`**${mentionedMember.user.tag}** has been warned, with **${messages.size}** messages purged ${success}${logging && logging.moderation.include_reason === "true" ?`\n\n**Reason:** ${reason}`:``}`)
+      .setDescription(`**${mentionedMember.user.tag}** đã được cảnh báo, với **${messages.size}** tin nhắn bị xóa ${success}${logging && logging.moderation.include_reason === "true" ?`\n\n**Lý do:** ${reason}`:``}`)
       .setColor(message.guild.me.displayHexColor)
-    message.channel.send(embed)
+    message.reply({ embeds: [embed]})
     .then(async(s)=>{
           if(logging && logging.moderation.delete_reply === "true"){
             setTimeout(()=>{
@@ -167,37 +164,37 @@ let warnID = random.password({
           if(punishment === "1"){
           action = `banned`;
 
-          await mentionedMember.ban({ reason: `Auto Punish / Responsible user: ${message.author.tag}` }).catch(()=>{})
+          await mentionedMember.ban({ reason: `Tự động trừng phạt / Người dùng có trách nhiệm: ${message.author.tag}` }).catch(()=>{})
 
           } else if (punishment === "2"){
           action = `kicked`;
 
-await mentionedMember.kick({ reason: `Auto Punish / Responsible user: ${message.author.tag}` }).catch(()=>{})
+await mentionedMember.kick({ reason: `Tự động trừng phạt / Người dùng có trách nhiệm: ${message.author.tag}` }).catch(()=>{})
 
 
           } else if (punishment === "3"){
           action = `softbanned`;
 
-await mentionedMember.ban({ reason:`Auto Punish / ${language.softbanResponsible}: ${message.author.tag}`, days: 7 });
-await message.guild.members.unban(mentionedMember.user, `Auto Punish / ${language.softbanResponsible}: ${message.author.tag}`);
+await mentionedMember.ban({ reason:`Tự động trừng phạt / ${language.softbanResponsible}: ${message.author.tag}`, days: 7 });
+await message.guild.members.unban(mentionedMember.user, `Tự động trừng phạt / ${language.softbanResponsible}: ${message.author.tag}`);
 
           }
 
-          message.channel.send(new Discord.MessageEmbed().setColor(message.client.color.green).setDescription(`Auto Punish triggered, ${action} **${mentionedMember.user.tag}** ${message.client.emoji.success}`))
+         message.reply({ embeds: [new Discord.MessageEmbed().setColor(message.client.color.green).setDescription(`Tự động trừng phạt đã kích hoạt, ${action} **${mentionedMember.user.tag}** ${message.client.emoji.success}`)]})
           
           const auto = logging.moderation.auto_punish;
           if(auto.dm && auto.dm !== "1"){
             let dmEmbed;
             if(auto.dm === "2"){
-            dmEmbed = `${message.client.emoji.fail} You've been ${action} from **${message.guild.name}**\n__(Auto Punish Triggered)__`
+            dmEmbed = `${message.client.emoji.fail} Bạn đã từng ${action} từ **${message.guild.name}**\n__(Tự động trừng phạt đã kích hoạt)__`
             } else if(auto.dm === "3"){
-            dmEmbed = `${message.client.emoji.fail} You've been ${action} from **${message.guild.name}**\n__(Auto Punish Triggered)__\n\n**Warn Count:** ${warnDoc.warnings.length}`
+            dmEmbed = `${message.client.emoji.fail} Bạn đã từng ${action} từ **${message.guild.name}**\n__(Tự động trừng phạt đã kích hoạt)__\n\n**Số lượng cảnh báo:** ${warnDoc.warnings.length}`
             };
 
-            mentionedMember.send(new MessageEmbed()
+            mentionedMember.send({ embeds: [new MessageEmbed()
             .setColor(message.client.color.red)
             .setDescription(dmEmbed)
-            )
+            ]})
           }
 
         }
@@ -225,12 +222,12 @@ let logcase = logging.moderation.caseN
 if(!logcase) logcase = `1`
 
 const logEmbed = new MessageEmbed()
-.setAuthor(`Action: \`Warn\` | ${mentionedMember.user.tag} | Case #${logcase}`, mentionedMember.user.displayAvatarURL({ format: 'png' }))
-.addField('User', mentionedMember, true)
-.addField('Moderator', message.member, true)
-.addField('Reason', reason, true)
-.addField('Message Count', messages.size)
-.setFooter(`ID: ${mentionedMember.id} | Warn ID: ${warnID}`)
+.setAuthor(`Hoạt động: \`Warn\` | ${mentionedMember.user.tag} | Trường hợp #${logcase}`, mentionedMember.user.displayAvatarURL({ format: 'png' }))
+.addField('Người dùng', mentionedMember, true)
+.addField('Người điều hành', message.member, true)
+.addField('Lý do', reason, true)
+.addField('Số lượng tin nhắn', messages.size)
+.setFooter(`ID: ${mentionedMember.id} | ID Cảnh báo : ${warnID}`)
 .setTimestamp()
 .setColor(color)
 

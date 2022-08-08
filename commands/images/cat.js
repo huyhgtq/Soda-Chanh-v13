@@ -8,7 +8,7 @@ module.exports = class extends Command {
     constructor(...args) {
       super(...args, {
         name: 'cat',
-        description: 'Get a cat picture!',
+        description: 'Nhận một hình ảnh con mèo!',
         category: 'Images',
         cooldown: 5
       });
@@ -32,7 +32,10 @@ module.exports = class extends Command {
             .setFooter(`/api.thecatapi.com/v1/images/search`)
             .setTimestamp()
             .setColor(client.color.blue)
-          message.channel.send(embed);
+			.setFooter(
+      `${language.requested} ${message.author.username}` + " • (Aww cute =＾´• ⋏ •`＾=)", message.author.displayAvatarURL({ dynamic: true })
+      )
+          message.reply({ embeds: [embed]});
         } catch (err) {
          console.log(`${err}, command name: cat`)
          message.channel.send(language.catError)

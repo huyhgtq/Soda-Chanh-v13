@@ -5,7 +5,7 @@ module.exports = class extends Command {
       super(...args, {
         name: 'maintenance',
         aliases: [ 'maintenance' ],
-        description: 'Sets the bot to maintenance',
+        description: 'Đặt bot để bảo trì enable / disable',
         category: 'Owner',
         ownerOnly: true
       });
@@ -13,7 +13,7 @@ module.exports = class extends Command {
 
     async run(message, args) {
 
-      if(!args[0]) return message.channel.send('Would you like to enable or disable maintenance mode?')
+      if(!args[0]) return message.reply('Bạn có muốn enable hay disable chế độ bảo trì không?')
       
       const maintenance = await Maintenance.findOne({maintenance: 'maintenance'})
 
@@ -29,7 +29,7 @@ module.exports = class extends Command {
         })
         newMain.save().catch(()=>{})
       }
-      await message.channel.send('Enabling maintenance Mode')
+      await message.reply('Bật chế độ bảo trì')
       process.exit(1)
 
       } else if(args[0].toLowerCase() == "disable"){
@@ -44,11 +44,11 @@ module.exports = class extends Command {
         })
         newMain.save().catch(()=>{})
       }
-      await message.channel.send('Disabling maintenance Mode')
+      await message.reply('Tắt chế độ bảo trì')
       process.exit(1)
 
       } else {
-        message.channel.send('Invalid Response')
+        message.reply('Phản hồi không hợp lệ')
       }
       
     }

@@ -33,18 +33,18 @@ if(color == "#000000") color = oldEmoji.client.color.yellow;
 
 
     const embed = new discord.MessageEmbed()
-    .setDescription(`:pencil: ***Emoji Updated***`)
-    .addField('Emoji Name', `${oldEmoji.name} --> ${newEmoji.name}`, true)
-    .addField('Emoji', newEmoji, true)
-    .addField('Full ID', `\`<:${oldEmoji.name}:${oldEmoji.id}>\``, true)
-    .setFooter(`Emoji ID: ${oldEmoji.id}`)
+    .setDescription(`***Đã cập nhật biểu tượng cảm xúc***`)
+    .addField('Tên biểu tượng cảm xúc', `${oldEmoji.name} --> ${newEmoji.name}`, true)
+    .addField('Biểu tượng cảm xúc', `${newEmoji}`)
+    .addField('ID đầy đủ', `\`<:${oldEmoji.name}:${oldEmoji.id}>\``, true)
+    .setFooter(`ID biểu tượng cảm xúc: ${oldEmoji.id}`)
     .setTimestamp()
     .setColor(color)
 
     if(channelEmbed &&
       channelEmbed.viewable &&
       channelEmbed.permissionsFor(newEmoji.guild.me).has(['SEND_MESSAGES', 'EMBED_LINKS'])){
-            channelEmbed.send(embed).catch(()=>{})
+            channelEmbed.send({ embeds: [embed] }).catch(()=>{})
       }
 
 

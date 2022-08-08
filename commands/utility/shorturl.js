@@ -11,7 +11,7 @@ module.exports = class extends Command {
       super(...args, {
         name: 'shorturl',
         aliases: [ 'shorten'],
-        description: 'Shorten a url!!',
+        description: 'Rút ngắn url !!',
         category: 'Utility',
         guildOnly: true,
         cooldown: 20
@@ -28,7 +28,7 @@ module.exports = class extends Command {
           
 
           if (talkedRecently.has(message.author.id)) {
-            message.channel.send(`You are **blocked** from the following command - ${message.author}`);
+            message.reply(`Bạn bị ** chặn ** khỏi lệnh sau - ${message.author}`);
           
           } else {
          
@@ -159,11 +159,11 @@ let rgx =  /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\
     ];
 
 
-if(!link) return  message.channel.send( new discord.MessageEmbed()
+if(!link) return  message.reply({ embeds: [new discord.MessageEmbed()
   .setDescription(`${message.client.emoji.fail} | ${language.shortUrlError}`)
-  .setColor(message.client.color.red));
+  .setColor(message.client.color.red)]});
 
-  if(link.includes("porn") || ipLoggers.includes(link) || link.includes("sex") || link.includes("grabify") || link.includes("iplogger") || link.includes("2no") || link.includes("yip") || link.includes("iplis")|| link.includes("02ip") || link.includes("ezstat") || link.includes("logger")) return message.channel.send(`${message.author} ${language.shorturlBlock1}`) +       talkedRecently.add(message.author.id);
+  if(link.includes("porn") || ipLoggers.includes(link) || link.includes("sex") || link.includes("grabify") || link.includes("iplogger") || link.includes("2no") || link.includes("yip") || link.includes("iplis")|| link.includes("02ip") || link.includes("ezstat") || link.includes("logger")) return message.reply(`${message.author} ${language.shorturlBlock1}`) +       talkedRecently.add(message.author.id);
   setTimeout(() => {
  
     talkedRecently.delete(message.author.id);
@@ -171,13 +171,13 @@ if(!link) return  message.channel.send( new discord.MessageEmbed()
 
 
 if(!rgx.test(args[0]))
-return message.channel.send( new discord.MessageEmbed()
+return message.reply({ embeds: [new discord.MessageEmbed()
   .setDescription(`${message.client.emoji.fail} | ${language.shortUrlError}`)
-  .setColor(message.client.color.red));
+  .setColor(message.client.color.red)]});
 
 
 await ShortUrl.create({ full: link, short: kaka, guildID:message.guild.id, memberID:message.author.id})
-message.channel.send(new discord.MessageEmbed().setDescription(`${language.urlCreated}\n\n**Short Url:** [https://pogy.xyz/url/${kaka}](https://pogy.xyz/url/${kaka})\n**Full url:** ${args[0]}\n\n**Please note that by making urls you abide by our [policy](https://pogy.xyz/url)**`).setColor(message.client.color.blue));
+message.reply({ embeds: [new discord.MessageEmbed().setDescription(`${language.urlCreated}\n\n**Url ngắn:** [https://sodachan.tk/url/${kaka}](https://sodachan.tk/url/${kaka})\n**Url đầy đủ:** ${args[0]}\n\n**Xin lưu ý rằng bằng cách tạo url, bạn tuân theo [chính sách](https://sodachan.tk/url)**`).setColor(message.client.color.blue)]});
    
           }
 }

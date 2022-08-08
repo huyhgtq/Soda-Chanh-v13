@@ -11,10 +11,10 @@ module.exports = class extends Command {
       super(...args, {
         name: 'resetwarn',
         aliases: [ 'clearwarn', 'resetwarns','clearwarns','cw'],
-        description: 'Clear all the users warns',
+        description: 'Xóa tất cả những gì người dùng bị cảnh báo',
         category: 'Moderation',
         usage: '<user> [reason]',
-        examples: [ 'kick @Peter Breaking the rules' ],
+        examples: [ 'kick @yuunya Phá vỡ các quy tắc' ],
         guildOnly: true,
         userPermission: ['MANAGE_ROLES'],
       });
@@ -41,7 +41,7 @@ const settings = await Guild.findOne({
         .then(result => console.log(result))
         .catch(err => console.error(err));
 
-        return message.channel.send('This server was not in our database! We have added it, please retype this command.').then(m => m.delete({timeout: 10000}));
+        return message.reply('Máy chủ này không có trong cơ sở dữ liệu của chúng tôi! Chúng tôi đã thêm nó, vui lòng nhập lại lệnh này.').then(m => m.delete({timeout: 10000}));
     }
 });
 
@@ -56,22 +56,22 @@ const mentionedMember = message.mentions.members.last()
 
 
  if (!mentionedMember) {
-return message.channel.send(new discord.MessageEmbed()
+return message.reply({ embeds: [new discord.MessageEmbed()
    .setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true }))
     .setDescription(`${client.emoji.fail} | ${language.banUserValid}`)
     .setTimestamp(message.createdAt)
-    .setColor(client.color.red))
+    .setColor(client.color.red)]})
 }
 
 const mentionedPotision = mentionedMember.roles.highest.position
 const memberPotision = message.member.roles.highest.position
 
 if (memberPotision <= mentionedPotision) {
-return message.channel.send(new discord.MessageEmbed()
+return message.reply({ embeds: [new discord.MessageEmbed()
   .setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true }))
     .setDescription(`${client.emoji.fail} | ${language.rmPosition}`)
     .setTimestamp(message.createdAt)
-    .setColor(client.color.red))
+    .setColor(client.color.red)]})
 }
 
 let reason = args.slice(1).join(' ');
@@ -84,11 +84,11 @@ memberID: mentionedMember.id,
 }).catch(err => console.log(err))
 
 if (!warnDoc || !warnDoc.warnings.length) {
-return message.channel.send(new discord.MessageEmbed()
+return message.reply({ embeds: [new discord.MessageEmbed()
     .setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true }))
     .setDescription(`${client.emoji.fail} | ${language.rmNoWarning}`)
     .setTimestamp(message.createdAt)
-    .setColor(client.color.red))
+    .setColor(client.color.red)]})
 }
 await warnDoc.updateOne({
 modType: [],
@@ -99,10 +99,10 @@ date: [],
 })
 
 const removeEmbed = new discord.MessageEmbed()
-.setDescription(`${message.client.emoji.success} | Cleared all Warn of **${mentionedMember.user.tag}** ${logging && logging.moderation.include_reason === "true" ?`\n\n**Reason:** ${reason}`:``}`)
+.setDescription(`${message.client.emoji.success} | Đã xóa tất cả Cảnh báo về **${mentionedMember.user.tag}** ${logging && logging.moderation.include_reason === "true" ?`\n\n**Lý do:** ${reason}`:``}`)
 .setColor(message.client.color.green)
 
-message.channel.send(removeEmbed)
+message.reply({ embeds: [removeEmbed]})
 .then(async(s)=>{
           if(logging && logging.moderation.delete_reply === "true"){
             setTimeout(()=>{
@@ -134,15 +134,15 @@ let logcase = logging.moderation.caseN
 if(!logcase) logcase = `1`
 
 const logEmbed = new MessageEmbed()
-.setAuthor(`Action: \`Clear Warn\` | ${mentionedMember.user.tag} | Case #${logcase}`, mentionedMember.user.displayAvatarURL({ format: 'png' }))
-.addField('User', mentionedMember, true)
-.addField('Moderator', message.member, true)
-.addField('Reason', reason, true)
+.setAuthor(`Hoạt động: \`Clear Warn\` | ${mentionedMember.user.tag} | Trường hợp #${logcase}`, mentionedMember.user.displayAvatarURL({ format: 'png' }))
+.addField('Người dùng', mentionedMember, true)
+.addField('Người điều hành', message.member, true)
+.addField('Lý do', reason, true)
 .setFooter(`ID: ${mentionedMember.id}`)
 .setTimestamp()
 .setColor(color)
 
-channel.send(logEmbed).catch(()=>{})
+channel.send({ embeds: [logEmbed]}).catch(()=>{})
 
 logging.moderation.caseN = logcase + 1
 await logging.save().catch(()=>{})

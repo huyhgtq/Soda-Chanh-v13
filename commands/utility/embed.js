@@ -10,7 +10,7 @@ module.exports = class extends Command {
 		super(...args, {
 			name: 'embed',
 			aliases: ['embedify', 'embedbuilder'],
-			description: `Make a custom embed builder with Pogy!`,
+			description: `Tạo trình tạo nhúng tùy chỉnh với Soda Chan!`,
 			category: 'Utility',
 			guildOnly: true,
 			cooldown: 5,
@@ -27,133 +27,68 @@ module.exports = class extends Command {
 		const language = require(`../../data/language/${guildDB.language}.json`);
 		const prefix = guildDB.prefix;
 		if (embedstarted.has(message.author.id))
-			return message.channel
-				.send(
-					new MessageEmbed()
+			return message.reply({ embeds: [new MessageEmbed()
 						.setDescription(`${message.client.emoji.fail} ${language.embedd1} `)
-						.setColor(message.guild.me.displayHexColor)
-				)
+						.setColor(message.guild.me.displayHexColor)]})
 				.catch(() => {});
-		message.channel
-			.send(
-				new MessageEmbed()
-					.setDescription(
-						`${message.client.emoji.success} ${language.embedd2} `
-					)
-					.setColor(message.guild.me.displayHexColor)
-			)
+		
+		message.reply({ embeds: [new MessageEmbed()
+					.setDescription(`${message.client.emoji.success} ${language.embedd2} `)
+					.setColor(message.guild.me.displayHexColor)]})
 			.catch(() => {});
 
-		message.channel
-			.awaitMessages(m => m.author.id == message.author.id, {
-				max: 1,
-				time: 30000
-			})
-			.then(collected => {
-				if (collected.first().content.toLowerCase() == 'start') {
+		const filter = (m) => m.author.id == message.author.id;
+		
+		message.channel.awaitMessages({filter,  max: 1,time: 30000})
+			.then(collected => {if (collected.first().content.toLowerCase() == 'start') {
 					embedstarted.add(message.author.id);
 					message.delete();
-					message.channel.send(`${language.embedd3}`).catch(() => {});
-					message.channel
-						.awaitMessages(m => m.author.id == message.author.id, {
-							max: 1,
-							time: 30000
-						})
-						.then(collected => {
-							let title = collected.first().content;
-							if (collected.first().content.length < 255) {
-								if (collected.first().content == 'cancel')
-									return (
-										message.channel.send(
-											new MessageEmbed()
-												.setDescription(
-													`${message.client.emoji.fail} ${language.embed15} `
-												)
-												.setColor(message.guild.me.displayHexColor)
-										) + embedstarted.delete(message.author.id)
-									);
-								message.channel.send(`${language.embedd4}`).catch(() => {});
-								message.channel
-									.awaitMessages(m => m.author.id == message.author.id, {
-										max: 1,
-										time: 30000
-									})
-									.then(collected => {
-										if (collected.first().content.length < 2048) {
-											if (collected.first().content == 'cancel')
-												return (
-													message.channel.send(
-														new MessageEmbed()
-															.setDescription(
-																`${message.client.emoji.fail} ${
-																	language.embed15
-																} `
-															)
-															.setColor(message.guild.me.displayHexColor)
-													) + embedstarted.delete(message.author.id)
-												);
+					message.reply(`${language.embedd3}`)
+						
+					.catch(() => {});
+					
+		message.reply.awaitMessages({filter,  max: 1,time: 30000})
+			.then(collected => {let title = collected.first().content;if (collected.first().content.length < 255){
+				if (collected.first().content == 'cancel')
+							
+				return (
+					message.reply({ embeds: [new MessageEmbed()
+					.setDescription(`${message.client.emoji.fail} ${language.embed15} `)
+					.setColor(message.guild.me.displayHexColor)]}) + embedstarted.delete(message.author.id))
+						message.reply(`${language.embedd4}`).catch(() => {});
+				
+						message.channel.awaitMessages({filter,  max: 1,time: 30000})
+							.then(collected => {if (collected.first().content.length < 2048) {if (collected.first().content == 'cancel')return (
+							message.reply({ embeds: [new MessageEmbed()
+							.setDescription(`${message.client.emoji.fail} ${language.embed15} `)
+							.setColor(message.guild.me.displayHexColor)]}) + embedstarted.delete(message.author.id))
 
-											let description = collected.first().content;
-											message.channel
-												.send(`${language.embedd5}`)
-												.catch(() => {});
-											message.channel
-												.awaitMessages(m => m.author.id == message.author.id, {
-													max: 1,
-													time: 30000
-												})
-												.then(collected => {
-													if (
-														collected.first().content.length < 8 ||
-														collected.first().content.toLowerCase() == 'default'
-													) {
-														if (collected.first().content == 'cancel')
-															return (
-																message.channel.send(
-																	new MessageEmbed()
-																		.setDescription(
-																			`${message.client.emoji.fail} ${
-																				language.embed15
-																			} `
-																		)
-																		.setColor(message.guild.me.displayHexColor)
-																) + embedstarted.delete(message.author.id)
-															);
+								let description = collected.first().content;
+																							  
+									message.reply(`${language.embedd5}`).catch(() => {});
+									message.channel.awaitMessages({filter,  max: 1,time: 30000})
+												.then(collected => {if (collected.first().content.length < 8 ||collected.first().content.toLowerCase() == 'default') {
+													if (collected.first().content == 'cancel')
+															return (message.reply({ embeds: [new MessageEmbed()
+																		.setDescription(`${message.client.emoji.fail} ${language.embed15} `)
+																		.setColor(message.guild.me.displayHexColor)]}) + embedstarted.delete(message.author.id))
 
 														let color = collected.first().content;
-														if (
-															collected.first().content.toLowerCase() ==
-															'default'
-														)
-															color = `default`;
+														if (collected.first().content.toLowerCase() =='default')color = `default`;
 
-														message.channel
-															.send(`${language.embedd6}`)
-															.catch(() => {});
+														message.reply(`${language.embedd6}`).catch(() => {});
 
-														message.channel
-															.awaitMessages(
-																m => m.author.id == message.author.id,
-																{ max: 1, time: 30000 }
-															)
+														message.channel.awaitMessages({filter,  max: 1,time: 30000})
 															.then(collected => {
-																if (
-																	rgx.test(collected.first().content) ||
-																	collected.first().content.toLowerCase() ==
-																		'none'
-																) {
+																if (rgx.test(collected.first().content) ||collected.first().content.toLowerCase() =='none') {
 																	let thumbnail = collected
 																		.first()
 																		.content.toLowerCase();
-																	message.channel
-																		.send(`${language.embedd7}`)
+																	message.reply(`${language.embedd7}`)
 																		.catch(() => {});
 
 																	message.channel
-																		.awaitMessages(
-																			m => m.author.id == message.author.id,
-																			{ max: 1, time: 30000 }
-																		)
+																		.awaitMessages({filter,  max: 1,time: 30000})
 																		.then(collected => {
 																			if (
 																				rgx.test(collected.first().content) ||
@@ -165,51 +100,23 @@ module.exports = class extends Command {
 																					.first()
 																					.content.toLowerCase();
 
-																				message.channel
-																					.send(`${language.embedd8}`)
+																				message.reply(`${language.embedd8}`)
 																					.catch(() => {});
 
-																				message.channel
-																					.awaitMessages(
-																						m =>
-																							m.author.id == message.author.id,
-																						{ max: 1, time: 30000 }
-																					)
-																					.then(collected => {
-																						if (
-																							collected.first().content.length <
-																								2048 ||
-																							collected
-																								.first()
-																								.content.toLowerCase() == 'none'
-																						) {
+																				message.channel.awaitMessages({filter,  max: 1,time: 30000})
+																					.then(collected => {if (collected.first().content.length <2048 ||collected.first().content.toLowerCase() == 'none') 
+																					{
 																							if (
 																								collected.first().content ==
 																								'cancel'
 																							)
 																								return (
-																									message.channel.send(
-																										new MessageEmbed()
-																											.setDescription(
-																												`${
-																													message.client.emoji
-																														.fail
-																												} ${language.embed15} `
-																											)
-																											.setColor(
-																												message.guild.me
-																													.displayHexColor
-																											)
-																									) +
-																									embedstarted.delete(
-																										message.author.id
-																									)
-																								);
+																									message.reply({ embeds: [new MessageEmbed()
+																											.setDescription(`${message.client.emoji.fail} ${language.embed15} `)
+																											.setColor(message.guild.me.displayHexColor)]}) +embedstarted.delete(message.author.id))
 
-																							let footer = collected.first()
-																								.content;
-																							let mainfooter = collected.first()
-																								.content;
+																							let footer = collected.first().content;
+																							let mainfooter = collected.first().content;
 
 																							if (
 																								collected
@@ -219,21 +126,9 @@ module.exports = class extends Command {
 																							)
 																								footer = `none`;
 
-																							message.channel.send(
-																								`${language.embedd9}`
-																							);
-																							message.channel
-																								.awaitMessages(
-																									m =>
-																										m.author.id ==
-																										message.author.id,
-																									{ max: 1, time: 30000 }
-																								)
-																								.then(collected => {
-																									if (
-																										collected
-																											.first()
-																											.content.toLowerCase() ==
+																							message.reply(`${language.embedd9}`);
+																							message.channel.awaitMessages({filter,  max: 1,time: 30000})
+																								.then(collected => {if (collected.first().content.toLowerCase() ==
 																											'yes' ||
 																										collected
 																											.first()
@@ -245,25 +140,10 @@ module.exports = class extends Command {
 																												.content == 'cancel'
 																										)
 																											return (
-																												message.channel.send(
-																													new MessageEmbed()
-																														.setDescription(
-																															`${
-																																message.client
-																																	.emoji.fail
-																															} ${
-																																language.embed15
-																															} `
-																														)
-																														.setColor(
-																															message.guild.me
-																																.displayHexColor
-																														)
-																												) +
-																												embedstarted.delete(
-																													message.author.id
-																												)
-																											);
+																												message.reply({ embeds: [new MessageEmbed()
+																														.setDescription(`${message.client.emoji.fail} ${language.embed15} `)
+																														.setColor(message.guild.me.displayHexColor)]}) +
+																												embedstarted.delete(message.author.id))
 
 																										let timestamp = `no`;
 																										if (
@@ -275,18 +155,12 @@ module.exports = class extends Command {
 																											timestamp = `yes`;
 
 																										//here
-																										message.channel
-																											.send(
+																										message.reply(
 																												`${language.embedd10}`
 																											)
 																											.catch(() => {});
 																										message.channel
-																											.awaitMessages(
-																												m =>
-																													m.author.id ==
-																													message.author.id,
-																												{ max: 1, time: 30000 }
-																											)
+																											.awaitMessages({filter,  max: 1,time: 30000})
 																											.then(collected => {
 																												if (
 																													collected
@@ -304,29 +178,11 @@ module.exports = class extends Command {
 																														'cancel'
 																													)
 																														return (
-																															message.channel.send(
-																																new MessageEmbed()
+																															message.reply({ embeds: [new MessageEmbed()
 																																	.setDescription(
-																																		`${
-																																			message
-																																				.client
-																																				.emoji
-																																				.fail
-																																		} ${
-																																			language.embed15
-																																		} `
-																																	)
-																																	.setColor(
-																																		message
-																																			.guild.me
-																																			.displayHexColor
-																																	)
-																															) +
-																															embedstarted.delete(
-																																message.author
-																																	.id
-																															)
-																														);
+																																		`${message.client.emoji.fail} ${language.embed15} `)
+																																	.setColor(message.guild.me.displayHexColor)]}) +
+																															embedstarted.delete(message.author.id));
 
 																													if (
 																														collected
@@ -334,26 +190,11 @@ module.exports = class extends Command {
 																															.content.toLowerCase() ==
 																														'yes'
 																													) {
-																														message.channel
-																															.send(
-																																`${
-																																	language.embedd11
-																																}`
-																															)
+																														message.reply(`${language.embedd11}`)
 																															.catch(() => {});
 																														//   do stuff
 
-																														message.channel
-																															.awaitMessages(
-																																m =>
-																																	m.author.id ==
-																																	message.author
-																																		.id,
-																																{
-																																	max: 1,
-																																	time: 30000
-																																}
-																															)
+																														message.channel.awaitMessages({filter,  max: 1,time: 30000})
 																															.then(
 																																collected => {
 																																	let argword = collected.first()
@@ -367,31 +208,10 @@ module.exports = class extends Command {
 																																		1
 																																	)
 																																		return (
-																																			message.channel.send(
-																																				new MessageEmbed()
-																																					.setDescription(
-																																						`${
-																																							message
-																																								.client
-																																								.emoji
-																																								.fail
-																																						} ${
-																																							language.embed15
-																																						} `
-																																					)
-																																					.setColor(
-																																						message
-																																							.guild
-																																							.me
-																																							.displayHexColor
-																																					)
-																																			) +
-																																			embedstarted.delete(
-																																				message
-																																					.author
-																																					.id
-																																			)
-																																		);
+																																			message.reply({ embeds: [new MessageEmbed()
+																																					.setDescription(`${message.client.emoji.fail} ${language.embed15} `)
+																																					.setColor(message.guild.me.displayHexColor)]}) +
+                                                                                                                                                    embedstarted.delete(message.author.id));
 																																	if (
 																																		this.client.commands.get(
 																																			argword.toLowerCase()
@@ -401,11 +221,7 @@ module.exports = class extends Command {
 																																		)
 																																	)
 																																		return (
-																																			message.channel.send(
-																																				`${
-																																					language.embedd12
-																																				}`
-																																			) +
+																																			message.reply(`${language.embedd12}`) +
 																																			embedstarted.delete(
 																																				message
 																																					.author
@@ -459,8 +275,7 @@ module.exports = class extends Command {
 																																							.author
 																																							.id
 																																					);
-																																					message.channel.send(
-																																						new MessageEmbed()
+																																					message.reply({ embeds: [new MessageEmbed()
 																																							.setAuthor(
 																																								`${
 																																									message
@@ -480,18 +295,18 @@ module.exports = class extends Command {
 																																							)
 																																							.setTimestamp()
 																																							.setFooter(
-																																								'https://pogy.xyz'
+																																								'https://sodachan.tk/'
 																																							)
 																																							.setColor(
 																																								message
 																																									.guild
 																																									.me
 																																									.displayHexColor
-																																							)
-																																					);
+																																							)]
+																																											 });
 																																				} else {
 																																					return (
-																																						message.channel.send(
+																																						message.reply(
 																																							`${
 																																								message
 																																									.client
@@ -513,77 +328,25 @@ module.exports = class extends Command {
 
 																																		return;
 																																	} else
-																																		message.channel.send(
-																																			new MessageEmbed()
-																																				.setDescription(
-																																					`${
-																																						message
-																																							.client
-																																							.emoji
-																																							.fail
-																																					} ${
-																																						language.embed15
-																																					} `
-																																				)
-																																				.setColor(
-																																					message
-																																						.guild
-																																						.me
-																																						.displayHexColor
-																																				)
-																																		) +
-																																			embedstarted.delete(
-																																				message
-																																					.author
-																																					.id
-																																			);
-																																}
-																															)
+																																		message.reply({ embeds: [new MessageEmbed()
+																																				.setDescription(`${message.client.emoji.fail} ${language.embed15} `)
+																																				.setColor(message.guild.me.displayHexColor)]}) +
+																																			embedstarted.delete(message.author.id);})
 																															.catch(() => {
-																																message.channel.send(
-																																	new MessageEmbed()
-																																		.setDescription(
-																																			`${
-																																				message
-																																					.client
-																																					.emoji
-																																					.fail
-																																			} ${
-																																				language.embedd16
-																																			} `
-																																		)
-																																		.setColor(
-																																			message
-																																				.guild
-																																				.me
-																																				.displayHexColor
-																																		)
-																																) +
-																																	embedstarted.delete(
-																																		message
-																																			.author.id
-																																	);
-																															});
+																																message.reply({ embeds: [new MessageEmbed()	
+                                                                                                                                    .setDescription(`${message.client.emoji.fail} ${language.embedd16} `)
+																																		.setColor(message.guild.me.displayHexColor)]}) +
+																																	embedstarted.delete(message.author.id);
+                                                                                                                                });
 																													} else {
-																														message.channel
-																															.send(
+																														message.reply(
 																																`${
 																																	language.embedd17
 																																}`
 																															)
 																															.catch(() => {});
 
-																														message.channel
-																															.awaitMessages(
-																																m =>
-																																	m.author.id ==
-																																	message.author
-																																		.id,
-																																{
-																																	max: 1,
-																																	time: 30000
-																																}
-																															)
+																														message.channel.awaitMessages({filter,  max: 1,time: 30000})
 																															.then(
 																																collected => {
 																																	let channel = collected
@@ -643,9 +406,7 @@ module.exports = class extends Command {
 																																			embed.setColor(
 																																				`${color}`
 																																			);
-																																		channel.send(
-																																			embed
-																																		);
+																																		message.reply({ embeds: [embed] });
 																																		embedstarted.delete(
 																																			message
 																																				.author
@@ -654,26 +415,9 @@ module.exports = class extends Command {
 
 																																		return;
 																																	} else
-																																		message.channel
-																																			.send(
-																																				new MessageEmbed()
-																																					.setDescription(
-																																						`${
-																																							message
-																																								.client
-																																								.emoji
-																																								.fail
-																																						} ${
-																																							language.embed15
-																																						} `
-																																					)
-																																					.setColor(
-																																						message
-																																							.guild
-																																							.me
-																																							.displayHexColor
-																																					)
-																																			)
+																																		message.reply({ embeds: [new MessageEmbed()
+																																					.setDescription(`${message.client.emoji.fail} ${language.embed15} `)
+																																					.setColor(message.guild.me.displayHexColor)]})
 																																			.catch(
 																																				() => {}
 																																			);
@@ -684,26 +428,9 @@ module.exports = class extends Command {
 																																}
 																															)
 																															.catch(() => {
-																																message.channel
-																																	.send(
-																																		new MessageEmbed()
-																																			.setDescription(
-																																				`${
-																																					message
-																																						.client
-																																						.emoji
-																																						.fail
-																																				} ${
-																																					language.embedd16
-																																				} `
-																																			)
-																																			.setColor(
-																																				message
-																																					.guild
-																																					.me
-																																					.displayHexColor
-																																			)
-																																	)
+																																message.reply({ embeds: [new MessageEmbed()
+																																			.setDescription(`${message.client.emoji.fail} ${language.embedd16} `)
+																																			.setColor(message.guild.me.displayHexColor)]})
 																																	.catch(
 																																		() => {}
 																																	);
@@ -714,30 +441,13 @@ module.exports = class extends Command {
 																															});
 																													}
 																												} else
-																													message.channel
-																														.send(
-																															new MessageEmbed()
-																																.setDescription(
-																																	`${
-																																		message
-																																			.client
-																																			.emoji
-																																			.fail
-																																	} ${
-																																		language.embed15
-																																	} `
-																																)
-																																.setColor(
-																																	message.guild
-																																		.me
-																																		.displayHexColor
-																																)
-																														)
+																													message.reply({ embeds: [new MessageEmbed()
+																																.setDescription(`${message.client.emoji.fail} ${language.embed15} `)
+																																.setColor(message.guild.me.displayHexColor)]})
 																														.catch(() => {});
 																											})
 																											.catch(() => {
-																												message.channel.send(
-																													new MessageEmbed()
+																												message.reply({ embeds: [new MessageEmbed()
 																														.setDescription(
 																															`${
 																																message.client
@@ -749,45 +459,20 @@ module.exports = class extends Command {
 																														.setColor(
 																															message.guild.me
 																																.displayHexColor
-																														)
-																												);
+																														)]
+																															  });
 																											});
 																									} else
-																										message.channel
-																											.send(
-																												new MessageEmbed()
+																										message.reply({ embeds: [new MessageEmbed()
 																													.setDescription(
-																														`${
-																															message.client
-																																.emoji.fail
-																														} ${
-																															language.embed15
-																														} `
-																													)
-																													.setColor(
-																														message.guild.me
-																															.displayHexColor
-																													)
-																											)
+																														`${message.client.emoji.fail} ${language.embed15} `)
+																													.setColor(message.guild.me.displayHexColor)]})
 																											.catch(() => {});
 																								})
 																								.catch(() => {
-																									message.channel
-																										.send(
-																											new MessageEmbed()
-																												.setDescription(
-																													`${
-																														message.client.emoji
-																															.fail
-																													} ${
-																														language.embedd16
-																													} `
-																												)
-																												.setColor(
-																													message.guild.me
-																														.displayHexColor
-																												)
-																										)
+																									message.reply({ embeds: [new MessageEmbed()
+																												.setDescription(`${message.client.emoji.fail} ${language.embedd16} `)
+																												.setColor(message.guild.me.displayHexColor)]})
 																										.catch(() => {});
 																									embedstarted.delete(
 																										message.author.id
@@ -796,39 +481,18 @@ module.exports = class extends Command {
 
 																							return;
 																						} else
-																							message.channel
-																								.send(
-																									new MessageEmbed()
-																										.setDescription(
-																											`${
-																												message.client.emoji
-																													.fail
-																											} ${language.embed15}`
-																										)
-																										.setColor(
-																											message.guild.me
-																												.displayHexColor
-																										)
-																								)
+																							message.reply({ embeds: [new MessageEmbed()
+																										.setDescription(`${message.client.emoji.fail} ${language.embed15}`)
+																										.setColor(message.guild.me.displayHexColor)]})
 																								.catch(() => {});
 																						embedstarted.delete(
 																							message.author.id
 																						);
 																					})
 																					.catch(() => {
-																						message.channel
-																							.send(
-																								new MessageEmbed()
-																									.setDescription(
-																										`${
-																											message.client.emoji.fail
-																										} ${language.embedd16} `
-																									)
-																									.setColor(
-																										message.guild.me
-																											.displayHexColor
-																									)
-																							)
+																						message.reply({ embeds: [new MessageEmbed()
+																									.setDescription(`${message.client.emoji.fail} ${language.embedd16} `)
+																									.setColor(message.guild.me.displayHexColor)]})
 																							.catch(() => {});
 																						embedstarted.delete(
 																							message.author.id
@@ -836,9 +500,7 @@ module.exports = class extends Command {
 																					});
 																				return;
 																			} else
-																				message.channel
-																					.send(
-																						new MessageEmbed()
+																				message.reply({ embeds: [new MessageEmbed()
 																							.setDescription(
 																								`${message.client.emoji.fail} ${
 																									language.embed15
@@ -846,15 +508,13 @@ module.exports = class extends Command {
 																							)
 																							.setColor(
 																								message.guild.me.displayHexColor
-																							)
-																					)
+																							)]
+																										 })
 																					.catch(() => {});
 																			embedstarted.delete(message.author.id);
 																		})
 																		.catch(() => {
-																			message.channel
-																				.send(
-																					new MessageEmbed()
+																			message.reply({ embeds: [new MessageEmbed()
 																						.setDescription(
 																							`${message.client.emoji.fail} ${
 																								language.embedd16
@@ -862,17 +522,15 @@ module.exports = class extends Command {
 																						)
 																						.setColor(
 																							message.guild.me.displayHexColor
-																						)
-																				)
+																						)]
+																									 })
 																				.catch(() => {});
 																			embedstarted.delete(message.author.id);
 																		});
 
 																	return;
 																} else
-																	message.channel
-																		.send(
-																			new MessageEmbed()
+																	message.reply({ embeds: [new MessageEmbed()
 																				.setDescription(
 																					`${message.client.emoji.fail} ${
 																						language.embed15
@@ -880,15 +538,13 @@ module.exports = class extends Command {
 																				)
 																				.setColor(
 																					message.guild.me.displayHexColor
-																				)
-																		)
+																				)]
+																				  })
 																		.catch(() => {});
 																embedstarted.delete(message.author.id);
 															})
 															.catch(() => {
-																message.channel
-																	.send(
-																		new MessageEmbed()
+																message.reply({ embeds: [new MessageEmbed()
 																			.setDescription(
 																				`${message.client.emoji.fail} ${
 																					language.embedd16
@@ -896,68 +552,40 @@ module.exports = class extends Command {
 																			)
 																			.setColor(
 																				message.guild.me.displayHexColor
-																			)
-																	)
+																			)]
+																			  })
 																	.catch(() => {});
 																embedstarted.delete(message.author.id);
 															});
 
 														return;
 													} else
-														message.channel
-															.send(
-																new MessageEmbed()
-																	.setDescription(
-																		`${message.client.emoji.fail} ${
-																			language.embed15
-																		} `
-																	)
-																	.setColor(message.guild.me.displayHexColor)
-															)
+														message.reply({ embeds: [new MessageEmbed()
+																	.setDescription(`${message.client.emoji.fail} ${language.embed15} `)
+																	.setColor(message.guild.me.displayHexColor)]})
 															.catch(() => {});
 													embedstarted.delete(message.author.id);
 												})
 												.catch(() => {
-													message.channel
-														.send(
-															new MessageEmbed()
-																.setDescription(
-																	`${message.client.emoji.fail} ${
-																		language.embedd16
-																	} `
-																)
-																.setColor(message.guild.me.displayHexColor)
-														)
+													message.reply({ embeds: [new MessageEmbed()
+																.setDescription(`${message.client.emoji.fail} ${language.embedd16} `)
+																.setColor(message.guild.me.displayHexColor)]})
 														.catch(() => {});
 													embedstarted.delete(message.author.id);
 												});
 
 											return;
 										} else
-											message.channel
-												.send(
-													new MessageEmbed()
-														.setDescription(
-															`${message.client.emoji.fail} ${
-																language.embed15
-															} `
-														)
-														.setColor(message.guild.me.displayHexColor)
-												)
+											message.reply({ embeds: [new MessageEmbed()
+														.setDescription(`${message.client.emoji.fail} ${language.embed15} `)
+														.setColor(message.guild.me.displayHexColor)]})
 												.catch(() => {});
 										embedstarted.delete(message.author.id);
 									})
 									.catch(() => {
-										message.channel
-											.send(
-												new MessageEmbed()
-													.setDescription(
-														`${message.client.emoji.fail} ${
-															language.embedd16
-														}d `
-													)
-													.setColor(message.guild.me.displayHexColor)
-											)
+										message.reply({ embeds: [new MessageEmbed()
+													.setDescription(`${message.client.emoji.fail} ${language.embedd16}d `)
+													.setColor(message.guild.me.displayHexColor)]})
 											.catch(() => {});
 										embedstarted.delete(message.author.id);
 									});
@@ -967,39 +595,26 @@ module.exports = class extends Command {
 							embedstarted.delete(message.author.id);
 						})
 						.catch(() => {
-							message.channel
-								.send(
-									new MessageEmbed()
+							message.reply({ embeds: [new MessageEmbed()
 										.setDescription(
-											`${message.client.emoji.fail} ${language.embedd16} `
-										)
-										.setColor(message.guild.me.displayHexColor)
-								)
+											`${message.client.emoji.fail} ${language.embedd16} `)
+										.setColor(message.guild.me.displayHexColor)]})
 								.catch(() => {});
 							embedstarted.delete(message.author.id);
-						});
+                        });
 
 					return;
 				} else message.delete();
-				message.channel
-					.send(
-						new MessageEmbed()
-							.setDescription(
-								`${message.client.emoji.fail} ${language.embed15} `
-							)
-							.setColor(message.guild.me.displayHexColor)
-					)
+				message.reply({ embeds: [new MessageEmbed()
+							.setDescription(`${message.client.emoji.fail} ${language.embed15} `	)
+							.setColor(message.guild.me.displayHexColor)]})
 					.catch(() => {});
 				embedstarted.delete(message.author.id);
 			})
 			.catch(() => {
-				message.channel.send(
-					new MessageEmbed()
-						.setDescription(
-							`${message.client.emoji.fail} ${language.embedd16} `
-						)
-						.setColor(message.guild.me.displayHexColor)
-				);
+				message.reply({ embeds: [new MessageEmbed()
+						.setDescription(`${message.client.emoji.fail} ${language.embedd16} `)
+						.setColor(message.guild.me.displayHexColor)]});
 				embedstarted.delete(message.author.id);
 			});
 	}

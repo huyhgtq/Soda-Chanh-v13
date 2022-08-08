@@ -1,4 +1,4 @@
-<%- include("partials/head", { arc, bot, user, path, description, title: "Pogy - Apply"}) %>
+<%- include("partials/head", { arc, bot, user, path, description, title: " - Apply"}) %>
 
         <link rel="stylesheet" href="<%domain%>/css/appeal.css" />
   
@@ -29,14 +29,14 @@ body.done .contact-form-title::after {
 <% }  %>
 
                     <% if (!app || !app.questions.length || app.questions.length === 0 || app.questions.length < 1) { %>
-<h3> The current guild does not have any application at the moment. </h3>
+<h3> Máy chủ hiện tại chưa có ứng dụng nào. </h3>
             <% } else { %>
 
                      <% if (!bot.channels.cache.has(app.appLogs)) { %>
-<h3> The app Log channel was deleted which is the reason you can't apply to the current form. Please make sure to let an admin know. </h3>
+<h3> Kênh Nhật ký ứng dụng đã bị xóa, đó là lý do bạn không thể áp dụng cho biểu mẫu hiện tại. Hãy đảm bảo cho quản trị viên biết. </h3>
  <% } else if(app.appToggle === false) { %>
 
-<h3> The current guild's application Status is closed. Come back later.</h3>
+<h3> Trạng thái ứng dụng của máy chủ hiện tại đã bị đóng. Quay lại sau.</h3>
 
 
   <% } else { %>
@@ -85,14 +85,14 @@ body.done .contact-form-title::after {
         // Renders the HTML element with id 'example1' as a reCAPTCHA widget.
         // The id of the reCAPTCHA widget is assigned to 'widgetId1'.
         widgetId1 = grecaptcha.render('example1', {
-          'sitekey' : '6LfG_H8aAAAAAKFRc2P0w5-slk2yz--FCuhQhS4O',
+          'sitekey' : '6Lc4su0cAAAAAMICR1sbQlgB5gJEgiluFADwonha',
           'theme' : 'dark'
         });
         widgetId2 = grecaptcha.render(document.getElementById('example2'), {
-          'sitekey' : '6LfG_H8aAAAAAKFRc2P0w5-slk2yz--FCuhQhS4O'
+          'sitekey' : '6Lc4su0cAAAAAMICR1sbQlgB5gJEgiluFADwonha'
         });
         grecaptcha.render('example3', {
-          'sitekey' : '6LfG_H8aAAAAAKFRc2P0w5-slk2yz--FCuhQhS4O',
+          'sitekey' : '6Lc4su0cAAAAAMICR1sbQlgB5gJEgiluFADwonha',
           'callback' : verifyCallback,
           'theme' : 'dark'
         });

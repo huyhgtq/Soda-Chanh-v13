@@ -7,7 +7,7 @@ module.exports = class extends Command {
     constructor(...args) {
       super(...args, {
         name: 'dog',
-        description: 'Get a cute dog picture!',
+        description: 'Nhận một hình ảnh con chó dễ thương!',
         category: 'Images',
         cooldown: 5
       });

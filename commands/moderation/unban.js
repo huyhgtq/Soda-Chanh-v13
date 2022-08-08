@@ -11,10 +11,10 @@ module.exports = class extends Command {
       super(...args, {
         name: 'unban',
         aliases: [ 'ub', 'uban'],
-        description: 'unban the specified user from the guild',
+        description: 'bỏ cấm người dùng được chỉ định khỏi máy chủ',
         category: 'Moderation',
         usage: '<user-ID>',
-        examples: [ 'unban  710465231779790849' ],
+        examples: [ 'unban  451699780423385089' ],
         guildOnly: true,
         botPermission: ['BAN_MEMBERS'],
         userPermission: ['BAN_MEMBERS'],
@@ -43,7 +43,7 @@ const settings = await Guild.findOne({
         .then(result => console.log(result))
         .catch(err => console.error(err));
 
-        return message.channel.send('This server was not in our database! We have added it, please retype this command.').then(m => m.delete({timeout: 10000}));
+        return message.channel.send('Máy chủ này không có trong cơ sở dữ liệu của chúng tôi! Chúng tôi đã thêm nó, vui lòng nhập lại lệnh này.').then(m => m.delete({timeout: 10000}));
     }
 });
 
@@ -63,9 +63,9 @@ if(!id) {
   
 const embed = new MessageEmbed()
 .setAuthor(message.author.tag, message.author.displayAvatarURL())
-.setDescription(`**Proper Usage:**\n\n\`1-\` unban peter_#4444 appealed\n\`2-\` unban 710465231779790849 appealed\n\`3-\` unban all`)
+.setDescription(`**Sử dụng hợp lý:**\n\n\`1-\` unban Yuu Nya#8479 đã kháng cáo\n\`2-\` unban 451699780423385089 kháng cáo\n\`3-\` unban all`)
 .setColor(message.client.color.red)
-.setFooter('https://pogy.xyz')
+.setFooter('https://sodachan.tk/')
 
 message.channel.send(embed)
   return
@@ -86,13 +86,13 @@ let reason = `Unban All`
 
 if(!array || !array.length){
 const embed = new MessageEmbed()
-.setDescription(`${client.emoji.fail} | The current guild has no banned users.`)
+.setDescription(`${client.emoji.fail} | Máy chủ hiện tại không có người dùng bị cấm.`)
 .setColor(client.color.green)
 
 message.channel.send(embed).catch(()=>{})
 } else {
 const embed = new MessageEmbed()
-.setDescription(`${client.emoji.success} | ${language.unbanSuccess} **${array.length}** Users from the guild. \n\n**Users:**\n${array.join(" - ")} ${logging && logging.moderation.include_reason === "true" ?`\n\n**Reason:** ${reason}`:``}`)
+.setDescription(`${client.emoji.success} | ${language.unbanSuccess} **${array.length}** Người dùng từ máy chủ. \n\n**Users:**\n${array.join(" - ")} ${logging && logging.moderation.include_reason === "true" ?`\n\n**Lý do:** ${reason}`:``}`)
 .setColor(client.color.green)
 
 message.channel.send(embed)
@@ -128,17 +128,17 @@ if(color == "#000000") color = message.client.color.yellow;
 let logcase = logging.moderation.caseN
 if(!logcase) logcase = `1`
 
-let bannedUsersLength = `${array.length} users`
-if(!array || !array.length) bannedUsersLength = 'No users'
-if(array.length === 1) bannedUsersLength = '1 User'
+let bannedUsersLength = `${array.length} người dùng`
+if(!array || !array.length) bannedUsersLength = 'Không có người dùng'
+if(array.length === 1) bannedUsersLength = '1 người dùng'
 const logEmbed = new MessageEmbed()
-.setAuthor(`Action: \`UnBan All\` | ${bannedUsersLength} | Case #${logcase}`, message.author.displayAvatarURL({ format: 'png' }))
-.addField('Unbanned Users', `${bannedUsersLength}`, true)
-.addField('Moderator', message.member, true)
+.setAuthor(`Hoạt động: \`UnBan All\` | ${bannedUsersLength} | Trường hợp #${logcase}`, message.author.displayAvatarURL({ format: 'png' }))
+.addField('Bỏ cấm người dùng', `${bannedUsersLength}`, true)
+.addField('Người điều hành', message.member, true)
 .setTimestamp()
 .setColor(color)
 
-if(array.length) logEmbed.addField('**Users:**', array.join(" - "))
+if(array.length) logEmbed.addField('**Người dùng:**', array.join(" - "))
 channel.send(logEmbed).catch(()=>{})
 
 logging.moderation.caseN = logcase + 1
@@ -171,10 +171,10 @@ if (reason.length > 1024) reason = reason.slice(0, 1021) + '...';
 const userrz = bannedUsers1.get(members).user;
 if(userrz){
 const embed = new MessageEmbed()
-.setDescription(`${client.emoji.success} | ${language.unbanSuccess} ${userrz.tag} ${logging && logging.moderation.include_reason === "true" ?`\n\n**Reason:** ${reason}`:``}`)
+.setDescription(`${client.emoji.success} | ${language.unbanSuccess} ${userrz.tag} ${logging && logging.moderation.include_reason === "true" ?`\n\n**Lý do:** ${reason}`:``}`)
 .setColor(client.color.green)
 
-message.channel.send(embed).catch(()=>{})
+message.reply({ embeds: [embed]}).catch(()=>{})
 await message.guild.members.unban(userrz, `${reason} / ${language.unbanResponsible}: ${message.author.tag}`).then(async(s)=>{
           if(logging && logging.moderation.delete_reply === "true"){
             setTimeout(()=>{
@@ -211,14 +211,14 @@ if (!reason) reason = `${language.noReasonProvided}`;
 if (reason.length > 1024) reason = reason.slice(0, 1021) + '...';
 
 const logEmbed = new MessageEmbed()
-.setAuthor(`Action: \`UnBan\` | ${userrz.tag} | Case #${logcase}`, userrz.displayAvatarURL({ format: 'png' }))
-.addField('User', userrz, true)
-.addField('Moderator', message.member, true)
+.setAuthor(`Hoạt động: \`UnBan\` | ${userrz.tag} | Trường hợp #${logcase}`, userrz.displayAvatarURL({ format: 'png' }))
+.addField('Người dùng', userrz, true)
+.addField('Người điều hành', message.member, true)
 .setFooter(`ID: ${userrz.id}`)
 .setTimestamp()
 .setColor(color)
 
-channel.send(logEmbed).catch((e)=>{console.log(e)})
+channel.send({ embeds: [logEmbed]}).catch((e)=>{console.log(e)})
 
 logging.moderation.caseN = logcase + 1
 await logging.save().catch(()=>{})
@@ -230,9 +230,9 @@ await logging.save().catch(()=>{})
 }
 } else {
   
-message.channel.send(new MessageEmbed()
+message.reply({ embeds: [new MessageEmbed()
 .setDescription(`${client.emoji.fail} | ${language.unbanInvalidID}`)
-.setColor(client.color.red));
+.setColor(client.color.red)]});
 
 }
 
@@ -240,9 +240,9 @@ message.channel.send(new MessageEmbed()
 } else {
 
 
-message.channel.send(new MessageEmbed()
+message.reply({ embeds: [new MessageEmbed()
 .setDescription(`${client.emoji.fail} | ${language.unbanInvalidID}`)
-.setColor(client.color.red));
+.setColor(client.color.red)]});
 
 }
   
@@ -252,9 +252,9 @@ message.channel.send(new MessageEmbed()
 
 const bannedUsers = await message.guild.fetchBans();
 const user = bannedUsers.get(id);
-if (!user) return message.channel.send( new MessageEmbed()
+if (!user) return message.reply({ embeds: [new MessageEmbed()
 .setDescription(`${client.emoji.fail} | ${language.unbanInvalidID}`)
-.setColor(client.color.red));
+.setColor(client.color.red)]});
 
 let reason = args.slice(1).join(' ');
 if (!reason) reason = language.unbanNoReason;
@@ -264,10 +264,10 @@ const userr = bannedUsers.get(id).user;
 await message.guild.members.unban(user.user, `${reason} / ${language.unbanResponsible}: ${message.author.tag}`);
 
 const embed = new MessageEmbed()
-.setDescription(`${client.emoji.success} | ${language.unbanSuccess} ${userr.tag} ${logging && logging.moderation.include_reason === "true" ?`\n\n**Reason:** ${reason}`:``}`)
+.setDescription(`${client.emoji.success} | ${language.unbanSuccess} ${userr.tag} ${logging && logging.moderation.include_reason === "true" ?`\n\n**Lý do:** ${reason}`:``}`)
 .setColor(client.color.green)
 
-message.channel.send(embed).then(async(s)=>{
+message.reply({ embeds: [embed]}).then(async(s)=>{
           if(logging && logging.moderation.delete_reply === "true"){
             setTimeout(()=>{
             s.delete().catch(()=>{})
@@ -301,14 +301,14 @@ if (!reason) reason = `${language.noReasonProvided}`;
 if (reason.length > 1024) reason = reason.slice(0, 1021) + '...';
 
 const logEmbed = new MessageEmbed()
-.setAuthor(`Action: \`UnBan\` | ${userr.tag} | Case #${logcase}`, userr.displayAvatarURL({ format: 'png' }))
-.addField('User', userr, true)
-.addField('Moderator', message.member, true)
+.setAuthor(`Hoạt động: \`UnBan\` | ${userr.tag} | Trường hợp #${logcase}`, userr.displayAvatarURL({ format: 'png' }))
+.addField('Người dùng', userr, true)
+.addField('Người điều hành', message.member, true)
 .setFooter(`ID: ${userr.id}`)
 .setTimestamp()
 .setColor(color)
 
-channel.send(logEmbed).catch((e)=>{console.log(e)})
+channel.send({ embeds: [logEmbed]}).catch((e)=>{console.log(e)})
 
 logging.moderation.caseN = logcase + 1
 await logging.save().catch(()=>{})

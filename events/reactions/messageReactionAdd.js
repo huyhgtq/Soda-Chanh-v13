@@ -64,25 +64,22 @@ let guild = this.client.guilds.cache.get(db.guildid);
 let guildName = guild.name;
 
 let slowDownEmbed = new MessageEmbed()
-.setDescription(`${message.client.emoji.fail} Slow Down There, You're on a cooldown\n\n**Role Name:** ${rrRole.name}\n**Guild Name:** ${guildName}`)
+.setDescription(`${message.client.emoji.fail} Làm chậm ở đó, bạn đang trong thời gian hồi chiêu\n\n**Tên vai trò:** ${rrRole.name}\n**Tên máy chủ:** ${guildName}`)
 .setColor(message.client.color.red)
 
 let addEmbed = new MessageEmbed()
-.setAuthor('Role Added', `${message.client.domain}/logo.png` , `${message.url}` )
-.setDescription(`You have recieved the **${rrRole.name}** Role by reacting in ${guildName}`)
-.setFooter(`https://pogy.xyz`)
+.setAuthor('Đã thêm vai trò', `${message.client.domain}/logo.png` , `${message.url}` )
+.setDescription(`Bạn đã nhận được **${rrRole.name}** vai trò bằng cách phản ứng trong ${guildName}`)
 .setColor(message.client.color.green)
 
 let remEmbed = new MessageEmbed()
-.setAuthor('Role Removed', `${message.client.domain}/logo.png` , `${message.url}` )
-.setDescription(`You have removed the **${rrRole.name}** Role by reacting in ${guildName}`)
-.setFooter(`https://pogy.xyz`)
+.setAuthor('Đã xóa vai trò', `${message.client.domain}/logo.png` , `${message.url}` )
+.setDescription(`Bạn đã loại bỏ **${rrRole.name}** vai trò bằng cách phản ứng trong ${guildName}`)
 .setColor(message.client.color.green)
 
 let errorReaction = new MessageEmbed()
-.setAuthor('Reaction Role Error', `${message.client.domain}/logo.png` , `${message.url}` )
-.setDescription(`${message.client.emoji.fail} Failed to Add the role, since I'm Missing the Manage Roles Permission.\n\nPlease let an admin Know.`)
-.setFooter(`https://pogy.xyz`)
+.setAuthor('Lỗi vai trò phản ứng', `${message.client.domain}/logo.png` , `${message.url}` )
+.setDescription(`${message.client.emoji.fail} Không thể thêm vai trò, vì tôi thiếu quyền quản lý vai trò.\n\nVui lòng cho quản trị viên biết.`)
 .setColor(message.client.color.green)
 
 if(reactionCooldown.has(user.id)) {
@@ -315,7 +312,7 @@ let arraylength = array.length
         if(ticketCooldownLol.has(user.id)) return;
          if (!message.channel.permissionsFor(message.guild.me).has('SEND_MESSAGES')) return;
           if (!message.channel.permissionsFor(message.guild.me).has('EMBED_LINKS')) return;
-        message.channel.send(new discord.MessageEmbed().setColor(message.client.color.red).setDescription(`You already have ${arraylength} open tickets, as the current guild's ticket limit is ${ticketlimit} `).setAuthor(user.tag, user.displayAvatarURL()).setFooter('https://pogy.xyz')).then(m => m.delete({timeout: 5000}));
+        message.channel.send(new discord.MessageEmbed().setColor(message.client.color.red).setDescription(`Bạn đã có ${arraylength} mở vé, vì giới hạn vé của máy chủ hiện tại là ${ticketlimit} `).setAuthor(user.tag, user.displayAvatarURL())).then(m => m.delete({timeout: 5000}));
         ticketCooldownLol.add(user.id)
         setTimeout(()=>{
      ticketCooldownLol.delete(user.id)    
@@ -352,7 +349,7 @@ let everyone = message.guild.roles.everyone;
           },
         ],
         parent: ticketCategory.id,
-        reason: `Ticket Module`,
+        reason: `Ticket`,
         topic: `**ID:** ${user.id} | **Tag:** ${user.tag}`
       }).then(async(chan)=>{
 
@@ -387,9 +384,8 @@ if(chan){
     );
 
     chan.send(new MessageEmbed()
-    .setDescription(`Please use \`${prefix}close\` to close the ticket.`)
+    .setDescription(`Hãy sử dụng \`${prefix}close\` đóng vé.`)
     .setColor(message.client.color.red)
-    .setFooter('https://pogy.xyz')
     .setTimestamp())
 
    
@@ -399,10 +395,9 @@ let color2 = db.ticketLogColor
 
     const embedLog = new discord.MessageEmbed()
       .setColor(color2)
-      .setFooter('https://pogy.xyz')
-      .setTitle("Ticket Created")
+      .setTitle("Đã tạo Ticket")
       .setTimestamp()
-      .addField("Information" , `**User:** ${user}\n**Ticket Channel: **${chan.name}\n**Ticket:** #${serverCase}\n**Date:** ${moment(new Date()).format("dddd, MMMM Do YYYY")} `)
+      .addField("Thông tin" , `**Người dùng:** ${user}\n**Kênh bán vé: **${chan.name}\n**Ticket:** #${serverCase}\n**Ngày tháng:** ${moment(new Date()).format("MM-DD-YYYY")} `)
 
 
 
@@ -418,7 +413,7 @@ let color2 = db.ticketLogColor
 
 		}).catch(() => {
       if (!message.channel.permissionsFor(message.guild.me).has('SEND_MESSAGES')) return;
-		  message.channel.send(new discord.MessageEmbed().setColor(message.client.color.red).setDescription("There was an error creating the ticket, please check my permissions or contact support.")).then(m => m.delete({timeout: 5000})).catch(() => {})
+		  message.channel.send(new discord.MessageEmbed().setColor(message.client.color.red).setDescription("Đã xảy ra lỗi khi tạo vé, vui lòng kiểm tra quyền của tôi hoặc liên hệ với bộ phận hỗ trợ.")).then(m => m.delete({timeout: 5000})).catch(() => {})
 		})
   };
   }

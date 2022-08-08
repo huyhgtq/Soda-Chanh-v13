@@ -6,7 +6,7 @@ module.exports = class extends Command {
     super(...args, {
       name: 'asciify',
       aliases: [ 'bigtext', 'banner' ],
-      description: 'Turns your text into an ASCII art.',
+      description: 'Biến văn bản của bạn thành một tác phẩm nghệ thuật ASCII.',
       category: 'Fun',
       usage: '<text>',
       cooldown: 3
@@ -22,11 +22,11 @@ module.exports = class extends Command {
     const language = require(`../../data/language/${guildDB.language}.json`)
     
     if (args.length < 1) {
-      return message.channel.send(`${message.client.emoji.fail} ${language.changeErrorValid}`)
+      return message.reply(`${message.client.emoji.fail} ${language.changeErrorValid}`)
     }
 
-    return message.channel.send(await figlet(args), { code: true }).catch(() => {
-      message.channel.send(`${language.bigError}`)
+    return message.reply(await figlet(args), { code: true }).catch(() => {
+      message.reply (`${language.bigError}`)
     });
   }
 

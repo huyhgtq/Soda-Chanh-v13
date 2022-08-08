@@ -7,8 +7,9 @@ module.exports = class extends Command {
   constructor(...args) {
     super(...args, {
       name: "claim",
-      description: "Claim a ticket to assist the user.",
+      description: "Yêu cầu một vé để hỗ trợ người dùng.",
       aliases: [],
+	  disabled: true,
       cooldown: 3,
       usage: ' ',
       category: "Tickets"
@@ -50,7 +51,7 @@ module.exports = class extends Command {
         message.channel.updateOverwrite(pogy, { VIEW_CHANNEL: true, READ_MESSAGES: true, SEND_MESSAGES: true, READ_MESSAGE_HISTORY: true, ATTACH_FILES: true }).catch(err => { message.channel.send(new discord.MessageEmbed().setColor(client.color.red).setDescription(language.unclaimDontHavePerms))})
         message.channel.updateOverwrite(everyone, { VIEW_CHANNEL: false }).catch(err => { message.channel.send(new discord.MessageEmbed().setColor(client.color.red).setDescription(language.unclaimDontHavePerms))})
         
-        message.channel.send(new discord.MessageEmbed().setColor(client.color.green).setDescription(language.claimSuccess.replace("{userName}", message.author.username)))
+        message.reply({ embeds: [new discord.MessageEmbed().setColor(client.color.green).setDescription(language.claimSuccess.replace("{userName}", message.author.username))]})
       })
   }
 }

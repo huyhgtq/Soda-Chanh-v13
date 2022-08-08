@@ -5,7 +5,7 @@ module.exports = class extends Command {
     constructor(...args) {
       super(...args, {
         name: 'support',
-        description: `Sends you Pogy's Support server`,
+        description: `Gửi cho bạn máy chủ Hỗ trợ của Soda Chan`,
         category: 'Utility',
         cooldown: 3
       });
@@ -20,7 +20,7 @@ module.exports = class extends Command {
       
       const embed = new Discord.MessageEmbed()
         .setColor(message.guild.me.displayHexColor)
-        .setDescription(`${language.support}(https://discord.gg/duBwdCvCwW) ${message.client.emoji.success}`);
+        .setDescription(`${language.support}(https://discord.gg/2mHgQQz3GN) ${message.client.emoji.success}`);
 
       await message.channel.send(embed)  
     }

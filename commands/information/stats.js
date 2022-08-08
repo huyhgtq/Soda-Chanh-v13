@@ -1,115 +1,134 @@
-const Command = require('../../structures/Command');
-const { MessageEmbed, version: djsversion } = require('discord.js');
-const { mem, cpu, os } = require('node-os-utils');
+  const Command = require('../../structures/Command');
+const { MessageEmbed, MessageActionRow, MessageButton ,version: djsversion } = require('discord.js');
+const { mem, cpu, drive } = require('node-os-utils');
 const { oneLine, stripIndent } = require('common-tags');
 const moment = require('moment');
-const ms = require("parse-ms")
+const m = require("moment-duration-format");
+const os = require('os');
+const osutils = require("os-utils");
+const ms = require("parse-ms");
 const Guild = require('../../database/schemas/Guild');
+const Discord = require("discord.js")
+let cpuStat = require("cpu-stat");
+const config = require("../../config.json");
+const domain = require("../../config.js");
+const { dependencies } = require("../../package.json");
+
+function laysodep(num) {
+        const pattern = /\B(?=(\d{3})+(?!\d))/g;
+        return num.toString().replace(pattern, ',');
+    }
+
 module.exports = class extends Command {
     constructor(...args) {
       super(...args, {
         name: 'stats',
         aliases: ['s', 'botinfo'],
-        description: 'Displays Pogy\s Statistics',
+        description: 'Hiển thị số liệu thống kê của Soda Chan',
         category: 'Information',
         cooldown: 3
       });
     }
 
-    async run(message, client) {
-      const guildDB = await Guild.findOne({
-        guildId: message.guild.id
-      });
-    
-      const language = require(`../../data/language/${guildDB.language}.json`)
-      let uptime = this.client.shard ? await this.client.shard.broadcastEval('this.uptime') : this.client.uptime;
-      if (uptime instanceof Array) {
-        uptime = uptime.reduce((max, cur) => Math.max(max, cur), -Infinity);
+    async run(message, args) {
+    const client = message.client
+	const guildDB = await Guild.findOne({ guildId: message.guild.id });
+	const language = require(`../../data/language/${guildDB.language}.json`)
+	const prefix = guildDB.prefix;
+	const { totalGb, usedGb, freeGb, usedPercentage, freePercentage } = await drive.info();
+	const core = os.cpus()[0];
+   let cpuLol;
+  cpuStat.usagePercent(function(err, percent, seconds) {
+      if (err) {
+          return console.log(err);
       }
-      let seconds = uptime / 1000;
-      let days = parseInt(seconds / 86400);
-      seconds = seconds % 86400;
-      let hours = parseInt(seconds / 3600);
-      seconds = seconds % 3600;
-      let minutes = parseInt(seconds / 60);
-      seconds = parseInt(seconds % 60);
-    
-      uptime = `${seconds}s`;
-      if (days) {
-        uptime = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+      const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
+      //
+      let connectedchannelsamount = 0;
+      let guilds = client.guilds.cache.map(guild=>guild)
+      for(let i = 0; i< guilds.length; i++){
+            if(guilds[i].me.voice.channel) connectedchannelsamount += 1;
+            
       }
-      else if (hours) {
-        uptime = `${hours}h ${minutes}m ${seconds}s`;
-      }
-      else if (minutes) {
-        uptime = `${minutes}m ${seconds}s`;
-      }
+	  
 
-      const shardGuildCounts = await this.client.shard.fetchClientValues('guilds.cache.size')
-      const totalGuildCount = shardGuildCounts.reduce((total, current) => total + current)
-      const shardUserCounts = await this.client.shard.fetchClientValues('users.cache.size')
-      const totalUserCount = shardUserCounts.reduce((total, current) => total + current)
-      const shardChannelCounts = await this.client.shard.fetchClientValues('users.cache.size')
-      const totalChannelCount = shardUserCounts.reduce((total, current) => total + current)
-
-      let rss = client.shard ? await client.shard.broadcastEval('process.memoryUsage().rss') : process.memoryUsage().rss;
-      if (rss instanceof Array) {
-        rss = rss.reduce((sum, val) => sum + val, 0);
-      }
-      let heapUsed = client.shard ? await client.shard.broadcastEval('process.memoryUsage().heapUsed') : process.memoryUsage().heapUsed;
-      if (heapUsed instanceof Array) {
-        heapUsed = heapUsed.reduce((sum, val) => sum + val, 0);
-      }
-
-      const { totalMemMb, usedMemMb } = await mem.info();
-    const serverStats = stripIndent`
-      OS -- ${await os.oos()}
-      CPU -- ${cpu.model()}
+	  const serverStats = stripIndent`
+      OS -- ${os.platform()}
+      CPU -- ${core.model}
       Cores -- ${cpu.count()}
-      CPU Usage -- ${await cpu.usage()} %
-      RAM -- ${totalMemMb} MB
-      RAM Usage -- ${(heapUsed / 1024 / 1024).toFixed(2)} MB 
-
+      CPU Usage -- ${percent.toFixed(2)} %
+	     Speed CPU -- ${core.speed}MHz
+      RAM -- ${(os.totalmem() / 1024 / 1024).toFixed(2)} MB
+      RAM Usage -- ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB
+      Tổng bộ nhớ ${totalGb} GB
+      Bộ nhớ sử dụng, ${usedGb} GB(${usedPercentage}%
+      Bộ nhớ còn trống ${freeGb} GB(${freePercentage}%
     `;
 
-
-    const tech = stripIndent`
+	  const tech = stripIndent`
       Ping -- ${Math.round(message.client.ws.ping)}ms
-      Uptime  -- ${uptime}
-      ${language.pogyVersion} -- 2.0
-      Library -- Discord.js v12.5.1
-      Environment -- Node.js v12.18.4
-      Servers -- ${totalGuildCount}
-      ${language.users} -- ${this.client.guilds.cache.reduce((a, b) => a + b.memberCount, 0)}
-      ${language.channels} -- ${message.client.channels.cache.size}
-      Shards -- ${this.client.shard ? `${this.client.shard.count}` : 'None'}
-      ${language.pogyCommands} -- ${message.client.commands.size}
-      Aliases -- ${message.client.aliases.size}
+      WebSocket Ping -- ${client.ws.ping}ms
+      Uptime  -- ${duration}
+      ${language.pogyVersion} -- Beta 3.0
+      Library -- ${dependencies["discord.js"].replace("^", "v")}
+      Environment -- ${process.version}
+      Servers -- ${laysodep(client.guilds.cache.size)}
+      ${language.users} -- ${laysodep(client.guilds.cache.reduce((a, b) => a + b.memberCount, 0))}
+      ${language.channels} -- ${laysodep(message.client.channels.cache.size)}
+      ${language.pogyCommands} -- ${laysodep(message.client.commands.size)}
+      Aliases -- ${laysodep(message.client.aliases.size)}
+	     Emojis Cache ${laysodep(client.emojis.cache.size)}
     `;
-
-     const devs= stripIndent`
+	  const info = stripIndent`
+      SODA CHAN BOT ---
+    `;
+	  const devs= stripIndent`
      -------
      ${language.pogyOwners}
-    • Peter_#4444
+    • Harry#8479
 
      ${language.pogyDevelopers}
-    • Peter_#4444
+    • Harry#8479
 
      ${language.pogyContributor}
-    • GhostSlayer#0001
-    • ΛCЄ#0001
+    • ly#5580
+    • ! Losy . Anh Cả#3214
     -------
     `;
-    const embed = new MessageEmbed()
-      .setAuthor(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
-      .setTitle(`${language.pogyInfo}`)
-      .addField(`${language.pogyGeneral}`, `\`\`\`css\n${tech}\`\`\``, true)
-      .addField(`${language.pogyTeam}`, `\`\`\`css\n${devs}\`\`\``, true)
-      .addField(`${language.pogyStats}`, `\`\`\`css\n${serverStats}\`\`\``)
-      .setFooter(`Shard #${message.guild.shardID}`)
-      .setTimestamp()
-      .setColor(message.guild.me.displayHexColor);
-    message.channel.send(embed);
-    
-    }
-};
+	  const row = new MessageActionRow() // Prettier
+       .addComponents(
+        new MessageButton() // Prettier
+         .setURL(`https://discord.gg/2mHgQQz3GN`)
+         .setEmoji('<:member_role:964292126814900234>')
+         .setLabel("Support")
+         .setStyle("LINK")
+       )
+       .addComponents(
+        new MessageButton() // Prettier
+         .setURL(`https://discord.com/api/oauth2/authorize?client_id=${domain.client_id}&permissions=8&scope=bot`)
+         .setEmoji('<:Channel:964292621478531072>')
+         .setLabel("Invite me")
+         .setStyle("LINK")
+       );
+      if (process.env.DOMAIN) {
+       row.addComponents(
+        new MessageButton() // Prettier
+         .setURL(`${process.env.DOMAIN}`)
+         .setEmoji('<:StopStream:964292991298711624>')
+         .setLabel("Dashboard")
+         .setStyle("LINK")
+       );
+      }
+      const botinfo = new MessageEmbed()
+          .setAuthor(client.user.username, config.AVATARURL) 
+          .setTitle("__**Stats:**__")
+          .setColor('RANDOM')
+          .setTitle(`${language.pogyInfo}`, `\`\`\`css\n${info}\`\`\``)
+	  	  .addField(`${language.pogyStats}`, `\`\`\`css\n${serverStats}\`\`\``)
+          .addField(`${language.pogyGeneral}`, `\`\`\`css\n${tech}\`\`\``, true)
+		  .addField(`${language.pogyTeam}`, `\`\`\`css\n${devs}\`\`\``, true)
+          .setFooter("Coded by:    ! Losy | Harry#8479",config.AVATARURL)
+      message.reply({ embeds: [botinfo], components: [row] })
+  });
+  }
+  };

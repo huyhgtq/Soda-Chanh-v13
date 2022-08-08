@@ -2,7 +2,6 @@ const Event = require('../../structures/Event');
 const logger = require('../../utils/logger');
 const Guild = require('../../database/schemas/Guild');
 const WelcomeDB = require('../../database/schemas/welcome');
-const Canvas = require('canvas');
 const { MessageAttachment } = require('discord.js');
 const discord = require("discord.js");
 const muteModel = require('../../models/mute');
@@ -31,7 +30,7 @@ const muteDoc = await muteModel.findOne({
     if (muteDoc) {
         const muteRole = member.guild.roles.cache.find(r => r.name == 'Muted')
   
-        if (muteRole) member.roles.add(muteRole.id, ["Mute Command / User left and Rejoined."]).catch(()=>{})
+        if (muteRole) member.roles.add(muteRole.id, ["Tắt tiếng Lệnh / Người dùng rời và Liên kết lại."]).catch(()=>{})
   
         muteDoc.memberRoles = []
   
@@ -55,18 +54,18 @@ if(color == "#000000") color = member.client.color.green;
 
 
     const embed = new discord.MessageEmbed()
-      .setTitle('📥 Member Joined')
+      .setTitle('📥 Thành viên đã tham gia')
       .setAuthor(`${member.guild.name}`, member.guild.iconURL({ dynamic: true }))
       .setThumbnail(member.user.displayAvatarURL({ dynamic: true }))
       .setDescription(`${member} (**${member.user.tag}**)`)
-      .addField('Account created on', moment(member.user.createdAt).format('dddd, MMMM Do YYYY'))
+      .addField('Tài khoản được tạo vào', moment(member.user.createdAt).format('MM-DD-YYYY'))
       .setTimestamp()
       .setColor(member.guild.me.displayHexColor);
 
     if(channelEmbed &&
       channelEmbed.viewable &&
       channelEmbed.permissionsFor(member.guild.me).has(['SEND_MESSAGES', 'EMBED_LINKS'])){
-            channelEmbed.send(embed).catch(()=>{})
+            channelEmbed.send({ embeds: [embed] }).catch(()=>{})
       }
 
   
@@ -99,11 +98,11 @@ if(color == "#000000") color = member.client.color.green;
       
       let action;
       if(altDetector.altAction && altDetector.altAction.toLowerCase() === "ban") {
-        await member.ban({reason: "Alt Account | Alt Detector Module"}).catch(()=>{})
+        await member.ban({reason: "Tài khoản thay thế | Mô-đun phát hiện thay thế"}).catch(()=>{})
         action = "Banned"
       }
       if(altDetector.altAction && altDetector.altAction.toLowerCase() === "kick") {
-        await member.kick({ reason: "Alt Account | Alt Detector Module"}).catch(()=>{})
+        await member.kick({ reason: "Tài khoản thay thế | Mô-đun phát hiện thay thế"}).catch(()=>{})
         action = "Kicked"
       }
 
@@ -111,9 +110,9 @@ if(color == "#000000") color = member.client.color.green;
         if(action && action === "Kicked" || action === "Banned"){
         const embedAlt = new discord.MessageEmbed()
         .setColor('GREEN')
-        .setTitle(`Alt Detector | ${member.user.tag}`)
-        .setDescription(`**${action} ${member.user.tag} From the guild.**\n\n**Reason:** Alt Detector\n\n__**Account Created at:**__ ${moment(member.user.createdAt).format('MMMM Do YYYY, h:mm:ss a')}`)
-        altLog.send(embedAlt).catch(()=>{})
+        .setTitle(`Máy dò thay thế | ${member.user.tag}`)
+        .setDescription(`**${action} ${member.user.tag} Từ máy chủ.**\n\n**Lý do:** Alt Detector\n\n__**Tài khoản được tạo vào:**__ ${moment(member.user.createdAt).format('MM-DD-YYYY')}`)
+        altLog.send({ embeds: [embedAlt] }).catch(()=>{})
         }
       }
       
@@ -154,7 +153,7 @@ let text = welcome.welcomeMessage.replace(/{user}/g, `${member}`)
         .replace(/{size}/g, `${member.guild.memberCount}`)
         .replace(/{guild}/g, `${member.guild.name}`)
         .replace(/{member_createdAtAgo}/g, `${moment(member.user.createdTimestamp).fromNow()}`)
-        .replace(/{member_createdAt}/g, `${moment(member.user.createdAt).format('MMMM Do YYYY, h:mm:ss a')}`)
+        .replace(/{member_createdAt}/g, `${moment(member.user.createdAt).format('MM-DD-YYYY')}`)
         
         if(welcome.welcomeEmbed == "false") {
         member.send(`${text}`).catch(() => {})
@@ -181,9 +180,9 @@ let text = welcome.welcomeMessage.replace(/{user}/g, `${member}`)
         .replace(/{size}/g, `${member.guild.memberCount}`)
         .replace(/{guild}/g, `${member.guild.name}`)
         .replace(/{member_createdAtAgo}/g, `${moment(member.user.createdTimestamp).fromNow()}`)
-        .replace(/{member_createdAt}/g, `${moment(member.user.createdAt).format('MMMM Do YYYY, h:mm:ss a')}`)
+        .replace(/{member_createdAt}/g, `${moment(member.user.createdAt).format('MM-DD-YYYY')}`)
 
-          if(textEmbed !== null) embed.setDescription(textEmbed)
+          if(textEmbed !== null) embed.setDescription({ embeds: [textEmbed] })
           
           let authorName = welcome.embed.author.name.replace(/{user_tag}/g, `${member.user.tag}`)
         .replace(/{user_name}/g, `${member.user.username}`)
@@ -221,7 +220,7 @@ let text = welcome.welcomeMessage.replace(/{user}/g, `${member}`)
           if(image === "{userAvatar}") image = member.user.displayAvatarURL({ dynamic: true, size: 512 })
           if(image !== null) embed.setImage(image)
           
-          member.send(embed).catch(()=>{})
+          member.send({ embeds: [embed] }).catch(()=>{})
         }
 
       
@@ -241,7 +240,7 @@ let text = welcome.welcomeMessage.replace(/{user}/g, `${member}`)
         .replace(/{size}/g, `${member.guild.memberCount}`)
         .replace(/{guild}/g, `${member.guild.name}`)
         .replace(/{member_createdAtAgo}/g, `${moment(member.user.createdTimestamp).fromNow()}`)
-        .replace(/{member_createdAt}/g, `${moment(member.user.createdAt).format('MMMM Do YYYY, h:mm:ss a')}`)
+        .replace(/{member_createdAt}/g, `${moment(member.user.createdAt).format('MM-DD-YYYY')}`)
         
         if(welcome.welcomeEmbed == "false") {
                 
@@ -275,7 +274,7 @@ let text = welcome.welcomeMessage.replace(/{user}/g, `${member}`)
         .replace(/{size}/g, `${member.guild.memberCount}`)
         .replace(/{guild}/g, `${member.guild.name}`)
         .replace(/{member_createdAtAgo}/g, `${moment(member.user.createdTimestamp).fromNow()}`)
-        .replace(/{member_createdAt}/g, `${moment(member.user.createdAt).format('MMMM Do YYYY, h:mm:ss a')}`)
+        .replace(/{member_createdAt}/g, `${moment(member.user.createdAt).format('MM-DD-YYYY')}`)
 
           if(textEmbed !== null) embed.setDescription(textEmbed)
           
@@ -318,7 +317,7 @@ let text = welcome.welcomeMessage.replace(/{user}/g, `${member}`)
               if(greetChannel &&
       greetChannel.viewable &&
       greetChannel.permissionsFor(member.guild.me).has(['SEND_MESSAGES', 'EMBED_LINKS'])){
-        greetChannel.send(embed).catch(() => {})
+        greetChannel.send({ embeds: [embed] }).catch(() => {})
       }
         }
       }

@@ -10,10 +10,10 @@ module.exports = class extends Command {
       super(...args, {
         name: 'addrole',
         aliases: [ 'addr' ],
-        description: 'Adds the specified role to the mentioned user',
+        description: 'Thêm vai trò được chỉ định cho người dùng được đề cập',
         category: 'Moderation',
         usage: '<user>',
-        examples: [ 'addrole @peter' ],
+        examples: [ 'addrole @yuunya' ],
         guildOnly: true,
         botPermission: ['MANAGE_ROLES'],
         userPermission: ['MANAGE_ROLES'],
@@ -45,7 +45,7 @@ const success = client.emoji.success;
         .then(result => console.log(result))
         .catch(err => console.error(err));
 
-        return message.channel.send('This server was not in our database! We have added it, please retype this command.').then(m => m.delete({timeout: 10000}));
+        return message.reply('Máy chủ này không có trong cơ sở dữ liệu của chúng tôi! Chúng tôi đã thêm nó, vui lòng nhập lại lệnh này.').then(m => m.delete({timeout: 10000}));
     }
 });
   const logging = await Logging.findOne({ guildId: message.guild.id })
@@ -59,54 +59,54 @@ let member = message.mentions.members.last() || message.guild.members.cache.get(
  
 
     if (!member)
-      return message.channel.send( new MessageEmbed()
+      return message.reply({ embeds: [new MessageEmbed()
       .setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true }))
-      .setTitle(`${fail} Invalid User`)
-      .setDescription(`Please Mention a Valid user mention / user ID`)
+      .setTitle(`${fail} Người dùng không hợp lệ`)
+      .setDescription(`Vui lòng đề cập đến đề cập đến người dùng hợp lệ / ID người dùng`)
       .setTimestamp()
-      .setFooter('https://pogy.xyz')
-      .setColor(message.guild.me.displayHexColor));
+      .setFooter('https://sodachan.tk/')
+      .setColor(message.guild.me.displayHexColor)]});
     if (member.roles.highest.position >= message.member.roles.highest.position)
-      return message.channel.send( new MessageEmbed()
+      return message.reply({ embeds: [new MessageEmbed()
       .setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true }))
-      .setTitle(`${fail} Role Error`)
-      .setDescription(`The Provided Role has an equal or higher role than you.`)
+      .setTitle(`${fail} Lỗi vai trò`)
+      .setDescription(`Vai trò được Cung cấp có vai trò ngang bằng hoặc cao hơn bạn.`)
       .setTimestamp()
-      .setFooter('https://pogy.xyz')
-      .setColor(message.guild.me.displayHexColor));
+      .setFooter('https://sodachan.tk/')
+      .setColor(message.guild.me.displayHexColor)]});
 
     const role = getRoleFromMention(message, args[1]) || message.guild.roles.cache.get(args[1]) || message.guild.roles.cache.find(rl => rl.name.toLowerCase() === args.slice(1).join(' ').toLowerCase())
 
-    let reason = `The current Feature doesnt need a reason`
-    if (!reason) reason = `No Reason Provided`;
+    let reason = `Tính năng hiện tại không cần lý do`
+    if (!reason) reason = `Không cung cấp lý do`;
     if (reason.length > 1024) reason = reason.slice(0, 1021) + '...';
 
     if (!role)
-      return message.channel.send( new MessageEmbed()
+      return message.reply({ embeds: [new MessageEmbed()
       .setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true }))
-      .setTitle(`${fail} Invalid Role`)
-      .setDescription(`Please Provide a Valid Role / Role ID`)
+      .setTitle(`${fail} Vai trò không hợp lệ`)
+      .setDescription(`Vui lòng cung cấp một vai trò hợp lệ / ID vai trò`)
       .setTimestamp()
-      .setFooter('https://pogy.xyz')
-      .setColor(message.guild.me.displayHexColor));
+      .setFooter('https://sodachan.tk/')
+      .setColor(message.guild.me.displayHexColor)]});
     else if (member.roles.cache.has(role.id)) // If member already has role
-      return message.channel.send( new MessageEmbed()
+      return message.reply({ embeds: [new MessageEmbed()
       .setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true }))
-      .setTitle(`${fail} Role Error`)
-      .setDescription(`The user already has that role.`)
+      .setTitle(`${fail} Lỗi vai trò`)
+      .setDescription(`Người dùng đã có vai trò đó.`)
       .setTimestamp()
-      .setFooter('https://pogy.xyz')
-      .setColor(message.guild.me.displayHexColor));
+      .setFooter('https://sodachan.tk/')
+      .setColor(message.guild.me.displayHexColor)]});
     else {
       try {
 
 
-        await member.roles.add(role, [`Role Add / Responsible User: ${message.author.tag}`]);
+        await member.roles.add(role, [`Thêm vai trò / Người dùng có trách nhiệm: ${message.author.tag}`]);
         const embed = new MessageEmbed()
          
-          .setDescription(`${success} | Added** ${role.name}** to **${member.user.tag}**`)
+          .setDescription(`${success} | Thêm** ${role.name}** đến **${member.user.tag}**`)
           .setColor(message.guild.me.displayHexColor);
-        message.channel.send(embed)
+        message.reply({ embeds: [embed]})
         .then(async(s)=>{
           if(logging && logging.moderation.delete_reply === "true"){
             setTimeout(()=>{
@@ -140,14 +140,14 @@ let logcase = logging.moderation.caseN
 if(!logcase) logcase = `1`
 
 const logEmbed = new MessageEmbed()
-.setAuthor(`Action: \`Add Role\` | ${member.user.tag} | Case #${logcase}`, member.user.displayAvatarURL({ format: 'png' }))
-.addField('User', member, true)
-.addField('Moderator', message.member, true)
+.setAuthor(`Hoạt động: \`Add Role\` | ${member.user.tag} | Trường hợp #${logcase}`, member.user.displayAvatarURL({ format: 'png' }))
+.addField('Người sử dụng', member, true)
+.addField('Người điều hành', message.member, true)
 .setFooter(`ID: ${member.id}`)
 .setTimestamp()
 .setColor(color)
 
-channel.send(logEmbed).catch(()=>{})
+channel.send({ embeds: [logEmbed]}).catch(()=>{})
 
 logging.moderation.caseN = logcase + 1
 await logging.save().catch(()=>{})
@@ -160,7 +160,7 @@ await logging.save().catch(()=>{})
 
 
       } catch {
-        return message.channel.send(`Seems like my role is below, please rearrange the roles!`)
+        return message.reply(`Có vẻ như vai trò của tôi ở bên dưới, hãy sắp xếp lại các vai trò!`)
       }
     }  
 

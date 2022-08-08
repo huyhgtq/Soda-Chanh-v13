@@ -10,8 +10,8 @@ module.exports = class extends Command {
       aliases: [],
       usage: "<userID>",
       category: "Alt Detector",
-      examples: ["abypass 402490971041824768"],
-      description: "Whitelist alt accounts of your choice.",
+      examples: ["abypass 451699780423385089"],
+      description: "Danh sách trắng các tài khoản thay thế do bạn lựa chọn.",
       cooldown: 5,
       userPermission: ['MANAGE_GUILD'],
     })
@@ -48,16 +48,20 @@ module.exports = class extends Command {
             
             await newGuild.save()
             .catch(err => { console.log( err ) })
-        return message.channel.send(new discord.MessageEmbed().setColor(client.color.green).setDescription(language.abypassSuccess.replace("{userID}", args[0])))
+        return message.reply({ embeds: [new discord.MessageEmbed().setColor(client.color.green).setDescription(language.abypassSuccess.replace("{userID}", args[0]))]})
 
           }
           
           let oldAllowedAlts = db.allowedAlts //[]
           if(guildDB.isPremium === "false") {
-          if(oldAllowedAlts.length === 10) return message.channel.send(new discord.MessageEmbed().setColor(client.color.red).setDescription(language.abypassNotPremium10))
+          if(oldAllowedAlts.length === 10) return message.reply({ embeds: [new discord.MessageEmbed()
+																		   .setColor(client.color.red)
+																		   .setDescription(language.abypassNotPremium10)]})
           }
           if(guildDB.isPremium === "true") {
-          if(oldAllowedAlts.length === 50) return message.channel.send(new discord.MessageEmbed().setColor(client.color.red).setDescription(language.abypassNotPremium10.replace("10", "50")))
+          if(oldAllowedAlts.length === 50) return message.reply({ embeds: [new discord.MessageEmbed()
+																		   .setColor(client.color.red)
+																		   .setDescription(language.abypassNotPremium10.replace("10", "50"))]})
           }
           oldAllowedAlts.push(u.id)
           
@@ -65,11 +69,13 @@ module.exports = class extends Command {
             allowedAlts: oldAllowedAlts
           })
           
-          message.channel.send(new discord.MessageEmbed().setColor(client.color.green).setDescription(language.abypassSuccess.replace("{userID}", args[0])))
+           message.reply({ embeds: [new discord.MessageEmbed()
+							   .setColor(client.color.green)
+							   .setDescription(language.abypassSuccess.replace("{userID}", args[0]))]})
         })
       })
       .catch(err => {
-        message.channel.send(new discord.MessageEmbed().setColor(client.color.red).setDescription(language.abypassNotValidUser))
+        message.reply({ embeds: [new discord.MessageEmbed().setColor(client.color.red).setDescription(language.abypassNotValidUser)]})
       })
   }
 }

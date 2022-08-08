@@ -12,10 +12,10 @@ module.exports = class extends Command {
       super(...args, {
         name: 'warn',
         aliases: ['w'],
-        description: 'Gives a warning to the specified user from your Discord server.',
+        description: 'Đưa ra cảnh báo cho người dùng được chỉ định từ máy chủ Discord của bạn.',
         category: 'Moderation',
-        usage: '<user> [reason]',
-        examples: [ 'warn @Peter Please do not swear.' ],
+        usage: '<người dùng> [lý do]',
+        examples: [ 'warn @Yuunya Xin đừng thề.' ],
         guildOnly: true,
         userPermission: ['KICK_MEMBERS'],
       });
@@ -44,10 +44,7 @@ const settings = await Guild.findOne(
         .then(result => console.log(result))
         .catch(err => console.error(err));
 
-      return message.channel
-        .send(
-          'This server was not in our database! We have added it, please retype this command.'
-        )
+      return message.reply('Máy chủ này không có trong cơ sở dữ liệu của chúng tôi! Chúng tôi đã thêm nó, vui lòng nhập lại lệnh này.')
         .then(m => m.delete({ timeout: 10000 }));
     }
   }
@@ -61,23 +58,23 @@ let language = require(`../../data/language/${guildDB.language}.json`)
     const mentionedMember = message.mentions.members.last() || message.guild.members.cache.get(args[0])
     
  if (!mentionedMember) {
-      return message.channel.send(new Discord.MessageEmbed()
+      return message.reply({ embeds: [new Discord.MessageEmbed()
           .setDescription(`${client.emoji.fail} | ${language.warnMissingUser}`)
           .setTimestamp(message.createdAt)
-          .setColor(client.color.red))
+          .setColor(client.color.red)]})
   }
 
   const mentionedPotision = mentionedMember.roles.highest.position
   const memberPotision = message.member.roles.highest.position
 
   if (memberPotision <= mentionedPotision) {
-      return message.channel.send(new Discord.MessageEmbed()
+      return message.reply({ embeds: [new Discord.MessageEmbed()
       .setDescription(client.emoji.fail + " | " + language.warnHigherRole)
           .setTimestamp(message.createdAt)
-          .setColor(client.color.red))
+          .setColor(client.color.red)]})
   }
 
-  const reason = args.slice(1).join(' ') || 'Not Specified'
+  const reason = args.slice(1).join(' ') || 'Không được chỉ định'
   
   let warnID = random.password({
     length: 8,
@@ -119,22 +116,22 @@ let language = require(`../../data/language/${guildDB.language}.json`)
 if(logging && logging.moderation.warn_action && logging.moderation.warn_action !== "1"){
 
   if(logging.moderation.warn_action === "2"){
-dmEmbed = `${message.client.emoji.fail} You've been warned in **${message.guild.name}**`
+dmEmbed = `${message.client.emoji.fail} Bạn đã được cảnh báo trong **${message.guild.name}**`
   } else if(logging.moderation.warn_action === "3"){
-dmEmbed = `${message.client.emoji.fail} You've been warned in **${message.guild.name}**\n\n__**Reason:**__ ${reason}`
+dmEmbed = `${message.client.emoji.fail} Bạn đã được cảnh báo trong **${message.guild.name}**\n\n__**Lý do:**__ ${reason}`
   } else if(logging.moderation.warn_action === "4"){
-dmEmbed = `${message.client.emoji.fail} You've been warned in **${message.guild.name}**\n\n__**Moderator:**__ ${message.author} **(${message.author.tag})**\n__**Reason:**__ ${reason}`
+dmEmbed = `${message.client.emoji.fail} Bạn đã được cảnh báo trong **${message.guild.name}**\n\n__**Người điều hành:**__ ${message.author} **(${message.author.tag})**\n__**Lý do:**__ ${reason}`
   }
 
 mentionedMember.send(new MessageEmbed().setColor(message.client.color.red)
 .setDescription(dmEmbed)
 ).catch(()=>{})
 }
-      message.channel.send(new Discord.MessageEmbed().setColor(client.color.green).setDescription(`${language.warnSuccessful
+      message.reply({ embeds: [new Discord.MessageEmbed().setColor(client.color.green).setDescription(`${language.warnSuccessful
       
       .replace("{emoji}", client.emoji.success)
       .replace("{user}", `**${mentionedMember.user.tag}** `)}
-      ${logging && logging.moderation.include_reason === "true" ?`\n\n**Reason:** ${reason}`:``}`)).then(async(s)=>{
+      ${logging && logging.moderation.include_reason === "true" ?`\n\n**Lý do:** ${reason}`:``}`)]}).then(async(s)=>{
           if(logging && logging.moderation.delete_reply === "true"){
             setTimeout(()=>{
             s.delete().catch(()=>{})
@@ -152,37 +149,37 @@ mentionedMember.send(new MessageEmbed().setColor(message.client.color.red)
           if(punishment === "1"){
           action = `banned`;
 
-          await mentionedMember.ban({ reason: `Auto Punish / Responsible user: ${message.author.tag}` }).catch(()=>{})
+          await mentionedMember.ban({ reason: `Tự động trừng phạt / Người dùng có trách nhiệm: ${message.author.tag}` }).catch(()=>{})
 
           } else if (punishment === "2"){
           action = `kicked`;
 
-await mentionedMember.kick({ reason: `Auto Punish / Responsible user: ${message.author.tag}` }).catch(()=>{})
+await mentionedMember.kick({ reason: `Tự động trừng phạt / Người dùng có trách nhiệm: ${message.author.tag}` }).catch(()=>{})
 
 
           } else if (punishment === "3"){
           action = `softbanned`;
 
-await mentionedMember.ban({ reason:`Auto Punish / ${language.softbanResponsible}: ${message.author.tag}`, days: 7 });
-await message.guild.members.unban(mentionedMember.user, `Auto Punish / ${language.softbanResponsible}: ${message.author.tag}`);
+await mentionedMember.ban({ reason:`Tự động trừng phạt / ${language.softbanResponsible}: ${message.author.tag}`, days: 7 });
+await message.guild.members.unban(mentionedMember.user, `Tự động trừng phạt / ${language.softbanResponsible}: ${message.author.tag}`);
 
           }
 
-          message.channel.send(new Discord.MessageEmbed().setColor(message.client.color.green).setDescription(`Auto Punish triggered, ${action} **${mentionedMember.user.tag}** ${message.client.emoji.success}`))
+          message.reply({ embeds: [new Discord.MessageEmbed().setColor(message.client.color.green).setDescription(`Tự động trừng phạt được kích hoạt, ${action} **${mentionedMember.user.tag}** ${message.client.emoji.success}`)]})
           
           const auto = logging.moderation.auto_punish;
           if(auto.dm && auto.dm !== "1"){
             let dmEmbed;
             if(auto.dm === "2"){
-            dmEmbed = `${message.client.emoji.fail} You've been ${action} from **${message.guild.name}**\n__(Auto Punish Triggered)__`
+            dmEmbed = `${message.client.emoji.fail} Bạn đã từng ${action} từ **${message.guild.name}**\n__(Tự động trừng phạt được kích hoạt)__`
             } else if(auto.dm === "3"){
-            dmEmbed = `${message.client.emoji.fail} You've been ${action} from **${message.guild.name}**\n__(Auto Punish Triggered)__\n\n**Warn Count:** ${warnDoc.warnings.length}`
+            dmEmbed = `${message.client.emoji.fail} Bạn đã từng ${action} từ **${message.guild.name}**\n__(Tự động trừng phạt được kích hoạt)__\n\n**Số lượng cảnh báo:** ${warnDoc.warnings.length}`
             };
 
-            mentionedMember.send(new MessageEmbed()
+            mentionedMember.send({ embeds: [new MessageEmbed()
             .setColor(message.client.color.red)
             .setDescription(dmEmbed)
-            )
+            ]})
           }
 
         }
@@ -209,15 +206,15 @@ let logcase = logging.moderation.caseN
 if(!logcase) logcase = `1`
 
 const logEmbed = new MessageEmbed()
-.setAuthor(`Action: \`Warn\` | ${mentionedMember.user.tag} | Case #${logcase}`, mentionedMember.user.displayAvatarURL({ format: 'png' }))
-.addField('User', mentionedMember, true)
-.addField('Moderator', message.member, true)
-.addField('Reason', reason, true)
-.setFooter(`ID: ${mentionedMember.id} | Warn ID: ${warnID}`)
+.setAuthor(`Hoạt động: \`Warn\` | ${mentionedMember.user.tag} | Trường hợp #${logcase}`, mentionedMember.user.displayAvatarURL({ format: 'png' }))
+.addField('Người dùng', mentionedMember, true)
+.addField('Người điều hành', message.member, true)
+.addField('Lý do', reason, true)
+.setFooter(`ID: ${mentionedMember.id} | ID Cảnh báo: ${warnID}`)
 .setTimestamp()
 .setColor(color)
 
-channel.send(logEmbed).catch((e)=>{console.log(e)})
+channel.send({ embeds: [logEmbed]}).catch((e)=>{console.log(e)})
 
 logging.moderation.caseN = logcase + 1
 await logging.save().catch(()=>{})

@@ -34,19 +34,19 @@ if(color == "#000000") color = newRole.client.color.green
   if(logging.server_events.role_update == "true"){
 
  const embed = new discord.MessageEmbed()
-    .setDescription(`:pencil: ***Role Updated***`)
+    .setDescription(`***Đã cập nhật vai trò***`)
 
-    .setFooter(`Role ID: ${newRole.id}`)
+    .setFooter(`ID vai trò: ${newRole.id}`)
     .setTimestamp()
     .setColor(color)
 
 
 
 if(oldRole.name !== newRole.name) {
-    embed.addField('Name Update', `${oldRole.name} --> ${newRole.name}`, true)
+    embed.addField('Cập nhật tên', `${oldRole.name} --> ${newRole.name}`, true)
 
  } else {
-    embed.addField('Name Update', `Name not updated`, true)
+    embed.addField('Cập nhật tên', `Tên không được cập nhật`, true)
 
  }
 function makehex(rgb) { 
@@ -58,19 +58,19 @@ function makehex(rgb) {
 };
 
  if(oldRole.color !== newRole.color) {
-    embed.addField('Color Update', `#${makehex(oldRole.color)} --> #${makehex(newRole.color)}`, true)
+    embed.addField('Cập nhật màu sắc', `#${makehex(oldRole.color)} --> #${makehex(newRole.color)}`, true)
 
  } 
 
   if(oldRole.mentionable !== newRole.mentionable) {
-    embed.addField('mentionable', `${oldRole.mentionable} --> ${newRole.mentionable}`, true)
+    embed.addField('có thể dìu dắt', `${oldRole.mentionable} --> ${newRole.mentionable}`, true)
 
  } 
 
        if(channelEmbed &&
       channelEmbed.viewable &&
       channelEmbed.permissionsFor(newRoler.guild.me).has(['SEND_MESSAGES', 'EMBED_LINKS'])){
-            channelEmbed.send(embed).catch(()=>{})
+            channelEmbed.send({ embeds: [embed] }).catch(()=>{})
       }
 
 

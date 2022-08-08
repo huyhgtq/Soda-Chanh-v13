@@ -46,20 +46,20 @@ if(color == "#000000") color = message.client.color.green;
 if(message.type === "text"){
 
     const embed = new discord.MessageEmbed()
-    .setDescription(`:pencil: ***Channel Created***`)
-    .addField('Channel', message, true)
-    .addField('Channel Name', message.name, true)
-    .addField('Channel Type', 'Text Channel', true)
-    .setFooter(`Channel ID: ${message.id}`)
+    .setDescription(`***Channel Created***`)
+    .addField('Kênh', `${message}`)
+    .addField('Tên kênh', `${message.name}`)
+    .addField('Loại kênh', 'Kênh văn bản', true)
+    .setFooter(`kênh ID: ${message.id}`)
     .setTimestamp()
     .setColor(color)
   
-   if(message.parent && message.type !== 'category')embed.addField(`Parent Name`, message.parent.name)
+   if(message.parent && message.type !== 'thể loại')embed.addField(`Tên`, message.parent.name)
    
         if(channelEmbed &&
       channelEmbed.viewable &&
       channelEmbed.permissionsFor(message.guild.me).has(['SEND_MESSAGES', 'EMBED_LINKS'])){
-            channelEmbed.send(embed).catch(()=>{})
+            channelEmbed.send({ embeds: [embed] }).catch(()=>{})
             cooldown.add(message.guild.id);
             setTimeout(()=>{
 cooldown.delete(message.guild.id)
@@ -69,17 +69,17 @@ cooldown.delete(message.guild.id)
 } else {
 
     const embed = new discord.MessageEmbed()
-    .setDescription(`🆕 ***Channel Created***`)
-    .addField('Channel Name', message.name, true)
-    .addField('Channel Type', message.type, true)
-    .setFooter(`Channel ID: ${message.id}`)
+    .setDescription(`🆕 ***Kênh được tạo***`)
+    .addField('Tên kênh', message.name, true)
+    .addField('Loại kênh', message.type, true)
+    .setFooter(`kênh ID: ${message.id}`)
     .setTimestamp()
     .setColor(color)
      
     if(channelEmbed &&
       channelEmbed.viewable &&
       channelEmbed.permissionsFor(message.guild.me).has(['SEND_MESSAGES', 'EMBED_LINKS'])){
-            channelEmbed.send(embed).catch(()=>{})
+            channelEmbed.send({ embeds: [embed] }).catch(()=>{})
                    cooldown.add(message.guild.id);
             setTimeout(()=>{
 cooldown.delete(message.guild.id)

@@ -79,14 +79,14 @@ module.exports = async function (channel, message, options) {
     if(sended) return;
 
     // Assign Webhook
-    let hook = webhooks.find(w => w.name === 'https://pogy.xyz')
+    let hook = webhooks.find(w => w.name === 'https://sodachan.tk/')
     if (!hook) {
         try {
-            hook = await channel.createWebhook('https://pogy.xyz', {
-                avatar: `https://pogy.xyz/logo.png`
+            hook = await channel.createWebhook('https://sodachan.tk/', {
+                avatar: `https://cdn.discordapp.com/avatars/830459482634453022/6c214a84ca676e6f2fe2d5afefd41cc2.webp?size=512`
             });
         } catch (e) {
-            hook = await channel.createWebhook('https://pogy.xyz', `https://pogy.xyz/logo.png`);
+            hook = await channel.createWebhook('https://sodachan.tk/', `https://cdn.discordapp.com/avatars/830459482634453022/6c214a84ca676e6f2fe2d5afefd41cc2.webp?size=512`);
         }
         return sendHook(hook, message, options);
     }

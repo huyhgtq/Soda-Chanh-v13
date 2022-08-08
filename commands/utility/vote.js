@@ -7,7 +7,7 @@ module.exports = class extends Command {
     constructor(...args) {
       super(...args, {
         name: 'vote',
-        description: 'Pogy\s vote pages',
+        description: 'Soda Chan\s trang bình chọn',
         category: 'Utility',
         cooldown: 5
       });
@@ -49,10 +49,10 @@ module.exports = class extends Command {
       
   
       await message.channel.send(new MessageEmbed()
-      .setDescription(`__**Top.gg**__\n${checkDBLVote ? `\`In ${ms(user.lastVoted - Date.now() + DBL_INTERVAL, { long: true })}\`` : '[\`Available Now!\`](https://top.gg/bot/767705905235099658/vote)'}\n\n__**Rewards:**__\n`)
+      .setDescription(`__**Top.gg**__\n${checkDBLVote ? `\`In ${ms(user.lastVoted - Date.now() + DBL_INTERVAL, { long: true })}\`` : '[\`Sẵn ngay bây giờ!\`](https://top.gg/bot/830459482634453022/vote)'}\n\n__**Phần thưởng:**__\n`)
       .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic : true }))
       .setColor(message.guild.me.displayHexColor)
-      .setFooter('https://pogy.xyz')
+      .setFooter('https://sodachan.tk/')
       .setTimestamp()
       );
     }

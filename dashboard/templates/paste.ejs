@@ -1,9 +1,6 @@
-
-
-
-   
+ 
 <% if(type === "ticket") { %>
-<title>Pogy - Ticket Transcript</title>
+<title>Ticket Transcript</title>
 <link rel="icon"
     type="image/png"
     href="<%domain%>/logo.png">
@@ -54,7 +51,7 @@ let pog;
 }
 </style>
     <% } else if(type === "noFind") { %>
-    <title>Pogy - Expired</title>
+    <title>Soda Chan - Expired</title>
    <div class="container-contact">
             <div class="wrap-contact">
                                 
@@ -65,12 +62,12 @@ let pog;
         </div>
             <style>
     .contact-form-title::after {
-    content: "Could not find the following Transcript";
+    content: "Không thể tìm thấy Bản ghi sau";
 }
 </style>
 
     <% } else if(type === "form") { %>
-<title>Pogy - Application</title>
+<title>Soda Chan - Application</title>
 <link rel="icon"
     type="image/png"
     href="<%domain%>/logo.png">
@@ -109,7 +106,7 @@ const closedby = bot.users.cache.get(db.by)
 }
 </style>
     <% } else if(type === "noFindForm") { %>
-     <title>Pogy - Expired</title>
+     <title>Soda Chan - Expired</title>
    <div class="container-contact">
             <div class="wrap-contact">
                                 
@@ -120,9 +117,11 @@ const closedby = bot.users.cache.get(db.by)
         </div>
             <style>
     .contact-form-title::after {
-    content: "Could not find the following Application";
+    content: "Không thể tìm thấy ứng dụng sau";
 }
+
 </style>
+
     <% } %>
 </html>
 
@@ -202,11 +201,6 @@ margin-bottom: 5px;
 }
 .hover2:hover{
 background-color: var(--server-hover);
-}
-
-
-body {
-    background-color: #2f2f2f;
 }
 
 a {

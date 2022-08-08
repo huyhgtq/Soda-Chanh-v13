@@ -7,7 +7,7 @@ module.exports = class extends Command {
     constructor(...args) {
       super(...args, {
         name: 'f',
-        description: 'Pay your respect!',
+        description: 'Tôn trọng của bạn!',
         category: 'Fun',
         cooldown: 3
       });
@@ -33,7 +33,7 @@ if (!args[0]) {
                   .setAuthor(`${message.author.username} has paid their respects.`, message.author.displayAvatarURL({ format: 'png' }))
                   .setColor('PURPLE')
                   .setFooter(`${language.f3}`);
-              message.channel.send({ embed }).then(m => m.react('🇫')).catch(() => {});
+              message.reply({ embeds: [embed] }).then(m => m.react('🇫')).catch(() => {});
   
   
           }
@@ -44,7 +44,7 @@ if (!args[0]) {
                   .setColor('PURPLE')
                   .setDescription(`${message.author} ${language.f2} ${target}`)
                   .setFooter(`${language.f3}`);
-              message.channel.send({ embed }).then(m => m.react('🇫')).catch(() => {});
+              message.reply({ embeds: [embed] }).then(m => m.react('🇫')).catch(() => {});
   
           }
   

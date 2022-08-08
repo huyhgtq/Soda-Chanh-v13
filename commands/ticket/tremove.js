@@ -8,8 +8,9 @@ module.exports = class extends Command {
     super(...args, {
       name: "trem",
       aliases: ["ticketrem", "tremove", "ticketremove"],
-      description: "remove a member from the current ticket",
-      usage: "<user>",
+      description: "xóa một thành viên khỏi vé hiện tại",
+	  disabled: true,
+      usage: "<Thành viên>",
       category: "Tickets"
     })
   }
@@ -58,7 +59,7 @@ module.exports = class extends Command {
 
       
       } catch (e) {
-        message.channel.send(`An error has occured: ${e}\nSend this in the support server.`)
+        message.reply(`Đã xảy ra lỗi: ${e}\nGửi cái này trong máy chủ hỗ trợ.`)
 
       }
     })

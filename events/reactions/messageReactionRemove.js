@@ -52,15 +52,13 @@ let guildName = guild.name;
   if (!rrRole) return;
   
 let addEmbed = new MessageEmbed()
-.setAuthor('Role Added', `${message.client.domain}/logo.png` , `${message.url}` )
-.setDescription(`You have recieved the **${rrRole.name}** Role by reacting in ${guildName}`)
-.setFooter(`https://pogy.xyz`)
+.setAuthor('Đã thêm vai trò', `${message.client.domain}/logo.png` , `${message.url}` )
+.setDescription(`Bạn đã nhận được **${rrRole.name}** vai trò bằng cách phản ứng trong ${guildName}`)
 .setColor(message.client.color.green)
 
 let remEmbed = new MessageEmbed()
-.setAuthor('Role Removed', `${message.client.domain}/logo.png` , `${message.url}` )
-.setDescription(`You have removed the **${rrRole.name}** Role by reacting in ${guildName}`)
-.setFooter(`https://pogy.xyz`)
+.setAuthor('Đã xóa vai trò', `${message.client.domain}/logo.png` , `${message.url}` )
+.setDescription(`Bạn đã loại bỏ **${rrRole.name}** vai trò bằng cách phản ứng trong ${guildName}`)
 .setColor(message.client.color.green)
 
 

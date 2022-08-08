@@ -16,7 +16,7 @@
 
 
 </head>
-<%- include("../partials/dashMenu", { bot, user, path, description, title: `Pogy - Dashboard`, arc, url})%>
+<%- include("../partials/dashMenu", { bot, user, path, description, title: `Soda Chan - Dashboard`, arc, url})%>
 
 
 <% if(guild.roles.cache.filter(m => !m.managed && m.name !== "@everyone").size) { %>
@@ -28,7 +28,7 @@
 <% if (guild.icon) {
  iconurl = "https://cdn.discordapp.com/icons/" + guild.id + "/" + guild.icon + ".png??size=512";
 } else {
- iconurl = "https://cdn.glitch.com/82fe990a-7942-42e3-9790-39807ccdb9f6%2Ficon-404-dark.png?v=1602427904949";
+ iconurl = "https://cdn.discordapp.com/attachments/893953110349852686/970760403976093716/soda_chan_new.png";
 }
 %>
 
@@ -109,7 +109,7 @@
 </div>
 
 <div class="form-group mb-30" style="padding-top: 20px;">
-<p>- TIP: keep the embed color to #000000 for the default logging colors.
+<p>- TIP: giữ màu nhúng thành # 000000 cho các màu ghi mặc định.
 <div class="logging-box">
 <div class="col-md-4" style=
 "background-color:#2f2f2f;
@@ -123,7 +123,7 @@
  
   ">
 <h3 class="logging-box-title">Moderation Logging</h3>
-<p style="padding-left: 40px;">Log actions ran by moderation commands</p>
+<p style="padding-left: 40px;">Các hành động ghi nhật ký được thực hiện bởi các lệnh kiểm duyệt</p>
 <ul style="padding-left: 40px; color: white">
   <li>
   <div style="padding-top: 15px">
@@ -145,7 +145,7 @@
       <input id="c2" name="kick" type="checkbox">
     <% } %>
 
-    <label for="c2">Kick </label>
+    <label for="c2">Đuổi </label>
   </li>
 
 
@@ -155,7 +155,7 @@
         <% } else { %>
         <input id="c3" name="role-a" type="checkbox">
     <% } %>
-    <label for="c3">Role add / remove</label>
+    <label for="c3">Thêm / Xoá vai trò</label>
   </li>
 
 
@@ -165,7 +165,7 @@
         <% } else { %>
         <input id="c4" name="purge" type="checkbox">
     <% } %>
-    <label for="c4">Purge</label>
+    <label for="c4">thanh trừng</label>
   </li>
 
 
@@ -176,7 +176,7 @@
      <input name="lock" id="c5" type="checkbox">
     <% } %>
 
-    <label for="c5">Lock / unlock</label>
+    <label for="c5">Khoá kênh / Mở kênh</label>
   </li>
 
 
@@ -186,7 +186,7 @@
         <% } else { %>
       <input id="c6" name="warns" type="checkbox">
     <% } %>
-    <label for="c6">Warn / Warn Purge</label>
+    <label for="c6">Cảnh báo / Warn Purge</label>
   </li>
 
 
@@ -196,7 +196,7 @@
         <% } else { %>
         <input name="mute" id="c7" type="checkbox">
     <% } %>
-    <label for="c7">Mute</label>
+    <label for="c7">Tắt tiếng</label>
   </li>
 
   
@@ -206,7 +206,7 @@
         <% } else { %>
         <input id="c8" name="slowmode" type="checkbox">
     <% } %>
-    <label for="c8">Slowmode</label>
+    <label for="c8">Chế độ chậm</label>
   </li>
             <li>
 
@@ -215,12 +215,12 @@
         <% } else { %>
         <input id="c9" name="nicknames" type="checkbox">
     <% } %>
-    <label for="c9">Nicknames</label>
+    <label for="c9">Biệt danh</label>
   </li>
   </ul>
   <div style="padding-top: 35px">
 </div>
-<p style="padding-left: 40px;">Log Channel</p>
+<p style="padding-left: 40px;">Kênh ghi nhật ký</p>
 <select id="select1" name="moderation_channel">
  <% if(log.moderation.channel && bot.channels.cache.has(log.moderation.channel)){ %>
                                                     <option selected="selected">#<%= bot.channels.cache.get(log.moderation.channel).name %></option>
@@ -236,7 +236,7 @@
                                                 <% } %>  
 
 </select>
-<p style="padding-left: 40px;">Ignore Channel</p>
+<p style="padding-left: 40px;">Bỏ qua kênh</p>
 <select id="select130" name="ignore_channel">
  <% if(log.moderation.ignore_channel && bot.channels.cache.has(log.moderation.ignore_channel)){ %>
                                                     <option selected="selected">#<%= bot.channels.cache.get(log.moderation.ignore_channel).name %></option>
@@ -252,7 +252,7 @@
                                                 <% } %>  
 
 </select>
-<p style="padding-left: 40px;">Ignore Role</p>
+<p style="padding-left: 40px;">Bỏ qua vai trò</p>
 <select id="select12" name="ignore_role">
            
              <% if(log.moderation.ignore_role && guild.roles.cache.has(log.moderation.ignore_role)){ %>
@@ -286,7 +286,7 @@
 
   <div class="row" style="color: white;">
     <div class="col-md-4" style="text-align: center">
-    <label for="logging-color-1" class="form-label">Color</label>
+    <label for="logging-color-1" class="form-label">Màu sắc</label>
     <div>
     <input style="background-color: #fff; color: #2f2f2f; border: #222222;     display: inline-flex;
     margin: 4px;
@@ -297,7 +297,7 @@
         <div class="col-md-4">&nbsp;</div>
 
     <div class="col-md-4" style="text-align: center;  padding-bottom: 40px">
-  Enable
+  Cho phép
   <div style="padding-top: 4px">
 <% if(log.moderation.toggle == "true"){%>
   <input id="s1" name="toggle" type="checkbox" class="switch" checked>
@@ -308,7 +308,7 @@
 
     </div>
   <div class="row justify-content-center" style="    padding-bottom: 10px;">
-<button class="save" name="moderation" type="submit">Save Changes</button>
+<button class="save" name="moderation" type="submit">Lưu thay đổi</button>
 </div>
 
   </div>
@@ -320,9 +320,9 @@
 
 <div class="logging-box">
 <div class="col-md-4" style="background-color:#2f2f2f; box-shadow: 2px 2px 2px #2f2f2f; border-radius: 5px; width: 33%; margin-right: 17px;">
-<h3 class="logging-box-title">Server Events</h3>
+<h3 class="logging-box-title">Sự kiện máy chủ</h3>
 
-<p style="padding-left: 40px;">Log actions ran by changes by the guild.</p>
+<p style="padding-left: 40px;">Các hành động ghi nhật ký được thực hiện bởi các thay đổi của guild.</p>
   <div style="padding-top: 15px">
 </div>
 <ul style="padding-left: 40px; color: white">
@@ -333,7 +333,7 @@
         <input id="c11"  name="channel_created" type="checkbox">
       
     <% } %>
-    <label for="c11">Channel Creation</label>
+    <label for="c11">Tạo kênh</label>
   </li>
 
 
@@ -343,7 +343,7 @@
         <% } else { %>
     <input id="c12" name="channel_update" type="checkbox">
     <% } %>
-    <label for="c12">Channel Updated </label>
+    <label for="c12">Cập nhật kênh </label>
   </li>
 
 
@@ -353,7 +353,7 @@
        <% } else { %>
       <input id="c13" name="channel_delete" type="checkbox">
     <% } %>
-    <label for="c13">Channel Deleted</label>
+    <label for="c13">Kênh bị xóa</label>
   </li>
 
 
@@ -363,7 +363,7 @@
           <% } else { %>
     <input id="c14" name="role_create" type="checkbox">
     <% } %>
-    <label for="c14">Role created / deleted</label>
+    <label for="c14">tạo / xóa vai trò</label>
   </li>
 
 
@@ -373,7 +373,7 @@
           <% } else { %>
     <input id="c15"  name="role_update" type="checkbox">
     <% } %>
-    <label for="c15">Role Updated</label>
+    <label for="c15">Cập nhật vai trò</label>
   </li>
 
 
@@ -383,7 +383,7 @@
           <% } else { %>
  <input id="c16" name="guild_update" type="checkbox">
     <% } %>
-    <label for="c16">Guild Updated</label>
+    <label for="c16">Cập nhật máy chủ</label>
   </li>
 
         <li>
@@ -393,20 +393,20 @@
    <input id="c17" name="emoji_update" type="checkbox">
     <% } %>
 
-    <label for="c17">Emoji Changes</label>
+    <label for="c17">Thay đổi biểu tượng cảm xúc</label>
   </li>
 
   
 <div style="padding-top: 25px;">
 </div>
-<p>Voice Events</p>
+<p>Sự kiện kênh thoại</p>
          <li>
                <% if(log.server_events.voice.join == "true") { %>
     <input id="c190" name="join" type="checkbox" checked>
           <% } else { %>
     <input id="c190" name="join" type="checkbox" >
     <% } %>
-    <label for="c190">Join voice channel</label>
+    <label for="c190">Thanh viên tham gia kênh thoại</label>
   </li>
            <li>
                <% if(log.server_events.voice.move == "true") { %>
@@ -414,7 +414,7 @@
           <% } else { %>
     <input id="c199" name="move" type="checkbox" >
     <% } %>
-    <label for="c199">Move between voice channels</label>
+    <label for="c199">Di chuyển thành viên giữa các kênh thoại</label>
   </li>
            <li>
                <% if(log.server_events.voice.leave == "true") { %>
@@ -422,11 +422,11 @@
           <% } else { %>
     <input id="c192" name="leave" type="checkbox" >
     <% } %>
-    <label for="c192">Leave voice channel</label>
+    <label for="c192">Thanh viên rời khỏi kênh thoại</label>
   </li>
   <div style="padding-top: 25px;">
 </div>
-<p>Member movement</p>
+<p>Cập nhật thành viên</p>
            
 
           <li>
@@ -435,7 +435,7 @@
           <% } else { %>
     <input id="c18" name="member_join" type="checkbox">
     <% } %>
-    <label for="c18">Members joining</label>
+    <label for="c18">Thành viên tham gia</label>
   </li>
 
 
@@ -445,7 +445,7 @@
           <% } else { %>
     <input id="c19" name="member_leave" type="checkbox" >
     <% } %>
-    <label for="c19">Members Leaving</label>
+    <label for="c19">Các thành viên rời đi</label>
   </li>
   </ul>
 
@@ -484,7 +484,7 @@
   
     <div class="col-md-4" style="text-align: center">
 
-    <label for="logging-color-1" class="form-label">Color</label>
+    <label for="logging-color-1" class="form-label">Màu sắc</label>
     <div>
     <input style="background-color: #fff; color: #2f2f2f; border: #222222;     display: inline-flex;
     margin: 4px;
@@ -494,7 +494,7 @@
         <div class="col-md-4">&nbsp;</div>
 
     <div class="col-md-4" style="text-align: center;  padding-bottom: 40px">
-  Enable
+  Cho phép
   <div style="padding-top: 4px">
   <% if(log.server_events.toggle == "true") { %>
   <input id="s1" type="checkbox" name="toggle1" class="switch" checked>
@@ -505,7 +505,7 @@
     </div>
 
       <div class="row justify-content-center" style="    padding-bottom: 10px;">
-<button class="save" type="submit" name="server_events">Save Changes</button>
+<button class="save" type="submit" name="server_events">Lưu thay đổi</button>
 </div>
   </div>
 
@@ -515,8 +515,8 @@
 
 <div class="logging-box">
 <div class="col-md-4" style="background-color:#2f2f2f; box-shadow: 2px 2px 2px #2f2f2f; border-radius: 5px; width: 31%;">
-<h3 class="logging-box-title">Member Events</h3>
-<p style="padding-left: 40px;">Log member actions</p>
+<h3 class="logging-box-title">Sự kiện thành viên</h3>
+<p style="padding-left: 40px;">Ghi nhật ký hành động của thành viên</p>
 <ul style="padding-left: 40px; color: white">
   <li>
   <% if(log.member_events.role_update == "true") { %>
@@ -524,7 +524,7 @@
     <% } else { %>
     <input id="c20" name="member_role_update" type="checkbox">
     <% } %>
-    <label for="c20">Role Updates</label>
+    <label for="c20">Cập nhật vai trò</label>
   </li>
 
   <li>
@@ -534,7 +534,7 @@
  <input id="c21" name="name_change"  type="checkbox">
     <% } %>
 
-    <label for="c21">Name Changes</label>
+    <label for="c21">Thay đổi tên</label>
   </li>
 
 
@@ -578,7 +578,7 @@
         <div class="col-md-4">&nbsp;</div>
 
     <div class="col-md-4" style="text-align: center;  padding-bottom: 40px">
-  Enable
+  Cho phép
   <div style="padding-top: 4px">
   <% if(log.member_events.toggle == "true") { %>
   <input id="s1" name="member_events_toggle" type="checkbox" class="switch" checked>
@@ -588,7 +588,7 @@
 </div>
     </div>
       <div class="row justify-content-center" style="    padding-bottom: 10px;">
-<button class="save" type="submit" name="member_events">Save Changes</button>
+<button class="save" type="submit" name="member_events">Lưu thay đổi</button>
 </div>
   </div>
 
@@ -605,7 +605,7 @@
 <p style="color: #222222">Hello</p>
 <div class="logging-box">
 <div class="col-md-4" style="background-color:#2f2f2f; box-shadow: 2px 2px 2px #2f2f2f; border-radius: 5px; width: 31%;">
-<h3 class="logging-box-title">Message Events</h3>
+<h3 class="logging-box-title">Sự kiện tin nhắn</h3>
 <ul style="padding-left: 40px; color: white">
 
 <% if(log.message_events.deleted == "true") { %>
@@ -615,7 +615,7 @@
     <% } else { %>
     <input id="c25" name="deleted" type="checkbox">
     <% } %>
-    <label for="c25">Deleted Messages</label>
+    <label for="c25">Tin nhắn xóa</label>
   </li>
 
 
@@ -628,7 +628,7 @@
         <% } else { %>
   <input id="c26" name="edited" type="checkbox">
     <% } %>
-    <label for="c26">Edited Messages</label>
+    <label for="c26">Tin nhắn đã chỉnh sửa</label>
   </li>
 
 
@@ -640,7 +640,7 @@
         <% } else { %>
     <input id="c27" name="purged" type="checkbox">
     <% } %>
-    <label for="c27">Purged Messages</label>
+    <label for="c27">Các Tin nhắn đã xóa</label>
   </li>
 
 
@@ -653,7 +653,7 @@
   <input id="s121" type="checkbox" name="ignore" class="switch">
   <% } %>
 
-    <label for="c299">Ignore others bots</label>
+    <label for="c299">Bỏ qua các bot khác</label>
   </li>
 
   </ul>
@@ -686,7 +686,7 @@
 
   <div class="row" style="color: white;">
     <div class="col-md-4" style="text-align: center">
-    <label for="logging-color-1" class="form-label">Color</label>
+    <label for="logging-color-1" class="form-label">Màu sắc</label>
      <div>
     <input style="background-color: #fff; color: #2f2f2f; border: #222222;     display: inline-flex;
     margin: 4px;
@@ -696,7 +696,7 @@
         <div class="col-md-4">&nbsp;</div>
 
     <div class="col-md-4" style="text-align: center;  padding-bottom: 40px">
-  Enable
+  Cho phép
   <div style="padding-top: 4px">
   <% if(log.message_events.toggle == "true") { %>
   <input id="s1" type="checkbox" name="message_events_toggle" class="switch" checked>
@@ -706,7 +706,7 @@
 </div>
     </div>
       <div class="row justify-content-center" style="    padding-bottom: 10px;">
-<button class="save" type="submit" name="message_events">Save Changes</button>
+<button class="save" type="submit" name="message_events">Lưu thay đổi</button>
 </div>
   </div>
 

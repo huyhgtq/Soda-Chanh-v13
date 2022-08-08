@@ -1,211 +1,325 @@
-
-
-
-<!-- Taken from https://asphaltbot.com -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Pogy - 404</title>
-<link rel="icon"
-    type="image/png"
-    href="<%= domain %>/logo.png"> 
-  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
-</head>
-<body>
-<script type="82bce08dfd744ac342171454-text/javascript">
-   window.onerror = function(error) {
-     
-     // silence annoying errors
-     return true;
-     
-   }
-   
-    setInterval(function() {
-      if (hyperEnable == undefined) return;
-      var cur = player.getCurrentTime();
-      if (Math.round(cur) == 139) {
-        hyperEnable();
-      } else if (cur >= 215 && cur < 216) {
-        hyperDisable();
-      }
-    }, 1);
-  </script>
-<canvas width="1366" height="581">
-</canvas>
-
-<img id="memeplane" src="<%= domain %>/404/plane.png">
-
-
-
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:600,900">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Lato:300,700,900">
+<link rel="shortcut icon" href="/favicon.ico">
+<%- include("partials/head", { bot, user, path, description, title: "404 - Soda Chan", arc, url, image }) %>
+
+</style>
+
+<div id="spacer">
+</div>
+<div id="title">
+</h1>
+</div>
+<div id="layers">
+  <div class="layer layer-1"></div>
+  <div class="layer layer-2"></div>
+  <div class="layer layer-3"></div>
+  <div class="layer layer-4"></div>
+  <div class="layer layer-5"></div>
+
+</div>
 
 
 <div class="error-page">
-    <div>
+    <h1 data-h1="404">404</h1>
+    <p data-p="NOT FOUND">NOT FOUND</p>
+  </div>
 
-
-        <h1 data-h1="404">404</h1>
-        <p data-p="NOT FOUND">NOT FOUND</p>
-      
-    </div>
-</div>
-<div id="particles-js"></div>
-</div>
-<div class="images">
-<img id="img-eyes" src="<%= domain %>/404/b1nzybanhammer.png">
-<img id="img-b1nzyavatar" src="<%= domain %>/404/b1nzyavatar.png">
-<img id="img-b1nzy" src="<%= domain %>/404/b1nzy.png">
-
-<img id="img-jake" src="<%= domain %>/404/jake.gif">
-<img id="img-lul" src="<%= domain %>/404/lul.png">
-
-<img id="img-hyperthink" src="<%= domain %>/404/hyperthink.png">
-<img id="img-thonkang" src="<%= domain %>/404/thonkang.png">
-<img id="img-feelsthinking" src="<%= domain %>/404/feelsthinking.png">
-<img id="img-owo" src="<%= domain %>/404/owo.png">
-<img id="img-uwu" src="<%= domain %>/404/uwu.png">
-<img id="img-banhammer" src="<%= domain %>/404/banhammer.png">
-<img id="img-b1nzybanhammer" src="<%= domain %>/404/b1nzybanhammer.png">
-<img id="img-eggplant" src="<%= domain %>/404/b1nzybanhammer.png">
-<img id="img-hypergibbs" src="<%= domain %>/404/hypergibbs.png">
-<img id="img-asphalt" src="<%= domain %>/logo.png">
-</div>
-<script type="82bce08dfd744ac342171454-text/javascript" src="<%= domain %>/js/404.js"></script>
-<script src="https://ajax.cloudflare.com/cdn-cgi/scripts/7089c43e/cloudflare-static/rocket-loader.min.js" data-cf-settings="82bce08dfd744ac342171454-|49" defer=""></script><script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"rayId":"628a50c96fd00fee","r":1,"si":10,"version":"2021.2.0"}'></script>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js'></script><script>particlesJS("particles-js", {
-  "particles": {
-    "number": {
-      "value": 5,
-      "density": {
-        "enable": true,
-        "value_area": 800
-      }
-    },
-    "color": {
-      "value": "#fcfcfc"
-    },
-    "shape": {
-      "type": "circle",
-    },
-    "opacity": {
-      "value": 0.5,
-      "random": true,
-      "anim": {
-        "enable": false,
-        "speed": 1,
-        "opacity_min": 0.2,
-        "sync": false
-      }
-    },
-    "size": {
-      "value": 140,
-      "random": false,
-      "anim": {
-        "enable": true,
-        "speed": 10,
-        "size_min": 40,
-        "sync": false
-      }
-    },
-    "line_linked": {
-      "enable": false,
-    },
-    "move": {
-      "enable": true,
-      "speed": 8,
-      "direction": "none",
-      "random": false,
-      "straight": false,
-      "out_mode": "out",
-      "bounce": false,
-      "attract": {
-        "enable": false,
-        "rotateX": 600,
-        "rotateY": 1200
-      }
+</div> 
+<script>
+  (function($) {
+    $(document).ready(function() {
+  
+      $('.layer').each(function() {
+  
+        var $this = $(this),
+          limit = 30,
+          $star = [];
+  
+        while (limit) {
+  
+          $star = $('<span/>').addClass('star');
+          $star.html('<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M10.744,5.372C7.777,5.372,5.372,2.967,5.372,0c0,2.967-2.405,5.372-5.372,5.372c2.967,0,5.372,2.405,5.372,5.372 C5.372,7.777,7.777,5.372,10.744,5.372z"/></svg>');
+          $star.css({
+            left: randomInt(1, 100) + '%',
+            top: randomInt(1, 100) + '%',
+            transform: 'scale(' + randomNum(0, 1) + ')',
+            opacity: randomNum(0.6, 1)
+          });
+  
+          $this.append($star);
+          limit--;
+        }
+      });
+  
+    });
+  
+    function randomInt(min, max) {
+      return Math.floor((Math.random() * max) + min);
     }
-  },
-    "interactivity": {
-    "detect_on": "canvas",
-    "events": {
-      "onhover": {
-        "enable": false
-      },
-      "onclick": {
-        "enable": false
-      },
-      "resize": true
+    
+    function randomNum(min, max) {
+      return Math.max((Math.random() * max), min).toFixed(1);
     }
-  },
-  "retina_detect": true
-});</script>
+  })(jQuery);
+</script>
+
 </body>
 </html>
 <style>
-html, body {
-  height: 100%;
-  overflow: hidden;
+ html,
+  body {
+    background: #000000;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Noto Sans', sans-serif;
+    color:#fff;
+    
+  }
+  
+  #title {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: table;
+  }
+
+.animation{
+  margin-top:20%;
+  display:inline-block;
+  margin-bottom:5%;
 }
 
-.error-page {
+
+h1{
+  font-size:32px;
+  font-weight:400;
+  text-transform:uppercase;
+  margin:0;
+}
+p{
+  font-size:16px;
+  font-weight:7000;
+  margin:0;
+}
+  
+  h1 span {
+    font-size: 250px;
+    text-shadow: 0 2px 5px rgba(25, 41, 48, 0.1), 0 4px 5px rgba(25, 41, 48, 0.1), 0 6px 5px rgba(25, 41, 48, 0.1), 0 8px 5px rgba(25, 41, 48, 0.1), 0 10px 5px rgba(25, 41, 48, 0.1), 0 12px 5px rgba(25, 41, 48, 0.1), 0 14px 5px rgba(25, 41, 48, 0.1), 0 16px 5px rgba(25, 41, 48, 0.1), 0 18px 5px rgba(25, 41, 48, 0.1), 0 20px 5px rgba(25, 41, 48, 0.1), 0 22px 5px rgba(25, 41, 48, 0.1), 0 24px 5px rgba(25, 41, 48, 0.1), 0 26px 5px rgba(25, 41, 48, 0.1), 0 28px 5px rgba(25, 41, 48, 0.1), 0 30px 5px rgba(25, 41, 48, 0.1);
+  }
+  
+  h1 em {
+    display: block;
+    font-family: 'Open Sans';
+    font-style: normal;
+    letter-spacing: 35px;
+    color: #253D47;
+    text-shadow: -1px -1px 0 #FFFFFF, 1px -1px 0 #FFFFFF, 1px 1px 0 #FFFFFF, -1px 1px 0 #FFFFFF, 0 2px 5px rgba(25, 41, 48, 0.1), 0 4px 5px rgba(25, 41, 48, 0.1), 0 6px 5px rgba(25, 41, 48, 0.1), 0 8px 5px rgba(25, 41, 48, 0.1), 0 10px 5px rgba(25, 41, 48, 0.1);
+  }
+  
+  h1 em::before,
+  h1 em::after {
+    content: '';
+    display: inline-block;
+    width: 160px;
+    position: relative;
+    top: -15px;
+    border: 1px solid #FFFFFF;
+    height: 5px;
+    box-shadow: 0 2px rgba(25, 41, 48, 0.1), 0 4px rgba(25, 41, 48, 0.1), 0 6px rgba(25, 41, 48, 0.1), 0 8px rgba(25, 41, 48, 0.1), 0 10px rgba(25, 41, 48, 0.1);
+  }
+  
+  c{
+    position: absolute;
+      bottom: 2%;
+      right: 2%;
+  }
+  
+  #layers {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    overflow: hidden;
+  }
+  
+  .layer {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    opacity: 0;
+    -webkit-animation-name: zoom;
+    animation-name: zoom;
+    -webkit-animation-duration: 5s;
+    animation-duration: 5s;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+  }
+  
+  .layer.layer-2 {
+    -webkit-animation-delay: 1s;
+    animation-delay: 1s;
+  }
+  
+  .layer.layer-3 {
+    -webkit-animation-delay: 2s;
+    animation-delay: 2s;
+  }
+  
+  .layer.layer-4 {
+    -webkit-animation-delay: 3s;
+    animation-delay: 3s;
+  }
+  
+  .layer.layer-5 {
+    -webkit-animation-delay: 4s;
+    animation-delay: 4s;
+  }
+  
+  .star {
+    width: 11px;
+    height: 11px;
+    display: inline-block;
+    position: absolute;
+    fill: #ffffff;
+  }
+  
+  .star:nth-child(3n+3) {
+    fill: #FEC777;
+  }
+  
+  .star:nth-child(5n+5) {
+    fill: #498FB3;
+  }
+  
+  @-webkit-keyframes zoom {
+    0% {
+      -webkit-transform: scale(0.1);
+      transform: scale(0.1);
+      opacity: 0;
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      -webkit-transform: scale(2);
+      transform: scale(2);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes zoom {
+    0% {
+      -webkit-transform: scale(0.1);
+      transform: scale(0.1);
+      opacity: 0;
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      -webkit-transform: scale(2);
+      transform: scale(2);
+      opacity: 0;
+    }
+  }
+  a {
+    color: #FFFFFF;
+    font-family: Lato;
+    font-size: 20px;
+    font-weight: 200;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    z-index: 20;
+    display: table-cell;
+    vertical-align: middle;
+    text-decoration: none;
+  }
+
+  summary::-webkit-details-marker {
+  display: none
+}
+
+.control-icon {
+  fill: rebeccapurple;
+  transition: .3s ease;
+  pointer-events: none;
+}
+
+.control-icon-close {
+  display: none;
+}
+
+details[open] .control-icon-close {
+  display: initial;
+  transition: .3s ease;
+}
+
+details[open] .control-icon-expand {
+  display: none;
+}
+
+details + details {
+  margin-top: 20px;
+}
+
+details[open] {
+  min-height: 50px;
+  background-color: #2f2f2f;
+  box-shadow: 2px 2px 20px rgba(0,0,0,.2);
+}
+
+#content{
+padding-left: 40px;
+padding-right: 40px;
+width:100%;
+height:100%;
+}
+
+details p {
+  color: #ffffff;
+  font-weight: 300;
+}
+
+summary {
+  display: flex;
+  color: white;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+summary:focus {
+  outline: none;
+  
+}
+
+summary:focus::after {
+  content: "";
+  height: 100%;
+  width: 100%;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-shadow: 0 0 0 5px rebeccapurple;
+}
+
+  a:hover
+  {
+    color: #F50;
+  }
+  .error-page {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -312,4 +426,4 @@ a.back:hover {
 button,hr,input{overflow:visible}audio,canvas,progress,video{display:inline-block}progress,sub,sup{vertical-align:baseline}html{font-family:sans-serif;line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0} menu,article,aside,details,footer,header,nav,section{display:block}h1{font-size:2em;margin:.67em 0}figcaption,figure,main{display:block}figure{margin:1em 40px}hr{box-sizing:content-box;height:0}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}a{background-color:transparent;-webkit-text-decoration-skip:objects}a:active,a:hover{outline-width:0}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:bolder}dfn{font-style:italic}mark{background-color:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative}sub{bottom:-.25em}sup{top:-.5em}audio:not([controls]){display:none;height:0}img{border-style:none}svg:not(:root){overflow:hidden}button,input,optgroup,select,textarea{font-family:sans-serif;font-size:100%;line-height:1.15;margin:0}button,input{}button,select{text-transform:none}[type=submit], [type=reset],button,html [type=button]{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:ButtonText dotted 1px}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}[hidden],template{display:none}/*# sourceMappingURL=normalize.min.css.map */
 
 html,body{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;width:100%;height:100%;overflow:hidden}.images{display:none}#memeplane{zoom:.5;-webkit-animation:fly-plane 50ms infinite ease-in-out;animation:fly-plane 50ms infinite ease-in-out}@keyframes fly-plane{0%{transform:translate(-7px,4px) rotate(-45deg)}25%{transform:translate(4px,-8px) rotate(-45deg)}50%{transform:translate(-5px,3px) rotate(-45deg)}75%{transform:translate(4px,8px) rotate(-45deg)}100%{transform:translate(7px,6px) rotate(-45deg)}}@keyframes fly-plane-extreme{0%{transform:translate(-12px,10px) rotate(-45deg)}25%{transform:translate(11px,-13px) rotate(-45deg)}50%{transform:translate(-12px,14px) rotate(-45deg)}75%{transform:translate(12px,13px) rotate(-45deg)}100%{transform:translate(13px,14px) rotate(-45deg)}}canvas{position:absolute;top:0;left:0;width:100vw;height:100vh;z-index:-50}.text{background:rgba(0,0,0,.4)}.text>h1{position:center;color:#fff;font-weight:700;font-size:5.5em;padding:.2em;padding-bottom:0}h1{margin:.2em 0}
-</style>
+</script>

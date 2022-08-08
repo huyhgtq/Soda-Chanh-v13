@@ -13,7 +13,7 @@
 <link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<%- include("../partials/dashMenu", { bot, user, path, description, title: `Pogy - Dashboard`, arc, url})%>
+<%- include("../partials/dashMenu", { bot, user, path, description, title: `Soda Chan - Dashboard`, arc, url})%>
 
 
 
@@ -26,7 +26,7 @@
 <% if (guild.icon) {
  iconurl = "https://cdn.discordapp.com/icons/" + guild.id + "/" + guild.icon + ".png??size=512";
 } else {
- iconurl = "https://cdn.glitch.com/82fe990a-7942-42e3-9790-39807ccdb9f6%2Ficon-404-dark.png?v=1602427904949";
+ iconurl = "https://cdn.discordapp.com/attachments/893953110349852686/970760403976093716/soda_chan_new.png";
 }
 %>
 
@@ -65,13 +65,13 @@
       
           
 <div class="botsettings">
-		  <div class="alert alert-info" role="alert"><i class="fa fa-info-circle" style="font-size: 16px"></i>This Page is currently under Development, feel free to come back later.</div>
+		  <div class="alert alert-info" role="alert"><i class="fa fa-info-circle" style="font-size: 16px"></i>Trang này hiện đang được Phát triển, vui lòng quay lại sau.</div>
 </div>
 
 </div>
 
 <% } else { %>
-<p class="no-js">Make sure the guild has 1 channel.</p>
+<p class="no-js">Đảm bảo Server có 1 kênh.</p>
 <% } %>
 
 

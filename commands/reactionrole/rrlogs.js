@@ -12,7 +12,7 @@ module.exports = class extends Command {
       super(...args, {
         name: 'rrlog',
         aliases: ["reactionrolelog", "rrlogs"],
-        description: 'Set reaction role Logs in the guild.',
+        description: 'Đặt vai trò phản ứng Nhật ký trong máy chủ.',
         category: 'Reaction Role',
         cooldown: 3,
         usage: 'enable <channel>',

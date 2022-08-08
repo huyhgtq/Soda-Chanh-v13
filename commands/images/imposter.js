@@ -10,10 +10,10 @@ module.exports = class extends Command {
       super(...args, {
         name: 'impostor',
         aliases: ['imposter'],
-        description: 'Be an impostor',
+        description: 'Là một kẻ mạo danh',
         category: 'Images',
         usage: '<text>',
-        examples: [ 'imposter Peter' ],
+        examples: [ 'imposter Harry' ],
         cooldown: 5,
         guildOnly: true
       });

@@ -43,16 +43,16 @@ if(color == "#000000") color = this.client.color.red;
 
 
      const embed = new MessageEmbed()
-    .setAuthor(`Messages Cleared`, message.guild.iconURL({ dynamic: true }))
+    .setAuthor(`Tin nhắn đã được xóa`, message.guild.iconURL({ dynamic: true }))
     .setTimestamp()
-    .setDescription(`**${messages.size} messages** in ${message.channel} were deleted.`)
+    .setDescription(`**${messages.size} tin nhắn** trong ${message.channel} đã bị xóa.`)
     .setColor(message.guild.me.displayHexColor)
     .setFooter(`${messages.size} Messages`);
 
     if(channelEmbed &&
       channelEmbed.viewable &&
       channelEmbed.permissionsFor(message.guild.me).has(['SEND_MESSAGES', 'EMBED_LINKS'])){
-            channelEmbed.send(embed).catch(()=>{})
+            channelEmbed.send({ embeds: [embed] }).catch(()=>{})
       }
 
   }

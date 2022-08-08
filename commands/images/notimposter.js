@@ -7,10 +7,10 @@ module.exports = class extends Command {
       super(...args, {
         name: 'notimpostor',
         aliases:['notimposter'],
-        description: 'Someone was not the impostor',
+        description: 'Ai đó không phải là kẻ mạo danh',
         category: 'Images',
-        usage: '<text>',
-        examples: [ 'notimpostor Peter' ],
+        usage: '<bản văn>',
+        examples: [ 'notimpostor Harry' ],
         cooldown: 5,
         guildOnly: true
       });

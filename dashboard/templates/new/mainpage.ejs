@@ -16,7 +16,7 @@
 
 
 </head>
-<%- include("../partials/dashMenu", { bot, user, path, description, title: `Pogy - Dashboard`, arc, url})%>
+<%- include("../partials/dashMenu", { bot, user, path, description, title: `Soda Chan - Dashboard`, arc, url})%>
 
 
 
@@ -27,7 +27,7 @@
 <% if (guild.icon) {
  iconurl = "https://cdn.discordapp.com/icons/" + guild.id + "/" + guild.icon + ".png??size=512";
 } else {
- iconurl = "https://cdn.glitch.com/82fe990a-7942-42e3-9790-39807ccdb9f6%2Ficon-404-dark.png?v=1602427904949";
+ iconurl = "https://cdn.discordapp.com/attachments/893953110349852686/970760403976093716/soda_chan_new.png";
 }
 %>
 
@@ -126,7 +126,7 @@
   ">
 <div class="rr-box-title">
 <div class="overviews">
-        <div class="overviewsTitle">Main Settings<span class="smallDesc"> - Customise Pogy's Main Settings</span></div>
+        <div class="overviewsTitle">Main Settings<span class="smallDesc"> - Tùy chỉnh cài đặt chính của Soda Chan</span></div>
 
 </div>
 </div>
@@ -135,7 +135,7 @@
 </div>
 
 <h3 style="font-family: var(--font2); padding-left: 40px">Nickname</h3>
-<p style="padding-left: 40px;">Change the bot's nickname in the current guild.</p>
+<p style="padding-left: 40px;">Thay đổi tên của bot trong Server của bạn.</p>
 
   <div class="form-group row" style="padding-left: 40px">
     <div class="col-sm-10">
@@ -145,7 +145,7 @@
   </div>
 
 <h3 style="padding-left: 40px; font-family: var(--font2);">Prefix</h3>
-<p style="padding-left: 40px">Change the bot's prefix that triggers the bot.</p>
+<p style="padding-left: 40px">Thay đổi prefix của bot.</p>
   <div class="form-group row" style="padding-left: 40px">
     <div class="col-sm-10">
       <input type="text" name="prefix" style="background: #222222;color: white; border: none;
@@ -153,29 +153,40 @@
     </div>
   </div>
 
+
 <h3 style="font-family: var(--font2); padding-left: 40px">Language</h3>
 <p style="padding-left: 40px">Change the Bot's Language.</p>
    
       <select class="select" name="language">
       <% if(settings.language == "english") {%>
         <option value="english" selected>English ( EN )</option>
+		<option value="vietnamese">vietnamese ( VI )</option>
         <option value="french">Francais ( FR )</option>
         <option value="spanish">Español ( ES )</option>
+		  
        <% } else if(settings.language == "french") {%>
-
         <option value="english">English  ( EN )</option>
         <option value="french" selected>French ( FR )</option>
+		<option value="vietnamese">vietnamese ( VI )</option>
+        <option value="spanish">Español ( ES )</option>
+
+		<% } else if(settings.language == "vietnamese") {%>
+        <option value="english">English  ( EN )</option>
+        <option value="french">French ( FR )</option>
+		<option value="vietnamese"selected>vietnamese ( VI )</option>
         <option value="spanish">Español ( ES )</option>
 
 <% } else if(settings.language == "spanish") {%>
         <option value="english">English  ( EN )</option>
         <option value="french">French ( FR )</option>
+		<option value="vietnamese">vietnamese ( VI )</option>
         <option value="spanish" selected>Español ( ES )</option>
 <% } %>
       </select>
   
 
 <div style="padding-top: 10px"></div>
+
 
 <div style="
   color:hsla(210,8%,51%,.13);
@@ -250,7 +261,7 @@
 </div>
 <div style="padding-bottom: 15px;"></div>
 <div class="overviews">
-        <div class="overviewsTitle">Server Growth <span class="smallDesc"> -Based on server members join dates</span></div>
+        <div class="overviewsTitle">Server Growth <span class="smallDesc"> -Dựa trên ngày tham gia của các thành viên máy chủ</span></div>
 
 </div>
 

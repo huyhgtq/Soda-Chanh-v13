@@ -3,14 +3,18 @@ const Guild = require('../../database/schemas/Guild');
 const Premium = require('../../database/schemas/GuildPremium');
 const moment = require("moment");
 const config = require('../../config.json');
-const Discord = require('discord.js');
-const webhookClient = new Discord.WebhookClient(config.webhook_id, config.webhook_url);
+const Discord = require("discord.js");
+const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
+const webhookClient = new Discord.WebhookClient({ 
+id: `${config.webhook_id}`,
+token: `${config.webhook_url}`});
+
 let uniqid = require('uniqid');
 module.exports = class extends Command {
     constructor(...args) {
       super(...args, {
         name: 'redeem',
-        description: `Redeem a Premium code!`,
+        description: `Đổi mã Premium!`,
         category: 'Utility',
         cooldown: 3,
         userPermission: ["MANAGE_GUILD"]
@@ -26,11 +30,11 @@ module.exports = class extends Command {
       
    let code = args[0]
 
-    if(!code) return message.channel.send(new Discord.MessageEmbed().setColor('RED').setDescription(`${message.client.emoji.fail} Please Specify a code to redeem`))
+    if(!code) return message.reply({ embeds: [new Discord.MessageEmbed().setColor('RED').setDescription(`${message.client.emoji.fail} Vui lòng chỉ định mã để đổi`)]})
     
     if(guildDB.isPremium === "true") {
 
-      return message.channel.send(new Discord.MessageEmbed().setColor('RED').setDescription(`${message.client.emoji.fail} the current guild is already premium`))
+      return message.reply({ embeds: [new Discord.MessageEmbed().setColor('RED').setDescription(`${message.client.emoji.fail} máy chủ hiện tại đã là cao cấp`)]})
     }
 
     const premium = await Premium.findOne({
@@ -39,7 +43,7 @@ module.exports = class extends Command {
 
     if(premium){
 
-const expires = moment(Number(premium.expiresAt)).format("dddd, MMMM Do YYYY HH:mm:ss")
+const expires = moment(Number(premium.expiresAt)).format("MM-DD-YYYY")
 
 
     guildDB.isPremium = "true";
@@ -56,35 +60,56 @@ const expires = moment(Number(premium.expiresAt)).format("dddd, MMMM Do YYYY HH:
 let ID = uniqid(undefined, `-${code}`);
 const date = require('date-and-time');
 const now = new Date();
-let DDate = date.format(now, 'YYYY/MM/DD HH:mm:ss');  
+let DDate = date.format(now, 'MM-DD-YYYY');  
 
     try {
-await message.author.send(new Discord.MessageEmbed()
-    .setDescription(`**Premium Subscription**\n\nYou've recently redeemed a code in **${message.guild.name}** and here is your receipt:\n\n **Reciept ID:** ${ID}\n**Redeem Date:** ${DDate}\n**Guild Name:** ${message.guild.name}\n**Guild ID:** ${message.guild.id}`)
+	const row = new MessageActionRow()
+          .addComponents(
+              new MessageButton()
+              .setLabel('liên hệ với tôi')
+              .setURL(`https://discord.gg/2mHgQQz3GN`)
+              .setStyle('LINK')
+              .setEmoji('🔗')
+          )
+await message.reply({ embeds: [new Discord.MessageEmbed()
+    .setDescription(`**Đăng ký Premium**\n\nGần đây, bạn đã đổi một mã trong **${message.guild.name}** và đây là biên lai của bạn:\n\n **ID biên nhận:** ${ID}\n**Đổi vào ngày:** ${DDate}\n**Tên máy chủ:** ${message.guild.name}\n**ID máy chủ:** ${message.guild.id}`)
       .setColor(message.guild.me.displayHexColor)
-      .setFooter(message.guild.name))
+      .setFooter(message.guild.name)]})
     } catch (err){
 console.log(err)
- message.channel.send(new Discord.MessageEmbed().setDescription(`**Congratulations!**\n\n**${message.guild.name}** Is now a premium guild! Thanks a ton!\n\nIf you have any questions please contact me [here](https://discord.gg/duBwdCvCwW)\n\n**Could not send your Reciept via dms so here it is:**\n**Reciept ID:** ${ID}\n**Redeem Date:** ${DDate}\n**Guild Name:** ${message.guild.name}\n**Guild ID:** ${message.guild.id}\n\n**Please make sure to keep this information safe, you might need it if you ever wanna refund / transfer servers.**\n\n**Expires At:** ${expires}`).setColor(message.guild.me.displayHexColor).setFooter(message.guild.name));
+ message.reply({ embeds: [new Discord.MessageEmbed()
+						  .setDescription(`**Xin chúc mừng!**\n\n**${message.guild.name}** Bây giờ là một máy chủ Premium! Cảm ơn rất nhiều!\n\nNếu bạn có bất kỳ câu hỏi \n\n**Không thể gửi Biên nhận của bạn qua dms nên đây là:**\n**ID biên nhận:** ${ID}\n**Đổi vào ngày:** ${DDate}\n**Tên máy chủ:** ${message.guild.name}\n**ID máy chủ:** ${message.guild.id}\n\n**Hãy đảm bảo giữ thông tin này an toàn, bạn có thể cần thông tin này nếu bạn muốn hoàn lại tiền / chuyển máy chủ.**\n\n**Hết hạn vào:** ${expires}`)
+						  .setColor(message.guild.me.displayHexColor)
+						  .setFooter(message.guild.name)], components: [row]});
      
       return;
     }
    
-
-    message.channel.send(new Discord.MessageEmbed().setDescription(`**Congratulations!**\n\n**${message.guild.name}** Is now a premium guild! Thanks a ton!\n\nIf you have any questions please contact me [here](https://discord.gg/FqdH4sfKBg)\n**your receipt has been sent via dms**\n\n**Expires At:** ${expires}`).setColor(message.guild.me.displayHexColor).setFooter(message.guild.name));
+	const row2 = new MessageActionRow()
+          .addComponents(
+              new MessageButton()
+              .setLabel('liên hệ với tôi')
+              .setURL(`https://discord.gg/2mHgQQz3GN`)
+              .setStyle('LINK')
+              .setEmoji('🔗')
+          )
+    message.reply({ embeds: [new Discord.MessageEmbed()
+			.setDescription(`**Xin chúc mừng!**\n\n**${message.guild.name}** Bây giờ là một máy chủ Premium! Cảm ơn rất nhiều!\n\nNếu bạn có bất kỳ câu hỏi, \n**biên lai của bạn đã được gửi qua dms**\n\n**Hết hạn vào:** ${expires}`)
+							 .setColor(message.guild.me.displayHexColor)
+							 .setFooter(message.guild.name)], components: [row2]});
 
 const embedPremium = new Discord.MessageEmbed()
-      .setDescription(`**Premium Subscription**\n\n**${message.author.tag}** Redeemed a code in **${message.guild.name}**\n\n **Reciept ID:** ${ID}\n**Redeem Date:** ${DDate}\n**Guild Name:** ${message.guild.name}\n**Guild ID:** ${message.guild.id}\n**Redeemer Tag:** ${message.author.tag}\n**Redeemer ID:** ${message.author.id}\n\n**Expires At:** ${expires}`)
+      .setDescription(`**Đăng ký Premium**\n\n**${message.author.tag}** Đã đổi mã trong **${message.guild.name}**\n\n **ID biên nhận:** ${ID}\n**Đổi vào ngày:** ${DDate}\n**Tên máy chủ:** ${message.guild.name}\n**ID máy chủ:** ${message.guild.id}\n**Thẻ đổi quà:** ${message.author.tag}\n**ID người đổi:** ${message.author.id}\n\n**Hết hạn vào:** ${expires}`)
       .setColor(message.guild.me.displayHexColor)
 
 webhookClient.send({
-        username: 'Pogy Premium',
+        username: 'Soda Chan Premium',
         avatarURL: `${message.client.domain}/logo.png`,
         embeds: [embedPremium],
       });
 
     } else {
-        return message.channel.send(new Discord.MessageEmbed().setColor('RED').setDescription(`${message.client.emoji.fail} I could not the following Code.`))
+        return message.reply({ embeds: [new Discord.MessageEmbed().setColor('RED').setDescription(`${message.client.emoji.fail} Tôi không thể mã sau.`)]})
     }
 
     }

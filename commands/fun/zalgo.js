@@ -9,7 +9,7 @@ module.exports = class extends Command {
       super(...args, {
         name: 'zalgo',
         aliases: ['zalgolize'],
-        description: 'Make the bot zalgolize a message',
+        description: 'Đặt bot zalgolize một thông báo',
         category: 'Fun',
         cooldown: 3
       });
@@ -24,9 +24,9 @@ module.exports = class extends Command {
         
           const language = require(`../../data/language/${guildDB.language}.json`)
 
-          if(!args[0]) return message.channel.send(`${language.zalgolize}`)
+          if(!args[0]) return message.reply(`${language.zalgolize}`)
 
-          message.channel.send(new discord.MessageEmbed().setColor(client.color.blue).setDescription(`\u180E${zalgo(args, 0.2, [10, 5, 10])}`));
+          message.reply({ embeds: [new discord.MessageEmbed().setColor(client.color.blue).setDescription(`\u180E${zalgo(args, 0.2, [10, 5, 10])}`)]});
 
   
     }

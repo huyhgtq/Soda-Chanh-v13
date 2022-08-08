@@ -10,8 +10,8 @@ module.exports = class extends Command {
       aliases: [],
       usage: "<userID>",
       category: "Alt Detector",
-      examples: ["adisallow 402490971041824768"],
-      description: "Remove an alt account off the whitelist.",
+      examples: ["adisallow 451699780423385089"],
+      description: "Xóa tài khoản thay thế khỏi danh sách trắng.",
       cooldown: 5,
       userPermission: ['MANAGE_GUILD'],
     })
@@ -38,11 +38,17 @@ module.exports = class extends Command {
             
             await newGuild.save()
             
-            return message.channel.send(new discord.MessageEmbed().setColor(client.color.red).setDescription(language.adisallowNotInArray))
+            return message.reply({ embeds: [new discord.MessageEmbed()
+											.setColor(client.color.red)
+											.setDescription(language.adisallowNotInArray)]})
       }
-      if(!args[0]) return message.channel.send(new discord.MessageEmbed().setColor(client.color.red).setDescription(language.adisallowNotInArray))
+      if(!args[0]) return message.reply({ embeds: [new discord.MessageEmbed()
+											   .setColor(client.color.red)
+											   .setDescription(language.adisallowNotInArray)]})
 
-      if(!db.allowedAlts.includes(args[0])) return message.channel.send(new discord.MessageEmbed().setColor(client.color.red).setDescription(language.adisallowNotInArray))
+      if(!db.allowedAlts.includes(args[0])) return message.reply({ embeds: [new discord.MessageEmbed()
+																		.setColor(client.color.red)
+																		.setDescription(language.adisallowNotInArray)]})
       
       let arr = db.allowedAlts
       let newArr = removeA(arr, args[0])
@@ -51,7 +57,9 @@ module.exports = class extends Command {
         allowedAlts: newArr
       })
       
-      message.channel.send(new discord.MessageEmbed().setColor(client.color.green).setDescription(language.adisallowSucess))
+      message.reply({ embeds: [new discord.MessageEmbed()
+						   .setColor(client.color.green)
+						   .setDescription(language.adisallowSucess)]})
 
 function removeA(arr) {
     var what, a = arguments, L = a.length, ax;

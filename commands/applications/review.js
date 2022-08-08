@@ -11,8 +11,7 @@ module.exports = class extends Command {
       aliases: ["reviewapps", "reviewapplication", "reviewapplications"],
       usage: "",
       category: "Applications",
-
-      description: "Approve an application in the guild.",
+      description: "Phê duyệt đơn đăng ký trong guild.",
       cooldown: 5,
       userPermission: ['MANAGE_GUILD'],
     })
@@ -53,21 +52,19 @@ if (results && results.length) {
     .setTitle(`Applications - Review`)
     .setDescription(`\`\`\`\n${array.join("\n\n")}\`\`\`` || "No Pending Applications Found")
     .setColor(message.client.color.green)
-    .setFooter(message.author.tag,  
-          message.author.displayAvatarURL({ dynamic: true })
-        )
+    .setFooter(message.author.tag,  message.author.displayAvatarURL({ dynamic: true }))
 
 if (array.length <= interval) {
     
     const range = (array.length == 1) ? '[1]' : `[1 - ${array.length}]`;
-      message.channel.send(embed
+        message.reply({ embeds: [embed
     .setTitle(`Applications - Review ${range}`)
     .setDescription(`\`\`\`\n${array.join("\n\n")}\`\`\``|| "No Pending Applications Found")
     .setColor(message.client.color.green)
     .setFooter(message.author.tag,  
           message.author.displayAvatarURL({ dynamic: true })
         )
-      )
+      ]})
       
 
     } else {

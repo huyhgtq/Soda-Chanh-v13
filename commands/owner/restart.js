@@ -5,14 +5,14 @@ module.exports = class extends Command {
       super(...args, {
         name: 'restart',
         aliases: [ 'reboot' ],
-        description: 'Restart the bot!',
+        description: 'Khởi động lại bot!',
         category: 'Owner',
         ownerOnly: true
       });
     }
 
     async run(message) {
-      await message.channel.send("Restarting!").catch(err => this.client.console.error(err));
+      await message.reply("Đang khởi động lại!").catch(err => this.client.console.error(err));
       process.exit(1)
     }
 };

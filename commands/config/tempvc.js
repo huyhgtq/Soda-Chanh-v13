@@ -14,6 +14,7 @@ module.exports = class extends Command {
         usage: [ '<enable | disable>'],
         examples: [ 'tempvc enable', 'tempvc disable'],
         cooldown: 10,
+		disabled: true,
         userPermission: ['MANAGE_GUILD'],
         botPermission: ['SEND_MESSAGES', 'EMBED_LINKS', 'MOVE_MEMBERS', 'MANAGE_CHANNELS', 'VIEW_CHANNEL'],
       });
@@ -61,26 +62,26 @@ let client = message.client
       let properUsage = new MessageEmbed()
         .setColor(message.guild.me.displayHexColor)
         .setDescription(`${language.tempvc1.replace(/{prefix}/g, `${prefix}`)}`)
-        .setFooter('https://pogy.xyz')
+        .setFooter('https://sodachan.tk/')
 
       if (args.length < 1) {
-        return message.channel.send(properUsage);
+        return message.reply({ embeds: [properUsage]});
       }
 
  
       if (args.includes('disable') || args.includes('off') ) {
-    if(!message.member.hasPermission("MANAGE_CHANNELS")) return message.channel.send( new MessageEmbed()
+    if(!message.member.permissions.has("MANAGE_CHANNELS")) return message.reply({ embeds: [ new MessageEmbed()
     .setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true }))
     .setTitle(`${fail} ${language.missingUser} `)
     .setDescription(`${language.tempvc2}`)
     .setTimestamp()
-    .setFooter('https://pogy.xyz')
-    .setColor(message.guild.me.displayHexColor));
+    .setFooter('https://sodachan.tk/')
+    .setColor(message.guild.me.displayHexColor)]});
 
-        if(!vcDB.channelID || !vcDB.categoryID || !vcDB.guildId ||!vcDB.channelID === null) return message.channel.send( new MessageEmbed()
+        if(!vcDB.channelID || !vcDB.categoryID || !vcDB.guildId ||!vcDB.channelID === null) return message.reply({ embeds: [new MessageEmbed()
         .setColor(message.guild.me.displayHexColor)
         .setDescription(`${message.client.emoji.fail} ${language.tempvc3}`)
-        .setFooter('https://pogy.xyz'));
+        .setFooter('https://sodachan.tk/')]});
         await Vc.findOne({
           guildId: message.guild.id
       }, async (err, guild) => {
@@ -110,20 +111,20 @@ let client = message.client
         }
           
   
-          return message.channel.send( new MessageEmbed()
+          return message.reply({ embeds: [new MessageEmbed()
           .setColor(message.guild.me.displayHexColor)
           .setDescription(`${message.client.emoji.success} ${language.tempvc4}`)
-          .setFooter('https://pogy.xyz')); 
+          .setFooter('https://sodachan.tk/')]}); 
         });
         return;
       } else if (args.includes('enable') || args.includes('on') ) {
-    if(!message.member.hasPermission("MANAGE_CHANNELS")) return message.channel.send( new MessageEmbed()
+    if(!message.member.permissions.has("MANAGE_CHANNELS")) return message.reply({ embeds: [new MessageEmbed()
     .setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true }))
     .setTitle(`${fail} ${language.missingUser} `)
     .setDescription(`${language.tempvc2}`)
     .setTimestamp()
-    .setFooter('https://pogy.xyz')
-    .setColor(message.guild.me.displayHexColor));
+    .setFooter('https://sodachan.tk/')
+    .setColor(message.guild.me.displayHexColor)]});
 
      
 try {
@@ -132,7 +133,7 @@ try {
   .setAuthor(`${language.tempvc5}`, `https://www.creeda.co.in/Images/loader.gif`)
   .setDescription(`\`${language.tempvc6}\``)
   .setColor(message.guild.me.displayHexColor);    
-  const msg = await message.channel.send(embed);
+  const msg = await message.reply({ embeds: [embed]});
 
 
 
@@ -141,7 +142,7 @@ try {
   if(!category) { 
     await embed
       .setDescription(`**${language.tempvc7}**`)
-      .setFooter(`Pogy v2.0`)
+      .setFooter(`Soda Chan`)
       .setTimestamp();
     msg.edit(embed) + message.guild.channels.create(`Join to Create`, {type: 'category', permissionOverwrites: [
     {
@@ -157,7 +158,7 @@ return;
   } else {
  embed
   .setDescription(`**${language.tempvc8}**\n\nID: ${category.id}`)
-  .setFooter(`Pogy v2.0`)
+  .setFooter(`Soda Chan`)
   .setTimestamp();
 msg.edit(embed);
 
@@ -172,7 +173,7 @@ if(!voice) {
     
 await embed
 .setDescription(`**${language.tempvc9}**`)
-.setFooter(`Pogy v2.0`)
+.setFooter(`Soda Chan`)
 .setTimestamp();
 msg.edit(embed);
 + message.guild.channels.create('Join to create', {type: 'voice', permissionOverwrites: [
@@ -193,7 +194,7 @@ return;
 } else {
    embed
   .setDescription(`**${language.tempvc10}**\n\nID: ${voice.id}`)
-  .setFooter(`Pogy v2.0`)
+  .setFooter(`Soda Chan v2.0`)
   .setTimestamp();
 msg.edit(embed)
 
@@ -206,7 +207,7 @@ if(!voice || !category ) {
     embed
     .setAuthor(`Setup Fail`)
     .setDescription(`${language.tempvc11.replace(/{prefix}/g, `${prefix}`)}`)
-    .setFooter(`Pogy v2.0`)
+    .setFooter(`Soda Chan v2.0`)
     .setTimestamp();
   msg.edit(embed);
   await Vc.findOne({
@@ -241,10 +242,10 @@ return;
     embed
     .setAuthor(`${language.tempvc12}`, `${message.client.domain}/logo.png` , `${channelInv}` )
     .setDescription(`**${language.tempvc13}** ${category.name}\n**${language.tempvc13} ID:** ${category.id}\n\n**${language.tempvc14}** ${voice.name}\n**${language.tempvc14} ID:** ${voice.id}\n\n${language.tempvc15} \`${prefix}tempvc off\` `)
-    .setFooter(`Pogy v2.0`)
+    .setFooter(`Soda Chan v2.0`)
     .setTimestamp();
   msg.edit(embed);
-  if(channelInv && channelVoice) message.channel.send(`${channelInv}`)
+  if(channelInv && channelVoice) message.reply(`${channelInv}`)
   await Vc.findOne({
         guildId: message.guild.id
     }, async (err, guild) => {
@@ -268,7 +269,7 @@ return;
   }, 2000)
 } catch {
 
-    message.channel.send(new MessageEmbed().setDescription(`${language.tempvc16}`).setColor(`RED`));
+   message.reply({ embeds: [new MessageEmbed().setDescription(`${language.tempvc16}`).setColor(`RED`)]});
   await Vc.findOne({
         guildId: message.guild.id
     }, async (err, guild) => {
@@ -294,9 +295,9 @@ return;
 
   
     } else if(args[0]) {
-     message.channel.send(properUsage) 
+     message.reply({ embeds: [properUsage]}) 
     } else {
- message.channel.send(properUsage) 
+ message.reply({ embeds: [properUsage]}) 
 
     }
     }

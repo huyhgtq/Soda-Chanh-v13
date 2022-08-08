@@ -1,6 +1,6 @@
 {
   "setLangInvalidPermission":"Necesita permiso de ADMINISTRADOR para ejecutar este comando",
-  "setLangMissingArgument":"No especificaste un idioma",
+  "setLangMissingArgument":"No especificaste uno de estos idiomas",
   "setLangInvalidOption":"Especifique entre: {languages}",
   "setLangChange":"El idioma cambió a {language}",
   
@@ -217,9 +217,9 @@
 "kill22":"matándolo",
 "kill23":"abofeteado",
 "kill24":"es demasiado débil para manejar esto",
-"kill25":"Pogy se sentó en",
+"kill25":"Bot se sentó en",
 "kill26":", El otro tristemente *sofocado*",
-"kill27":"Pogy abofeteó",
+"kill27":"Bot abofeteó",
 "kill28":"con un microondas",
 "kill29":"Muerto de hambre",
 "kill30":"sparece realmente inocente",
@@ -330,10 +330,10 @@
 "roleCount":"Recuento de roles",
 "creationDate":"Fecha de creación",
 "region":"Región",
-"pogyOwners":"Dueños de Pogy", 
+"pogyOwners":"Dueños de Bot", 
 "pogyDevelopers":"Desarrolladores",
 "pogyContributor":"Colaboradores",
-"pogyInfo":"Información de Pogy",
+"pogyInfo":"Información de Bot",
 "pogyGeneral":"Información general",
 "pogyTeam":"Miembros del equipo",
 "pogyStats":"Estadísticas",
@@ -341,7 +341,6 @@
 "pogyCommands":"Commands",
 "userh":"Usuario:",
 "joinedDiscord":"Se unió a Discord en:",
-"joinedServer":"Se unió al servidor en:",
 "roles":"Roles:",
 "noRoles":"Ese usuario no tiene roles",
 "noBadge":"Ese usuario no tiene insignia de bot",
@@ -365,8 +364,8 @@
 "suggest2":"Por favor bríndenos más información para su sugerencia.",
 "suggest3":"Oye, el propietario recibió la sugerencia, asegúrate de informarle, únete al",
 "support":"Únase al servidor de soporte [aquí]",
-"uptime1":"Pogy ha estado listo para",
-"vote":"Oye! Puedes votar por Pogy aquí:**\n\n**Top.gg:** [aquí](https://top.gg/bot/767705905235099658)\n**Bots for Discord:** [aquí](https://botsfordiscord.com/bot/767705905235099658)",
+"uptime1":"Bot ha estado listo para",
+"vote":"Oye! Puedes votar por Bot aquí:**\n\n**Top.gg:** [aquí](https://top.gg/bot/767705905235099658)\n**Bots for Discord:** [aquí](https://botsfordiscord.com/bot/767705905235099658)",
 "define1":"Oye, dame una palabra!",
 "define2":"No pude encontrar esa palabra!",
 "namse":"Palabra",
@@ -437,7 +436,7 @@
 "tiktok9":"Solicitado por",
 "tiktok10":"No se pudo encontrar el nombre de usuario:",
 
-"poll1":"__**Uso adecuado**__\n`1-` {prefix}poll {título} [opción 1] [opción 2] [opción 3] **(Max 20)**\n`2-` {prefix}poll \"hora\" {título} [option 1] [option 2] [option 3] **(Max 20)** **(s/m/h/d/w)**\n\n__**Ejemplos:**__\n`1-` {prefix}poll {Es Pogy el mejor bot?} [sí] [no] [quizás]\n`2-` {prefix}poll \"1d\" {Es Pogy el mejor bot?} [sí] [no] [quizás]",
+"poll1":"__**Uso adecuado**__\n`1-` {prefix}poll {título} [opción 1] [opción 2] [opción 3] **(Max 20)**\n`2-` {prefix}poll \"hora\" {título} [option 1] [option 2] [option 3] **(Max 20)** **(s/m/h/d/w)**\n\n__**Ejemplos:**__\n`1-` {prefix}poll {Es Bot el mejor bot?} [sí] [no] [quizás]\n`2-` {prefix}poll \"1d\" {Es Bot el mejor bot?} [sí] [no] [quizás]",
 "poll2":"No puedes tener más de 20 opciones en una encuesta",
 "poll3":"Termina en:",
 "poll4":"Fue un empate!",
@@ -598,5 +597,35 @@
 "remquestionSuccess": "He eliminado correctamente esta pregunta",
 
 "questionNoQuest": "Este servidor no tiene ninguna pregunta",
-"questionTitle": "Preguntas en este servidor"
+"questionTitle": "Preguntas en este servidor",
+
+"requested": "Solicitado por",
+"prefix": "El prefijo para este servidor es",
+
+"userinformation":"Informacion del usuario",
+"usertag":"etiqueta de usuario",
+"nickname":"apodo",
+"joinedserver":"Servidor unido en",
+"accountcreated":"Cuenta creada en",
+"highestrole":"Rol más alto", 
+"badges":"Insignias",
+"accountbanned":"¿Cuenta bloqueada?",
+"accountbanned2":"¡Sí, tu cuenta ha sido baneada!",
+"accountbanned3":"No, tu cuenta no está baneada.",
+
+	
+"nsfwchannels":"El siguiente Menú solo pertenece a Canales NSFW 👀",
+
+"lengthof100day":"Por favor, no exceda los 100 días.",
+
+"daysduration":"Proporcione una duración de días válida",
+"accountageof":"Vous ne pouvez trouver que des alts d'un âge de compte de ** 1000 jours ** ou moins",
+"created":"Creado en",
+"altdetector":"Detector Alt - Antigüedad de la cuenta <",
+"day":"Dias",
+"noaltsfound":"No se encontraron alternativas",
+"joinedat":"Se unió a",
+"joinage":"Alt Detector - Edad de ingreso <",
+
+"dmss":"Formulario enviado por DM"
 }

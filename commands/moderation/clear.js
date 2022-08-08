@@ -9,11 +9,11 @@ module.exports = class extends Command {
     constructor(...args) {
       super(...args, {
         name: 'clear',
-        aliases: [ 'clear', 'c', 'purge'],
-        description: '  Delete the specified amount of messages',
+        aliases: [ 'clear', 'c'],
+        description: 'Xóa số lượng tin nhắn được chỉ định',
         category: 'Moderation',
-        usage: 'purge [channel] [user] <message-count> [reason]',
-        examples: ['purge 20', 'purge #general 10', 'purge @peter 50', 'purge #general @peter 5'],
+        usage: 'clear [kênh] [người dùng] <số tin nhắn> [lý do]',
+        examples: ['clear 20', 'clear #chung 10', 'clear @yuunya 50', 'clear #chung @yuunya 5'],
         guildOnly: true,
         botPermission: ['MANAGE_MESSAGES'],
         userPermission: ['MANAGE_MESSAGES'],
@@ -49,7 +49,7 @@ try {
       .then(result => console.log(result))
       .catch(err => console.error(err));
 
-      return message.channel.send('This server was not in our database! We have added it, please retype this command.').then(m => m.delete({timeout: 10000}));
+      return message.reply('Máy chủ này không có trong cơ sở dữ liệu của chúng tôi! Chúng tôi đã thêm nó, vui lòng nhập lại lệnh này.').then(m => m.delete({timeout: 10000}));
   }
 });
 
@@ -66,13 +66,13 @@ const language = require(`../../data/language/${guildDB.language}.json`)
       args.shift();
     } else channel = message.channel;
 
-    if (channel.type != 'text' || !channel.viewable) return message.channel.send( new MessageEmbed()
+    if (channel.type != 'text' || !channel.viewable) return message.reply({ embeds: [ new MessageEmbed()
     .setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true }))
-    .setTitle(`${fail} Clear Error`)
-    .setDescription(`Please make sure I can view that channel`)
+    .setTitle(`${fail} lỗi khi xoá tin nhắn`)
+    .setDescription(`Hãy đảm bảo rằng tôi có thể xem kênh đó`)
     .setTimestamp()
-    .setFooter('https://pogy.xyz')
-    .setColor(message.guild.me.displayHexColor));
+    .setFooter('https://sodachan.tk/')
+    .setColor(message.guild.me.displayHexColor)]});
 
 
     const member = message.mentions.members.first() || getMemberFromMention(message, args[0]) || message.guild.members.cache.get(args[0]);
@@ -84,23 +84,23 @@ const language = require(`../../data/language/${guildDB.language}.json`)
 
     const amount = parseInt(args[0]);
     if (isNaN(amount) === true || !amount || amount < 0 || amount > 100)
-      return message.channel.send( new MessageEmbed()
+      return message.reply({ embeds: [new MessageEmbed()
       .setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true }))
-      .setTitle(`${fail} Clear Error`)
-      .setDescription(`I can only purge between 1 - 100 messages.`)
+      .setTitle(`${fail} lỗi khi xoá tin nhắn`)
+      .setDescription(`Tôi chỉ có thể xóa từ 1 đến 100 tin nhắn.`)
       .setTimestamp()
-      .setFooter('https://pogy.xyz')
-      .setColor(message.guild.me.displayHexColor));
+      .setFooter('https://sodachan.tk/')
+      .setColor(message.guild.me.displayHexColor)]});
 
 
     if (!channel.permissionsFor(message.guild.me).has(['MANAGE_MESSAGES']))
-      return message.channel.send( new MessageEmbed()
+      return message.reply({ embeds: [ new MessageEmbed()
       .setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true }))
-      .setTitle(`${fail} Clear Error`)
-      .setDescription(`Please make sure I have the **Manage Messages** Permission!`)
+      .setTitle(`${fail} lỗi khi xoá tin nhắn`)
+      .setDescription(`Hãy đảm bảo rằng tôi có quyền **Quản lý tin nhắn**!`)
       .setTimestamp()
-      .setFooter('https://pogy.xyz')
-      .setColor(message.guild.me.displayHexColor));
+      .setFooter('https://sodachan.tk/')
+      .setColor(message.guild.me.displayHexColor)]});
 
     let reason = args.slice(1).join(' ');
     if (!reason) reason = 'None';
@@ -115,13 +115,12 @@ const language = require(`../../data/language/${guildDB.language}.json`)
 
     if (messages.size === 0) { 
 
-      message.channel.send(
-        new MessageEmbed()
+      message.reply({ embeds: [new MessageEmbed()
           .setDescription(`
-            ${fail} Unable to find any messages from ${member}. 
+            ${fail} Không thể tìm thấy bất kỳ tin nhắn nào từ ${member}. 
           `)
           .setColor(message.guild.me.displayHexColor)
-      ).then(msg => msg.delete({ timeout: 10000 })).catch(()=>{})
+      ]}).then(msg => msg.delete({ timeout: 10000 })).catch(()=>{})
 
     } else { 
       
@@ -130,7 +129,7 @@ const language = require(`../../data/language/${guildDB.language}.json`)
         const embed = new MessageEmbed()
         
           .setDescription(`
-            ${success} Successfully deleted **${messages.size}** message(s) ${logging && logging.moderation.include_reason === "true" ?`\n\n**Reason:** ${reason}`:``}
+            ${success} Đã xóa thành công **${messages.size}** tin nhắn(s) ${logging && logging.moderation.include_reason === "true" ?`\n\n**Lý do:** ${reason}`:``}
           `)
 
           .setColor(message.guild.me.displayHexColor);
@@ -141,7 +140,7 @@ const language = require(`../../data/language/${guildDB.language}.json`)
             .spliceFields(1, 0, { name: 'Member', value: member, inline: true});
         }
 
-        message.channel.send(embed)
+        message.reply({ embeds: [embed]})
       .then(async(s)=>{
           if(logging && logging.moderation.delete_reply === "true"){
             setTimeout(()=>{
@@ -186,17 +185,17 @@ let logcase = logging.moderation.caseN
 if(!logcase) logcase = `1`
 
 const logEmbed = new MessageEmbed()
-.setAuthor(`Action: \`Purge\` | Case #${logcase}`, message.author.displayAvatarURL({ format: 'png' }))
-.addField('Moderator', message.member, true)
+.setAuthor(`Hoạt động: \`Clear\` | Trường hợp #${logcase}`, message.author.displayAvatarURL({ format: 'png' }))
+.addField('Người điều hành', message.member, true)
 .setTimestamp()
-.setFooter(`Responsible ID: ${message.author.id}`)
+.setFooter(`ID có trách nhiệm: ${message.author.id}`)
 .setColor(color)
 
 for (const field in fields) {
         logEmbed.addField(field, fields[field], true);
 }
 
-channel.send(logEmbed).catch(()=>{})
+channel.send({ embeds: [logEmbed]}).catch(()=>{})
 
 logging.moderation.caseN = logcase + 1
 await logging.save().catch(()=>{})
@@ -209,7 +208,7 @@ await logging.save().catch(()=>{})
 }
 
 } catch {
-  return message.channel.send(`${message.client.emoji.fail} | Could not purge messages`)
+  return message.reply(`${message.client.emoji.fail} | Không thể xóa tin nhắn`)
 }
 
   }

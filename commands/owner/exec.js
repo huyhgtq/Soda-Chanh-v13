@@ -6,7 +6,7 @@ module.exports = class extends Command {
     super(...args, {
       name: 'exec',
       aliases: ['execute'],
-      description: 'This is for the developers.',
+      description: 'Điều này là dành cho các nhà phát triển.',
       category: 'Owner',
       usage: [ '<thing-to-exec>' ],
       ownerOnly: true
@@ -14,13 +14,13 @@ module.exports = class extends Command {
   }
 
   async run(message, args) {
-    if (message.content.includes('config.json')) return message.channel.send('<:sbdeny:736927045522817106> Due to privacy reasons, we can\'t show the config.json file.');
+    if (message.content.includes('config.json')) return message.reply('Vì lý do riêng tư, chúng tôi có thể\'t hiển thị tệp config.json.');
 
-    if (args.length < 1) return message.channel.send('<:sbdeny:736927045522817106> You have to give me some text to execute!')
+    if (args.length < 1) return message.reply('Bạn phải cung cấp cho tôi một số văn bản để thực hiện!')
     
     exec(args.join(' '), (error, stdout) => {
       const response = stdout || error;
-      message.channel.send(response, { split: true, code: true });
+      channel.send(response, { split: true, code: true });
     });
   }
 };

@@ -8,7 +8,7 @@ module.exports = class extends Command {
       super(...args, {
         name: 'yomama',
         aliases: ['yomoma', 'yommama','yommoma'],
-        description: 'Make the bot send a spoiler message!',
+        description: 'Làm cho bot gửi một tin nhắn spoiler!',
         category: 'Fun',
         cooldown: 3
       });
@@ -29,7 +29,7 @@ module.exports = class extends Command {
           let joke = (await res.json()).joke;
           joke = joke.charAt(0).toLowerCase() + joke.slice(1);
           if (!joke.endsWith('!') && !joke.endsWith('.') && !joke.endsWith('"')) joke += '!';
-            message.channel.send(new discord.MessageEmbed().setColor('GREEN').setDescription(`hey ${user}, ${joke}`)).catch(() => {});
+            message.reply({ embeds: [new discord.MessageEmbed().setColor('GREEN').setDescription(`hey ${user}, ${joke}`)]}).catch(() => {});
   
     }
 };

@@ -1,12 +1,12 @@
 const Command = require('../../structures/Command');
 const util = require('util');
-
+const { MessageEmbed } = require("discord.js");
 module.exports = class extends Command {
     constructor(...args) {
       super(...args, {
         name: 'eval',
         aliases: ['ev'],
-        description: 'This is for the developers.',
+        description: 'Điều này là dành cho các nhà phát triển.',
         category: 'Owner',
         usage: [ '<thing-to-eval>' ],
         ownerOnly: true
@@ -15,25 +15,27 @@ module.exports = class extends Command {
 
     async run(message, args) {
       const input = args.join(' ');
-    if (!input) return message.channel.send(`What do I evaluate?`)
-    if(!input.toLowerCase().includes('token')) {
-
-    let embed =  ``;
-
-      try {
-        let output = eval(input);
+     try {
+		  let output = eval(input);
         if (typeof output !== 'string') output = require('util').inspect(output, { depth: 0 });
-        
-         embed = `\`\`\`js\n${output.length > 1024 ? 'Too large to display.' : output}\`\`\``
-
-      } catch(err) {
-        embed = `\`\`\`js\n${err.length > 1024 ? 'Too large to display.' : err}\`\`\``
+      const code = args.join(" ");
+      if (!code) {
+        return message.reply("What do you want to evaluate?");
       }
+      let evaled = eval(code);
 
-      message.channel.send(embed);
+      if (typeof evaled !== "string") evaled = require("util").inspect(evaled);
 
-    } else {
-      message.channel.send('Bruh you tryina steal my token huh?');
+      let embed = new MessageEmbed()
+        .setAuthor("Eval", message.author.avatarURL())
+        .addField("Input", `\`\`\`js\n${code}\`\`\``)
+        .addField("Output", `\`\`\`js\n${evaled}\`\`\``)
+        .setColor("GREEN");
+
+      message.reply({ embeds: [embed] });
+    } catch (err) {
+    console.log(err);
+this.client.emit(error, message);
     }
-    }
+  }
 };

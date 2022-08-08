@@ -7,7 +7,7 @@ module.exports = class extends Command {
     constructor(...args) {
       super(...args, {
         name: 'deepfry',
-        description: 'deepfry a picture!',
+        description: 'chiên một bức tranh!',
         category: 'Images',
         cooldown: 5
       });

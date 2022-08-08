@@ -4,7 +4,7 @@ module.exports = class extends Command {
     constructor(...args) {
       super(...args, {
         name: 'uselessweb',
-        description: 'See a random site from theuselessweb.com',
+        description: 'Xem một trang web ngẫu nhiên từ theuselessweb.com',
         category: 'Fun',
         cooldown: 3
       });
@@ -92,6 +92,6 @@ module.exports = class extends Command {
 
       var sites = sitesList[Math.round(Math.random() * (sitesList.length - 1))];
 
-      message.channel.send(sites)
+      message.reply(sites)
     }
 };

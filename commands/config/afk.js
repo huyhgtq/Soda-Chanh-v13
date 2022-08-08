@@ -9,10 +9,10 @@ module.exports = class extends Command {
       super(...args, {
         name: 'afk',
         aliases: [],
-        description: 'Set an AFK message!',
+        description: 'Đặt thông báo AFK!',
         category: 'Config',
         usage: [ '<reason>' ],
-        examples: [ 'afk Have to go!'],
+        examples: [ 'afk nào!'],
         cooldown: 20,
       });
     }
@@ -29,11 +29,11 @@ module.exports = class extends Command {
       const oldNickname = message.member.nickname || message.author.username;
       const nickname = `[AFK] ${oldNickname}`;
       const userr = message.mentions.users.first();
-      if (userr) return message.channel.send(`${language.afk1}`)
+      if (userr) return message.reply(`${language.afk1}`)
       let everyoneping = (args.indexOf("@everyone") > -1);
-      if (everyoneping === true) return message.channel.send(`${language.afk2}`)
+      if (everyoneping === true) return message.reply(`${language.afk2}`)
       if(args.length > 100){
-      message.channel.send(`${language.afk3}`)
+     message.reply(`${language.afk3}`)
           }
       const content = args.join(" ") || 'AFK';
   
@@ -57,7 +57,7 @@ module.exports = class extends Command {
           .setDescription(`${language.afk5} ${content}`)
           .setColor(message.guild.me.displayHexColor)
           .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic : true }))
-          message.channel.send(embed)
+          message.reply({ embeds: [embed]})
         newafk.save().catch((err) => console.error(err));
     }
     }

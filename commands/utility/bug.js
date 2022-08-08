@@ -2,7 +2,10 @@ const Command = require('../../structures/Command');
 const { MessageEmbed } = require('discord.js');
 const Discord = require('discord.js');
 const config = require('../../config.json');
-const webhookClient = new Discord.WebhookClient(config.webhook_id, config.webhook_url);
+const webhookClient = new Discord.WebhookClient({ 
+id: `${config.webhook_id}`,
+token: `${config.webhook_url}`});
+
 const Guild = require('../../database/schemas/Guild');
 const crypto = require("crypto");
 
@@ -11,9 +14,9 @@ module.exports = class extends Command {
       super(...args, {
         name: 'reportbug',
         aliases: ['bugreport', 'bug'],
-        description: 'Report bugs to Pogy!',
+        description: 'Báo cáo lỗi cho Soda Chan!',
         category: 'Utility',
-        usage: [ '<text>' ],
+        usage: [ '<tin nhắn>' ],
         cooldown: 60
       });
     }
@@ -29,15 +32,15 @@ module.exports = class extends Command {
       var id = crypto.randomBytes(4).toString('hex');
       
       if (args.length < 1) {
-        return message.channel.send( new MessageEmbed()
+        return message.reply({ embeds: [new MessageEmbed()
 .setColor(message.client.color.blue)
-.setDescription(`${message.client.emoji.fail} ${language.report1}`));
+.setDescription(`${message.client.emoji.fail} ${language.report1}`)]});
       }
     
       if (args.length < 3) {
-        return message.channel.send( new MessageEmbed()
+        return message.reply({ embeds: [new MessageEmbed()
 .setColor(message.client.color.blue)
-.setDescription(`${message.client.emoji.fail} ${language.report2}`));
+.setDescription(`${message.client.emoji.fail} ${language.report2}`)]});
       }
 
 let invite = await message.channel.createInvite({
@@ -50,37 +53,35 @@ let report = args.join(' ').split('').join('')
       .setTitle('Bug Report')
       .setThumbnail(message.author.displayAvatarURL({ dynamic: true }))
       .setDescription(report) 
-      .addField('User', message.member, true)
-      .addField('User username', message.member.user.username, true)
-      .addField('User ID', message.member.id, true)
-      .addField('User Tag', message.member.user.tag, true)
-      .addField('Server',  `[${message.guild.name}](${invite ||'none '})`, true)
-      .addField('Bug Report ID:', `#${id}`, true)
+      .addField('Tên người dùng', message.member.user.username, true)
+      .addField('ID người dùng', message.member.id, true)
+      .addField('Thẻ người dùng', message.member.user.tag, true)
+      .addField('Máy chủ',  `[${message.guild.name}](${invite ||'không '})`, true)
+      .addField('ID báo cáo lỗi:', `#${id}`, true)
       .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
       .setTimestamp()
       .setColor('GREEN');
 
       const confirmation = new MessageEmbed()
-      .setTitle('Bug Report')
+      .setTitle('Bảng báo cáo lỗi')
       .setThumbnail(message.author.displayAvatarURL({ dynamic: true }))
-      .setDescription(`${language.report3} Support [**Server**](https://discord.gg/duBwdCvCwW)`)
-      .addField('Member', message.member, true)
-      .addField('Message', report, true)
-      .addField('Bug Report ID:', `#${id}`, true)
-      .setFooter(`https://pogy.xyz`)
+      .setDescription(`${language.report3} Support [**Server**](https://discord.gg/FqdH4sfKBg)`)
+      .addField('Tin nhắn Báo cáo của bạn', report, true)
+      .addField('ID báo cáo lỗi của bạn:', `#${id}`, true)
+      .setFooter('nếu mà bạn không nhận bất cứ gì từ developers : hãy chụp lại bảng Bảng báo cáo lỗi và gửi cho họ')
       .setTimestamp()
-      .setColor('GREEN');
+      .setColor('GREEN')
+	  
     
     
         
       webhookClient.send({
-        username: 'Pogy Bug Report',
+        username: 'Soda Chan Bug Report',
         avatarURL: `${message.client.domain}/logo.png`,
         embeds: [embed],
       });
       
-      message.author.send(confirmation).catch(()=>{})
-      message.delete().catch(()=>{})
+      message.reply({ embeds: [confirmation]})
 
     }
 };

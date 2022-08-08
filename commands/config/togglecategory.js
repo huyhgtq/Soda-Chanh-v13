@@ -31,16 +31,16 @@ module.exports = class extends Command {
       const success = message.client.emoji.success;
       const fail = message.client.emoji.fail;
 
-      if(!args[0]) return message.channel.send(`What category do i disable?`);
+      if(!args[0]) return message.reply(`What category do i disable?`);
 
      if (args.length === 0 || args[0].toLowerCase() === 'Owner')
-      return message.channel.send('Please, provide a valid category!')
+      return message.reply('Please, provide a valid category!')
 
 
     const type = args.slice(0).join(" ").toString().toLowerCase();
     let description;
 
-  if(type === "config") return message.channel.send(`${fail} You may not disable the Configuration Category.`)
+  if(type === "config") return message.reply(`${fail} You may not disable the Configuration Category.`)
 
     const typesMain = message.client.utils.removeDuplicates(message.client.commands.filter(cmd => cmd.category !== 'Owner').map(cmd => cmd.category));
 
@@ -77,22 +77,22 @@ module.exports = class extends Command {
       .setAuthor(message.author.tag, message.guild.iconURL({ dynamic: true }))
       .setDescription(description)
       .addField('Disabled Commands', disabledd, true)
-      .setFooter(`https://pogy.xyz`)
+      .setFooter(`https://sodachan.tk/`)
       .setTimestamp()
       .setColor(message.client.color.green);
-    message.channel.send(embed).catch(()=>{
+   message.reply({ embeds: [embed]}).catch(()=>{
                const errorEmbed = new discord.MessageEmbed()
       .setAuthor(message.author.tag, message.guild.iconURL({ dynamic: true }))
       .setDescription(description)
       .addField('Disabled Commands', `[Too Large to Display]`, true)
-      .setFooter(`https://pogy.xyz`)
+      .setFooter(`https://sodachan.tk/`)
       .setTimestamp()
       .setColor(message.client.color.green);
-      message.channel.send(errorEmbed).catch(()=>{})
+      message.reply({ embeds: [errorEmbed]}).catch(()=>{})
     })
 
 
-    } else return message.channel.send(`Please, provide a valid category\n\n**Available Categories:**\n${typesMain.join(" - ")}`)
+    } else return message.reply(`Please, provide a valid category\n\n**Available Categories:**\n${typesMain.join(" - ")}`)
 
     }
   }    

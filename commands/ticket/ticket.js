@@ -9,7 +9,8 @@ module.exports = class extends Command {
     super(...args, {
       name: "ticket",
       aliases: ["create"],
-      description: "Create a ticket via a command if option is message",
+      description: "Tạo một vé thông qua một lệnh nếu tùy chọn là tin nhắn",
+	  disabled: true,
       usage: ' ',
       category: "Tickets",
       botPermission: ["MANAGE_CHANNELS"]
@@ -29,9 +30,19 @@ module.exports = class extends Command {
           guildID: message.guild.id,
         }, async (err, db) => {
       if(!db) return;
-      if(db.ticketType !== "message") return message.channel.send(new Discord.MessageEmbed().setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ format: 'png' })).setDescription(`${message.client.emoji.fail} This Feature is disabled in the current guild`).setFooter('https://pogy.xyz').setTimestamp().setColor('RED'));
+      if(db.ticketType !== "message") return message.channel.send({ embeds: [new Discord.MessageEmbed()
+																	  .setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ format: 'png' }))
+																	  .setDescription(`${message.client.emoji.fail} Tính năng này bị tắt trong máy chủ hiện tại`)
+																	  .setFooter('https://sodachan.tk/')
+																	  .setTimestamp()
+																	  .setColor('RED')]});
       
-      if(db.ticketToggle == "false") return message.channel.send(new Discord.MessageEmbed().setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ format: 'png' })).setDescription(`${message.client.emoji.fail} This Feature is disabled in the current guild`).setFooter('https://pogy.xyz').setTimestamp().setColor('RED'));
+      if(db.ticketToggle == "false") return message.channel.send({ embeds: [new Discord.MessageEmbed()
+																	 .setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ format: 'png' }))
+																	 .setDescription(`${message.client.emoji.fail} Tính năng này bị tắt trong máy chủ hiện tại`)
+																	 .setFooter('https://sodachan.tk/')
+																	 .setTimestamp()
+																	 .setColor('RED')]});
       
       let ticketRole = message.guild.roles.cache.get(db.supportRoleID);
       let ticketCategory = message.guild.channels.cache.get(db.categoryID)
@@ -46,7 +57,12 @@ module.exports = class extends Command {
   let reason = args.slice(0).join(" ");
 
   if(db.requireReason == "true"){
-  if (!reason) return message.channel.send(new Discord.MessageEmbed().setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ format: 'png' })).setDescription(`${message.client.emoji.fail} Please provide a reason`).setFooter('https://pogy.xyz').setTimestamp().setColor('RED'));
+  if (!reason) return message.reply({ embeds: [new Discord.MessageEmbed()
+											   .setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ format: 'png' }))
+											   .setDescription(`${message.client.emoji.fail} Vui lòng cung cấp lý do`)
+											   .setFooter('https://sodachan.tk/')
+											   .setTimestamp()
+											   .setColor('RED')]});
   }
 
 
@@ -71,7 +87,11 @@ let arraylength = array.length
       if(arraylength > ticketlimit || arraylength == ticketlimit) {
 
         message.react(client.emoji.fail)
-        return message.channel.send(new discord.MessageEmbed().setColor(client.color.red).setDescription(`You already have ${arraylength} open tickets, as the current guild's ticket limit is ${ticketlimit} `).setAuthor(message.author.tag, message.author.displayAvatarURL()).setFooter('https://pogy.xyz')).then(m => m.delete({timeout: 5000}))
+        return message.reply({ embeds: [new discord.MessageEmbed()
+										.setColor(client.color.red)
+										.setDescription(`Bạn đã có ${arraylength} mở vé, vì giới hạn vé của máy chủ hiện tại là ${ticketlimit} `)
+										.setAuthor(message.author.tag, message.author.displayAvatarURL())
+										.setFooter('https://sodachan.tk/')]}).then(m => m.delete({timeout: 5000}))
       }
       
       message.react(client.emoji.check)
@@ -99,15 +119,15 @@ message.guild.channels.create(chann, { type: "text" })
 
     if(db.ticketPing == "true"){
 
-    chan.send(`${member} ${ticketRole}`).catch(()=>{})
+    message.reply(`${member} ${ticketRole}`).catch(()=>{})
 
     }
     let reasonx = args.slice(0).join(" ")
-    if(!reasonx) reasonx = `No reason Provided`;
-    if(reasonx.length > 1024 ) reasonx = `Reason Too Long`;
-    if(reason.length > 1024 ) reasonx = `Reason Too Long`;
+    if(!reasonx) reasonx = `Không cung cấp lý do`;
+    if(reasonx.length > 1024 ) reasonx = `Lý do quá dài`;
+    if(reason.length > 1024 ) reasonx = `Lý do quá dài`;
     
-    chan.send(new discord.MessageEmbed()
+    message.reply({ embeds: [new discord.MessageEmbed()
     .setAuthor(message.author.tag, message.author.displayAvatarURL())
 
     .setDescription(db.ticketWelcomeMessage
@@ -118,7 +138,7 @@ message.guild.channels.create(chann, { type: "text" })
         .replace(/{user_ID}/g, `${member.id}`) || language.ticketNewTicketWaitForAssistant)
         
     .setColor(color)
-    ).catch(()=>{})
+    ]}).catch(()=>{})
     
     if(ticketCategory){
     chan.setParent(ticketCategory.id)
@@ -131,18 +151,21 @@ message.guild.channels.create(chann, { type: "text" })
 
         const embedLog = new discord.MessageEmbed()
       .setColor(color2)
-      .setFooter('https://pogy.xyz')
+      .setFooter('https://sodachan.tk/')
       .setTitle(language.ticketNewTicketTitle)
       .setTimestamp()
       //.addField("Information" , `**User:** ${user}\n**Ticket Channel: **${chan.name}\n**Ticket:** #${serverCase}\n**Date:** ${moment(new Date()).format("dddd, MMMM Do YYYY")} `)
-      .addField(language.ticketEmbedTitleInfo, language.ticketEmbedValueInfo.replace("{user}", `${user}`).replace("{chanName}", chan.name).replace("{serverCase}", serverCase).replace("{ticketDate}", moment(new Date()).format("dddd, MMMM Do YYYY")))
+      .addField(language.ticketEmbedTitleInfo, language.ticketEmbedValueInfo.replace("{user}", `${user}`)
+				.replace("{chanName}", chan.name)
+				.replace("{serverCase}", serverCase)
+				.replace("{ticketDate}", moment(new Date()).format("MM-DD-YYYY")))
       
       if(ticketLog) {
       ticketLog.send(embedLog).catch(() => {})
       }
 })
       } catch (e) {
-        message.channel.send(`An error has occured: ${e}\nSend this in the support server.`)
+        message.reply(`Đã xảy ra lỗi: ${e}\nGửi cái này trong máy chủ hỗ trợ.`)
       }
    })
   

@@ -5,7 +5,7 @@ module.exports = class extends Command {
       super(...args, {
         name: 'removebadge',
         aliases: [ ],
-        description: 'Remove a certain badge to a user.',
+        description: 'Xóa một huy hiệu nhất định cho người dùng.',
         category: 'Owner',
         ownerOnly: true
       });
@@ -17,11 +17,11 @@ module.exports = class extends Command {
 
       let user = message.mentions.users.first() || client.users.cache.get(args[0]) || match(args.join(" ").toLowerCase(), message.guild) || message.author;
 
-      if(!user) return message.channel.send('Provide me with a user.');
+      if(!user) return message.reply('Cung cấp cho tôi một người dùng.');
       
 
       const badge = args[1]
-      if(!badge) return message.channel.send('Provide me with a badge');
+      if(!badge) return message.reply('Cung cấp cho tôi một huy hiệu');
 
       let userFind = await User.findOne({
         discordId: user.id
@@ -47,11 +47,11 @@ module.exports = class extends Command {
       await userFind.updateOne({
         badges: newArr
       })
-      message.channel.send(`Removed ${badge} from the user!`)
+      message.reply(`Loại bỏ ${badge} từ người dùng!`)
 
 
       } else {
-        message.channel.send(`He doesn't have that badge`)
+        message.reply(`Anh ấy không có huy hiệu đó`)
       }
 
    

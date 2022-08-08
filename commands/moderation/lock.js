@@ -10,10 +10,11 @@ module.exports = class extends Command {
       super(...args, {
         name: 'lock',
         aliases: [ 'lc' ],
-        description: 'Locks the current / mentioned channel.',
+        description: 'Khóa kênh hiện tại / kênh đề cập.',
         category: 'Moderation',
         usage: '<channel> [time]',
-        examples: [ 'lock #general' ],
+        examples: [ 'lock #chung' ],
+		disabled: true,
         guildOnly: true,
         botPermission: ['MANAGE_CHANNELS'],
         userPermission: ['MANAGE_CHANNELS'],
@@ -44,7 +45,7 @@ module.exports = class extends Command {
         .then(result => console.log(result))
         .catch(err => console.error(err));
 
-        return message.channel.send('This server was not in our database! We have added it, please retype this command.').then(m => m.delete({timeout: 10000}));
+        return message.reply('Máy chủ này không có trong cơ sở dữ liệu của chúng tôi! Chúng tôi đã thêm nó, vui lòng nhập lại lệnh này.').then(m => m.delete({timeout: 10000}));
     }
 });
   const logging = await Logging.findOne({ guildId: message.guild.id })
@@ -71,10 +72,10 @@ let verified =  message.guild.roles.cache.find(r => r.name.toLowerCase() === 've
 
         if(channel.permissionsFor(message.guild.id).has('SEND_MESSAGES') === false) {
             const lockchannelError2 = new MessageEmbed()
-            .setDescription(`${fail} | ${channel} is already locked`)
+            .setDescription(`${fail} | ${channel} đã bị khóa`)
             .setColor(client.color.red)
 
-            return message.channel.send(lockchannelError2)
+            return message.reply({ embeds: [lockchannelError2]})
         }
       
         channel.updateOverwrite(message.guild.me, { SEND_MESSAGES: true }).catch(()=>{})
@@ -98,9 +99,9 @@ let verified =  message.guild.roles.cache.find(r => r.name.toLowerCase() === 've
        
 
         const embed = new MessageEmbed()
-        .setDescription(`${success} | successfully Locked **${channel}** ${logging && logging.moderation.include_reason === "true" ?`\n\n**Reason:** ${reason}`:``}`)
+        .setDescription(`${success} | đã khóa thành công **${channel}** ${logging && logging.moderation.include_reason === "true" ?`\n\n**Lý do:** ${reason}`:``}`)
         .setColor(client.color.green)
-        message.channel.send(embed)
+        message.reply({ embeds: [embed]})
         .then(async(s)=>{
           if(logging && logging.moderation.delete_reply === "true"){
             setTimeout(()=>{
@@ -140,15 +141,15 @@ if (!reason) reason = `${language.noReasonProvided}`;
 if (reason.length > 1024) reason = reason.slice(0, 1021) + '...';
 
 const logEmbed = new MessageEmbed()
-.setAuthor(`Action: \`Lock\` | ${message.author.tag} | Case #${logcase}`, message.author.displayAvatarURL({ format: 'png' }))
-.addField('Channel', channel, true)
-.addField('Moderator', message.member, true)
-.addField('Reason', reason, true)
+.setAuthor(`Hoạt động: \`Lock\` | ${message.author.tag} | Trường hợp #${logcase}`, message.author.displayAvatarURL({ format: 'png' }))
+.addField('Kênh', channel, true)
+.addField('Người điều hành', message.member, true)
+.addField('Lý do', reason, true)
 .setFooter(`ID: ${message.author.id}`)
 .setTimestamp()
 .setColor(color)
 
-channel.send(logEmbed).catch(()=>{})
+channel.send({ embeds: [logEmbed]}).catch(()=>{})
 
 logging.moderation.caseN = logcase + 1
 await logging.save().catch(()=>{})
@@ -160,7 +161,7 @@ await logging.save().catch(()=>{})
 }
         } catch (err) {
 
-     message.channel.send(`Error, Please try again later`)
+     message.reply(`Đã xảy ra lỗi, vui lòng thử lại sau`)
     }
 
 };

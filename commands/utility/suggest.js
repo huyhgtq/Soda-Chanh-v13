@@ -13,7 +13,7 @@ module.exports = class extends Command {
     constructor(...args) {
       super(...args, {
         name: 'suggest',
-        description: 'Suggest Something if the module is enabled!',
+        description: 'Đề xuất điều gì đó nếu mô-đun được bật!',
         category: 'Utility',
         cooldown: 20,
         botPermission: ["ADD_REACTIONS", "USE_EXTERNAL_EMOJIS"]
@@ -37,26 +37,26 @@ let suggestColor = guildDB.suggestion.suggestioncolor
 if(suggestColor == '#000000') suggestColor = message.guild.me.displayHexColor
 
 
-if(!guildDB.suggestion.suggestionChannelID || !guildDB.suggestion.suggestionChannelID === null) return message.channel.send(new MessageEmbed().setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ format: 'png' })).setDescription(`${fail} ${language.suggesting1}`).setFooter('https://pogy.xyz').setTimestamp().setColor('RED'));
+if(!guildDB.suggestion.suggestionChannelID || !guildDB.suggestion.suggestionChannelID === null) return message.channel.send(new MessageEmbed().setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ format: 'png' })).setDescription(`${fail} ${language.suggesting1}`).setFooter('https://sodachan.tk/').setTimestamp().setColor('RED'));
 
 let suggestion = guildDB.suggestion.suggestionChannelID
 let channel = message.guild.channels.cache.get(suggestion)
-if(!channel) return message.channel.send(new MessageEmbed().setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ format: 'png' })).setDescription(`${fail} ${language.suggesting2}`).setFooter('https://pogy.xyz').setTimestamp().setColor('RED'));
+if(!channel) return message.channel.send(new MessageEmbed().setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ format: 'png' })).setDescription(`${fail} ${language.suggesting2}`).setFooter('https://sodachan.tk/').setTimestamp().setColor('RED'));
   
 let suggestionName = args.slice(0).join(" ")
-if(!suggestionName) return message.channel.send(new MessageEmbed().setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ format: 'png' })).setDescription(`${fail} ${language.suggest1}`).setFooter('https://pogy.xyz').setTimestamp().setColor('RED'));
+if(!suggestionName) return message.channel.send(new MessageEmbed().setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ format: 'png' })).setDescription(`${fail} ${language.suggest1}`).setFooter('https://sodachan.tk/').setTimestamp().setColor('RED'));
 
-if(args.join(' ').length > 600) return message.channel.send(new MessageEmbed().setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ format: 'png' })).setDescription(`${fail} ${language.suggesting17}`).setFooter('https://pogy.xyz').setTimestamp().setColor('RED'));
+if(args.join(' ').length > 600) return message.channel.send(new MessageEmbed().setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ format: 'png' })).setDescription(`${fail} ${language.suggesting17}`).setFooter('https://sodachan.tk/').setTimestamp().setColor('RED'));
 
 let log = new discord.MessageEmbed()
   .setColor(suggestColor)
-  .setTitle(`Guild Suggestions`)
-  .setDescription(`**A new User just Suggested!**`)
+  .setTitle(`Đề xuất máy chủ`)
+  .setDescription(`**Người dùng mới vừa được đề xuất!**`)
   .addField(`${language.report18}`, message.member, true)
   .addField(`${language.report19}`, message.member.id, true)
   .addField(`${language.report20}`, message.author.tag, true)
-  .addField(`Channel`, message.channel, true)
-  .addField(`${language.report25}`, `${moment(new Date()).format("dddd, MMMM Do YYYY")}`, true)
+  .addField(`Kênh`, message.channel, true)
+  .addField(`${language.report25}`, `${moment(new Date()).format("MM-DD-YYYY")}`, true)
   .addField(`Suggestion`, `\`\`\`${suggestionName}\`\`\``)
   .setFooter(message.author.tag,  message.author.displayAvatarURL({ dynamic: true }))
 
@@ -65,7 +65,7 @@ if(guildDB.suggestion.suggestionChannelID !== null){
   let channelLog = await message.guild.channels.cache.get(guildDB.suggestion.suggestionlogChannelID)
   if(channelLog){
      send(channelLog, log, {
-   name: `Suggestion Logs`,
+   name: `Nhật ký đề xuất`,
    icon: `${message.client.domain}/logo.png`
  }).catch(()=>{})
   }
@@ -95,7 +95,7 @@ let embed = new discord.MessageEmbed()
   } else if(guildDB.isPremium == "true"){
    let member = message.member
    const description = guildDB.suggestion.description || `{suggestion}`;
-   const footer = guildDB.suggestion.footer || `suggested by {user_tag}`
+   const footer = guildDB.suggestion.footer || `được đề nghị bởi {user_tag}`
    let theEmbed = new discord.MessageEmbed()
    .setColor(suggestColor)
    .setTitle(`${language.suggesting3}`)
@@ -116,7 +116,7 @@ let embed = new discord.MessageEmbed()
 
     if(guildDB.suggestion.timestamp == "true") theEmbed.setTimestamp()
 
-    channel.send(theEmbed).catch(err => {return message.channel.send(`I could not send the suggestion Properly since my embed description either exceeds 2000 characters, or I do not have permissions to talk in the Suggestion Channel. Kindly report that to a staff member.`)})
+    channel.send(theEmbed).catch(err => {return message.channel.send(`Tôi không thể gửi đề xuất một cách chính xác vì mô tả nhúng của tôi vượt quá 2000 ký tự hoặc tôi không có quyền nói chuyện trong Kênh đề xuất. Vui lòng báo cáo điều đó cho một nhân viên.`)})
   .then(async(sug) => {
     if(guildDB.suggestion.reaction == "1"){
 
@@ -164,7 +164,7 @@ let embed = new discord.MessageEmbed()
   message.channel.send(new MessageEmbed()
   .setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ format: 'png' }))
   .setDescription(`${language.suggesting6} ${channel}`)
-  .setFooter('https://pogy.xyz')
+  .setFooter('https://sodachan.tk/')
   .setTimestamp()
   .setColor('GREEN')).then(k => {
 

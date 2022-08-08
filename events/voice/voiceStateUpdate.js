@@ -47,49 +47,49 @@ if(colorYellow === "#000000") colorYellow = 'YELLOW';
         let embed;
 
   
-        let oldparentname = "unknown"
-        let oldchannelname = "unknown"
-        let oldchanelid = "unknown"
+        let oldparentname = "không xác định"
+        let oldchannelname = "không xác định"
+        let oldchanelid = "không xác định"
         if (oldState && oldState.channel && oldState.channel.parent && oldState.channel.parent.name) oldparentname = oldState.channel.parent.name
         if (oldState && oldState.channel && oldState.channel.name) oldchannelname = oldState.channel.name
         if (oldState && oldState.channelID) oldchanelid = oldState.channelID
 
-        let newparentname = "unknown"
-        let newchannelname = "unknown"
-        let newchanelid = "unknown"
+        let newparentname = "không xác định"
+        let newchannelname = "không xác định"
+        let newchanelid = "không xác định"
         if (newState && newState.channel && newState.channel.parent && newState.channel.parent.name) newparentname = newState.channel.parent.name
         if (newState && newState.channel && newState.channel.name) newchannelname = newState.channel.name
         if (newState && newState.channelID) newchanelid = newState.channelID
 
         if (oldState.channelID && oldState.channel) {
-            if (typeof oldState.channel.parent !== "undefined") {
+            if (typeof oldState.channel.parent !== "chưa xác định") {
 
-                oldChannelName = `**Category:** ${oldparentname}\n\t**Name:** ${oldchannelname}\n**ID: **${oldchanelid}`
+                oldChannelName = `**Danh mục:** ${oldparentname}\n\t**Tên:** ${oldchannelname}\n**ID: **${oldchanelid}`
 
             } else {
-                oldChannelName = `-\n\t**Name:** ${oldparentname}\n**ID:** ${oldchanelid}`
+                oldChannelName = `-\n\t**Tên:** ${oldparentname}\n**ID:** ${oldchanelid}`
             }
         } else {
-           oldChannelName = `[Stage Channel]`
+           oldChannelName = `[Kênh sân khấu]`
         }
         if (newState.channelID && newState.channel) {
-            if (typeof newState.channel.parent !== "undefined") {
+            if (typeof newState.channel.parent !== "chưa xác định") {
 
-                newChannelName = `**Category:** ${newparentname}\n\t**Name:** ${newchannelname}\n**ID:** ${newchanelid}`
+                newChannelName = `**Danh mục:** ${newparentname}\n\t**Tên:** ${newchannelname}\n**ID:** ${newchanelid}`
 
             } else {
-                newChannelName = `-\n\t**Name:** ${newchannelname}**\n**ID:** ${newchanelid}`
+                newChannelName = `-\n\t**Tên:** ${newchannelname}**\n**ID:** ${newchanelid}`
             }
              } else {
-          newChannelName = `[Stage Channel]`
+          newChannelName = `[Kênh sân khấu]`
         }
         
         // JOINED V12
         if (!oldState.channelID && newState.channelID) {
             const joinembed = new discord.MessageEmbed()
-            .setAuthor(`${newState.member.user.tag} | Voice Channel Joined!`, newState.member.user.displayAvatarURL())
-            .addField('member', newState.member, true)
-            .addField('Channel', newChannelName, true)
+            .setAuthor(`${newState.member.user.tag} | Kênh thoại đã tham gia!`, newState.member.user.displayAvatarURL())
+            .addField('Thành viên', newState.member, true)
+            .addField('Kênh', newChannelName, true)
             .setColor(colorGreen)
            .setTimestamp()
            .setFooter(`ID: ${newState.member.user.id}`)
@@ -157,7 +157,7 @@ if(colorYellow === "#000000") colorYellow = 'YELLOW';
       channelEmbed.viewable &&
       channelEmbed.permissionsFor(newState.guild.me).has(['SEND_MESSAGES', 'EMBED_LINKS'])){
 
-             channelEmbed.send(moveembed).catch(()=>{});
+             channelEmbed.send({ embeds: [moveembed] }).catch(()=>{});
                            cooldown.add(newState.guild.id);
               setTimeout(()=>{
               cooldown.delete(newState.guild.id)

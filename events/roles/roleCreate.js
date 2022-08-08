@@ -22,40 +22,27 @@ if(maintenance && maintenance.toggle == "true") return;
 if(logging){
   if(logging.server_events.toggle == "true"){
 
-
-
 const channelEmbed = await role.guild.channels.cache.get(logging.server_events.channel)
-
 if(channelEmbed){
-
 let color = logging.server_events.color;
 if(color == "#000000") color = role.client.color.green
-
 
   if(logging.server_events.role_create == "true"){
 
  const embed = new discord.MessageEmbed()
-    .setDescription(`🆕 ***Role Created***`)
-    .addField('Role', role, true)
-    .addField('Role Name', role.name, true)
-    .setFooter(`Role ID: ${role.id}`)
+    .setDescription(`🆕 ***Đã tạo vai trò***`)
+    .addField('Vai trò', role, true)
+    .addField('Tên vai trò', role.name, true)
+    .setFooter(`ID vai trò: ${role.id}`)
     .setTimestamp()
     .setColor(color)
 
     if(channelEmbed &&
       channelEmbed.viewable &&
       channelEmbed.permissionsFor(role.guild.me).has(['SEND_MESSAGES', 'EMBED_LINKS'])){
-            channelEmbed.send(embed).catch(()=>{})
-      }
-
-
-  }
-
-
-  }
- }
-}
-
-
-  }
+            channelEmbed.send({ embeds: [embed] }).catch(()=>{})
+         }
+      }}
+    }
+  }}
 };

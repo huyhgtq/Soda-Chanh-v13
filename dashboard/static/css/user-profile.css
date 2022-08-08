@@ -1,0 +1,99 @@
+.banner-container {
+ width: 400px;
+ display: block;
+ padding: 10px;
+ border-radius: 5px;
+ background-repeat: no-repeat;
+ background-position: 50%;
+ background-size: cover;
+}
+
+.user-profile-image {
+ box-shadow: 0 3px 15px 0 rgba(0, 0, 0, 0.1), 0 1px 3px 0 rgba(0, 0, 0, 0.08);
+}
+
+.user-name {
+ word-break: break-word;
+}
+
+.buttons-container {
+ display: flex;
+ align-items: center;
+ justify-content: center;
+}
+
+.button-one {
+ margin-right: 5px;
+}
+
+.button-two {
+ margin-left: 5px;
+}
+$interface: #ededed;
+$text: #666;
+$dark: rgba(25,27,45,1);
+$teal: rgba(27,226,192,1);
+
+#fluid {
+  width: 100vw;
+  height: 100vh;
+  background-color: #fff;
+}
+
+body {
+  height: 100vh;
+  background-color: $teal;
+}
+
+#profile-name-header {
+  color: rgba(25,27,45,1);
+}
+
+.profile-nav-2 {
+  background-color: $interface;
+  border-color: darken($interface, 10%);
+  a {
+    color: $text;
+    &.active {
+      color: darken($text, 15%);
+    }
+  }
+}
+
+.single-pen {
+  border-color: $interface;
+  .stats {
+  background-color: transparent;
+  &:after {
+    background: transparent;
+  }
+}
+}
+.meta {
+  background-color: $interface;
+  color: $text;
+}
+.button-outline {
+  border-color: $dark;
+  color: $dark;
+  &:hover {
+    background-color: $dark;
+    color: #fff;
+  }
+}
+
+.button-dark {
+  background-color: rgba(0,0,0,0.3);
+  color: rgba(255,255,255,0.3);
+}
+.pagination-button {
+  border-color: #fff;
+}
+
+.links-and-stats {
+  background-color: $teal;
+}
+
+.iframe-wrap>.meta-overlay .pen-actions {
+  border-color: rgba(219,49,146,1);
+}

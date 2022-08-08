@@ -1,9 +1,10 @@
-<%- include("partials/head", { bot, user, path, description, title: "Pogy - report"}) %>
+<%- include("partials/head", { bot, user, path, description, title: "Report"}) %>
 
         <link rel="stylesheet" href="<%domain%>/css/report.css" />
         <script src="<%domain%>/js/report.js"></script>
-
     <body>
+
+
      <% if (user) { %>
      <script>
      var username = "<%= user.username %>#<%= user.discriminator %>";
@@ -14,8 +15,8 @@
                 <form class="contact-form validate-form">
                     <span class="contact-form-title"></span>
                     <div class="wrap-input rs1-wrap-input">
-                        <span class="label">Discord Name</span>
-                        <input class="input" type="text" name="reported_name" placeholder="Discord Name" required/>
+                        <span class="label">Tên Discord</span>
+                        <input class="input" type="text" name="reported_name" placeholder="Tên Discord" required/>
 
                         <span class="input-line"></span>
                     </div>
@@ -28,23 +29,23 @@
                     </div>
 
                     <div class="wrap-input">
-                        <span class="label">Report Reason</span>
-                        <textarea class="input" name="report" placeholder="Your Message" required></textarea>
+                        <span class="label">Báo cáo lý do</span>
+                        <textarea class="input" name="report" placeholder="Tin nhắn của bạn" required></textarea>
                         <span class="input-line"></span>
                        
                                    
                                
                     </div>
                       <div class="wrap-input">
-                      <span class="label">Proof:</span>
-                                  <textarea class="input" name="proof" placeholder="Proof links" required></textarea>
+                      <span class="label">Bằng chứng:</span>
+                                  <textarea class="input" name="proof" placeholder="Liên kết bằng chứng" required></textarea>
                                    <span class="input-line"></span>
                                    </div>
                     <div>
                     <span id="iunderstand" style="color:red"></span><br>
                     <div class="checkbox">
                 
-  <label><input type="checkbox" name="understand" id="checkboxL"> I understand that Pogy's team will be able to see my discord Tag & ID to contact me later for further investigations. </label>
+  <label><input type="checkbox" name="understand" id="checkboxL"> Tôi hiểu rằng nhóm của Soda Chan sẽ có thể thấy Thẻ & ID bất hòa của tôi để liên hệ với tôi sau để điều tra thêm. </label>
 </div>
       <span id="captcha" style="color:red"></span>
       <br>
@@ -55,7 +56,7 @@
                       
                     <div class="box-footer">
     
-                        <button type="submit">Send</button>
+                        <button type="submit">Gửi</button>
                     </div>
                 </form>
               
@@ -67,7 +68,7 @@
                 <form class="contact-form validate-form">
                     <span class="contact-form-title"></span>
                     <div class="wrap-input rs1-wrap-input">
-                              <span class="label">Discord Name</span>
+                              <span class="label">Tên Discord</span>
                         <input class="input" type="text" name="reported_name" placeholder="Discord Name" required disabled/>
 
                         <span class="input-line"></span>
@@ -81,7 +82,7 @@
                     </div>
 
                     <div class="wrap-input">
-                        <span class="label">Report Reason</span>
+                        <span class="label">Báo cáo lý do</span>
                         <textarea class="input" name="report" placeholder="Your Message" required disabled></textarea>
                         <span class="input-line"></span>
                        
@@ -95,7 +96,7 @@
                                    </div>
                     <div>
                     <div class="container-contact-form-btn">
-                    <p>You must be logged in to report a user.</p>
+                    <p>Bạn phải đăng nhập để báo cáo một người dùng.</p>
                    
                     </div>
                     <br>
@@ -121,14 +122,14 @@
         // Renders the HTML element with id 'example1' as a reCAPTCHA widget.
         // The id of the reCAPTCHA widget is assigned to 'widgetId1'.
         widgetId1 = grecaptcha.render('example1', {
-          'sitekey' : '6LfG_H8aAAAAAKFRc2P0w5-slk2yz--FCuhQhS4O',
+          'sitekey' : '6Lc4su0cAAAAAMICR1sbQlgB5gJEgiluFADwonha',
           'theme' : 'dark'
         });
         widgetId2 = grecaptcha.render(document.getElementById('example2'), {
-          'sitekey' : '6LfG_H8aAAAAAKFRc2P0w5-slk2yz--FCuhQhS4O'
+          'sitekey' : '6Lc4su0cAAAAAMICR1sbQlgB5gJEgiluFADwonha'
         });
         grecaptcha.render('example3', {
-          'sitekey' : '6LfG_H8aAAAAAKFRc2P0w5-slk2yz--FCuhQhS4O',
+          'sitekey' : '6Lc4su0cAAAAAMICR1sbQlgB5gJEgiluFADwonha',
           'callback' : verifyCallback,
           'theme' : 'dark'
         });
@@ -140,3 +141,4 @@
     </script>
 
   <%- include("partials/footer") %>
+  

@@ -13,7 +13,7 @@
 <link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap" rel="stylesheet">
 </head>
-<%- include("../partials/dashMenu", { bot, user, path, description, title: `Pogy - Dashboard`, arc, url})%>
+<%- include("../partials/dashMenu", { bot, user, path, description, title: `Soda Chan - Dashboard`, arc, url})%>
 
 
 <% if(guild.roles.cache.filter(m => !m.managed && m.name !== "@everyone").size) { %>
@@ -28,7 +28,7 @@
 <% if (guild.icon) {
  iconurl = "https://cdn.discordapp.com/icons/" + guild.id + "/" + guild.icon + ".png??size=512";
 } else {
- iconurl = "https://cdn.glitch.com/82fe990a-7942-42e3-9790-39807ccdb9f6%2Ficon-404-dark.png?v=1602427904949";
+ iconurl = "https://cdn.discordapp.com/attachments/893953110349852686/970760403976093716/soda_chan_new.png";
 }
 %>
 <form role="form" action="/dashboard/<%= guild.id %>/tickets" method="POST">
@@ -85,17 +85,17 @@
     </div>
   </div>
 <% }  %>
-    <h2 class="tickets-header" style="font-family: 'Cairo', sans-serif">Main Settings</h2>
+    <h2 class="tickets-header" style="font-family: 'Cairo', sans-serif">Cài đặt chính</h2>
 <br>
-<p>Welcome Message <a href="/variables" style="color: red">(Check Variables Here)</a></p>
+<p>Tin nhắn chào mừng <a href="/variables" style="color: red">(Kiểm tra các biến tại đây)</a></p>
 <textarea style="max-width: 380px; min-width: 380px; height:150px; 
 max-height:200px; min-height:60px; background-color: #2f2f2f; color: white;" id="textarea5"  rows="3" name="ticketWelcomeMessage" class="form-control" required><%= ticket.ticketWelcomeMessage || `Hey {user} Welcome to your ticket!\n\nThank you for creating a ticket, the support team will be with you shortly\n\nIn the mean time, please explain your issue below `%></textarea>
  <span style="color: white" id='remaining5'></span>
 
 <br>
 <p>
-<input style="background-color: #2f2f2f; color: white;" type="color" name="ticketWelcomeColor" value="<%= ticket.ticketWelcomeColor %>">  Embed Color</p>
-<p>Ticket Logs</p>
+<input style="background-color: #2f2f2f; color: white;" type="color" name="ticketWelcomeColor" value="<%= ticket.ticketWelcomeColor %>">Màu sắc Embed</p>
+<p>Ticket nhật ký</p>
 <input style="background-color: #2f2f2f; color: white;" type="color" name="ticketLogColor" value="<%= ticket.ticketLogColor %>">
 <select style="background-color: #2f2f2f; color: white; border-radius: 5px;" class="select" name="ticketChannel">
 <% if(ticket.ticketModlogID && bot.channels.cache.has(ticket.ticketModlogID)){ %>
@@ -111,7 +111,7 @@ max-height:200px; min-height:60px; background-color: #2f2f2f; color: white;" id=
                                                 <% } %>
                                             </select> 
 <br>
- <p>Support Role</p>
+ <p>Vai trò hỗ trợ</p>
  <select style="background-color: #2f2f2f; color: white; border-radius: 5px;" class="select" name="ticketRole">
  <% if(ticket.supportRoleID && guild.roles.cache.has(ticket.supportRoleID)){ %>
 <option selected="selected">@<%= guild.roles.cache.get(ticket.supportRoleID).name %></option>
@@ -125,7 +125,7 @@ max-height:200px; min-height:60px; background-color: #2f2f2f; color: white;" id=
                                                 <% } %>
                                             </select>
                                             <br>
-<p>Ticket Category</p>
+<p>Ticket ở danh mục nào</p>
 <select class="select" style="background-color: #2f2f2f; color: white; border-radius: 5px;" name="ticketCategory">
 <% if(ticket.categoryID && bot.channels.cache.has(ticket.categoryID)){ %>
  <option selected="selected"><%= bot.channels.cache.get(ticket.categoryID).name %></option>
@@ -139,7 +139,7 @@ max-height:200px; min-height:60px; background-color: #2f2f2f; color: white;" id=
                                                 <% } %>
                                             </select>
                                             <br>
-<p>Ticket Limit (1 - 5)</p>
+<p>Ticket Giới hạn (1 - 5)</p>
 
 <input style="background-color: #2f2f2f; color: white;  border: 2px solid grey; border-radius: 5px " type="number" name="ticketLimit" value="<%= ticket.maxTicket %>" min="1" max="5">
 <br>
@@ -169,7 +169,7 @@ max-height:200px; min-height:60px; background-color: #2f2f2f; color: white;" id=
 
                                                     <% } else { %>
                                                       <input name="ticketClose" class="input-switch" type="checkbox" id="switch3"></input><label class="label-switch"for="switch3" checked>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                                                    <% } %>Allow Users to Close ticket &nbsp;<% if(settings.isPremium == "false"){ %><a href="https://pogy.xyz/premium"><i style="font-size:14px; color: yellow" class="fa">&#xf006;</i></a><% } %></p>
+                                                    <% } %>Cho phép người dùng đóng ticket &nbsp;<% if(settings.isPremium == "false"){ %><a href="https://huyhgt.huyn9589.repl.co/premium/"><i style="font-size:14px; color: yellow" class="fa">&#xf006;</i></a><% } %></p>
 <br>
  </div> 
 <br>
@@ -178,16 +178,16 @@ max-height:200px; min-height:60px; background-color: #2f2f2f; color: white;" id=
                                     <div class="box-footer">
                                         <% if(ticket.ticketToggle == "true"){ %>
 
-                                            <button type="submit" name="ticketDisable" class="disable">Disable</button>
+                                            <button type="submit" name="ticketDisable" class="disable">Vô hiệu hóa</button>
                                               <% if(ticket.ticketType == "message"){ %>
    <button type="submit" name="switchReaction" class="update2">Use Reaction</button>
     <% } else if(ticket.ticketType == "reaction"){ %>
-      <button type="submit" name="switchReaction2" class="update3">Use Message</button>
+      <button type="submit" name="switchReaction2" class="update3">Sử dụng tin nhắn</button>
    <% }  %>
-                                            <button type="submit" name="ticketUpdate" class="update">Update</button>
- <button type="submit" name="resetDatabase" class="cd-popup-trigger">Reset Database</button>
+                                            <button type="submit" name="ticketUpdate" class="update">Cập nhật</button>
+ <button type="submit" name="resetDatabase" class="cd-popup-trigger">Đặt lại từ đầu</button>
                                         <% } else { %>
-                                            <button type="submit" name="ticketEnable" class="save">Enable</button>
+                                            <button type="submit" name="ticketEnable" class="save">Cho phép</button>
                                         <% } %>
                                     </div>
  
@@ -198,15 +198,15 @@ max-height:200px; min-height:60px; background-color: #2f2f2f; color: white;" id=
 
 
 <% if(ticket.ticketType == "reaction" && ticket.ticketCustom == "false") { %>   
-<h2 class="tickets-header" style="font-family: 'Cairo', sans-serif">Reaction Panel</h2>
+<h2 class="tickets-header" style="font-family: 'Cairo', sans-serif">Bảng phản ứng</h2>
 <br>
-<p><input type="color" style="background-color: #2f2f2f; color: white; border-radius: 5px;"  name="reactionPanelColor" value="<%= ticket.ticketEmbedColor %>">&nbsp; Embed Color</p>
-<p><bold>Reaction Title</bold></p>
+<p><input type="color" style="background-color: #2f2f2f; color: white; border-radius: 5px;"  name="reactionPanelColor" value="<%= ticket.ticketEmbedColor %>">&nbsp; Màu sắc Embed</p>
+<p><bold>Tiêu đề Reaction</bold></p>
 <div class="user-box">
       <input type="text" style="width: 400px; min-width: 400px; max-width: 400px;background-color: #2f2f2f; color: white; border-radius: 5px;"  class="form-control" name="reactionTitle" value="<%= ticket.ticketTitle || `Server Tickets` %>" placeholder="Reaction Title">
 </div>
 <br>
-<p><bold>Reaction description</bold>(Max 1024)</p>
+<p><bold>Mô tả Reaction </bold>(Max 1024)</p>
 <textarea style="background-color: #2f2f2f; color: white; border-radius: 5px; width: 400px; min-width: 400px; max-width: 400px; height: 70px; min-height: 70px; max-height: 150px"; id="textarea6"  rows="3" name="reactionDescription" class="form-control" required><%= ticket.ticketDescription || `Please react to open a ticket!`%></textarea>
  <span style="color: white" id='remaining6'></span>
 <br>
@@ -218,7 +218,7 @@ max-height:200px; min-height:60px; background-color: #2f2f2f; color: white;" id=
        
                                                     <% } else { %>
                                                             <input name="ticketTimestamp" class="input-switch" type="checkbox" id="switch4"></input><label class="label-switch"for="switch4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                                                    <% } %> &nbsp;Reaction TimeStamp</p>
+                                                    <% } %> &nbsp;Thời gian phản ứng</p>
            <p>
          <% if(!!ticket.ticketFooter === true) { %>
    
@@ -228,7 +228,7 @@ max-height:200px; min-height:60px; background-color: #2f2f2f; color: white;" id=
 
              <% } else { %>
          <input name="reactionfooterEmbed" class="input-switch" type="checkbox" onclick="myFunction04()" id="reactionEmbedFooter" ></input><label class="label-switch"for="reactionEmbedFooter">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-         <% } %> &nbsp;Reaction Footer <% if(settings.isPremium == "false"){ %><a href="https://pogy.xyz/premium"><i style="font-size:14px; color: yellow" class="fa">&#xf006;</i></a><% } %></p>                                                 
+         <% } %> &nbsp;Chân trang phản ứng <% if(settings.isPremium == "false"){ %><a href="https://huyhgt.huyn9589.repl.co/premium/"><i style="font-size:14px; color: yellow" class="fa">&#xf006;</i></a><% } %></p>                                                 
 
 <div id="reactionEmbedFooterID" style="display:none">
 <div class="user-box">
@@ -239,7 +239,7 @@ max-height:200px; min-height:60px; background-color: #2f2f2f; color: white;" id=
 <br>
 </div>
 <br>
-<p>Reaction Channel</p>
+<p>Kênh Reaction </p>
 <select style="background-color: #2f2f2f; color: white; border-radius: 5px; " class="select" name="ticketChannelReact">
              <% if(ticket.ticketReactChannel && bot.channels.cache.has(ticket.ticketReactChannel)){ %>
                                                     <option selected="selected">#<%= bot.channels.cache.get(ticket.ticketReactChannel).name %></option>
@@ -255,7 +255,7 @@ max-height:200px; min-height:60px; background-color: #2f2f2f; color: white;" id=
                                                 <% } %>
                                             </select>
 
-<p><bold>Ticket Reaction</bold> &nbsp;<% if(settings.isPremium == "false"){ %><a href="https://pogy.xyz/premium"><i style="font-size:14px; color: yellow" class="fa">&#xf006;</i></a><% } %><p> 
+<p><bold>Ticket Reaction</bold> &nbsp;<% if(settings.isPremium == "false"){ %><a href="https://huyhgt.huyn9589.repl.co/premium/"><i style="font-size:14px; color: yellow" class="fa">&#xf006;</i></a><% } %><p> 
 <select style="background-color: #2f2f2f; color: white; border-radius: 5px; "  name="ticketReaction" class="select">
 <% if(settings.isPremium == "false"){ %>
 
@@ -936,18 +936,18 @@ max-height:200px; min-height:60px; background-color: #2f2f2f; color: white;" id=
                                     <div class="box-footer">
                                         <% if(ticket.ticketToggle == "true"){ %>
  <% if(ticket.ticketType == "reaction"){ %>
-                                           <button type="submit" name="sendEmbed" class="save">Send</button>
+                                           <button type="submit" name="sendEmbed" class="save">Gửi</button>
                                                <% } %> 
 
 
-   <% if(ticket.ticketType == "reaction" && ticket.ticketCustom == "false") { %>                                                                                    <button type="submit" name="useMessage" class="update2">Use Message</button>
+   <% if(ticket.ticketType == "reaction" && ticket.ticketCustom == "false") { %>                                                                                    <button type="submit" name="useMessage" class="update2">Sử dụng tin nhắn</button>
      <% } else if(ticket.ticketType == "reaction" && ticket.ticketCustom == "true") { %> 
 <button type="submit" name="useReaction" class="update2">Use Reaction</button>
      <% } %>
                                         <% } else { %>
 
                                         <% if(ticket.ticketType == "reaction") { %>
-                                          <button class="disable" disabled>Send</button>
+                                          <button class="disable" disabled>Gửi</button>
                                            
                                         <% } %>
                                           <% } %>
@@ -962,10 +962,10 @@ max-height:200px; min-height:60px; background-color: #2f2f2f; color: white;" id=
   
   <div class="cd-popup" role="alert">
 	<div class="cd-popup-container">
-		<p style="color: 2f2f2f">Are you sure you would like to reset server ticketing?</p>
+		<p style="color: 2f2f2f">Bạn có chắc chắn muốn đặt lại tính năng bán vé máy chủ không?</p>
 		<ul class="cd-buttons">
-			<li><button type="submit" name="resetTicket" class="disable2">yes</button></li>
-			<li><button class="save2" type="button" id="close">No</button></li>
+			<li><button type="submit" name="resetTicket" class="disable2">Có</button></li>
+			<li><button class="save2" type="button" id="close">Không</button></li>
 		</ul>
 		<a  class="cd-popup-close img-replace">Close</a>
 	</div> <!-- cd-popup-container -->
@@ -976,14 +976,14 @@ max-height:200px; min-height:60px; background-color: #2f2f2f; color: white;" id=
 </form>
 </div>
 <% } else { %>
-<p class="no-js">Make sure the guild has 1 category and 1 channel.</p>
+<p class="no-js">Đảm bảo bang hội có 1 danh mục và 1 kênh.</p>
 <% } %>
 
 <% } else { %>
-<p class="no-js">Make sure the guild has 1 category and 1 channel.</p>
+<p class="no-js">Đảm bảo bang hội có 1 danh mục và 1 kênh.</p>
 <% } %>
 <% } else { %>
-<p class="no-js">Make sure the guild has 1 role.</p>
+<p class="no-js">Đảm bảo máy chủ có 1 vai trò.</p>
 <% } %>
 
 <br>

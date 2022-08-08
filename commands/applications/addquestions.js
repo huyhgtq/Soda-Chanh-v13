@@ -11,7 +11,7 @@ module.exports = class extends Command {
       usage: "<question>",
       category: "Applications",
       examples: ["addquestion Question1 | Question2"],
-      description: "Add questions to the list and when you apply they will be there",
+      description: "Thêm câu hỏi vào danh sách và khi bạn nộp đơn, họ sẽ ở đó",
       cooldown: 5,
       userPermission: ['MANAGE_GUILD'],
     })
@@ -31,7 +31,9 @@ module.exports = class extends Command {
   if(guildDB.isPremium === true) {
     maxQuestions = 25
   }
-    if(!questions) return message.channel.send(new discord.MessageEmbed().setColor(client.color.red).setDescription(language.addquestionMissingArg))
+    if(!questions) return message.reply({ embeds: [new discord.MessageEmbed()
+											   .setColor(client.color.red)
+											   .setDescription(language.addquestionMissingArg)]})
   let split = questions.split("|")
   
   await app.findOne({
@@ -45,7 +47,9 @@ module.exports = class extends Command {
     let actualArr = arr.concat(split)
     console.log(actualArr)
     if(actualArr.length > maxQuestions) {
-      return message.channel.send(new discord.MessageEmbed().setColor(client.color.red).setDescription(language.addquestionMoreThanLength.replace("{amountLength}", maxQuestions)))
+      return message.reply({ embeds: [new discord.MessageEmbed()
+								  .setColor(client.color.red)
+								  .setDescription(language.addquestionMoreThanLength.replace("{amountLength}", maxQuestions))]})
     }
     let newAppDB = new app({
      guildID: message.guild.id,
@@ -55,7 +59,9 @@ module.exports = class extends Command {
     })
     await newAppDB.save().catch((err) => {console.log(err)})
     
-    return message.channel.send(new discord.MessageEmbed().setColor(client.color.green).setDescription(language.addquestionSuccess))
+    return message.reply({ embeds: [new discord.MessageEmbed()
+								.setColor(client.color.green)
+								.setDescription(language.addquestionSuccess)]})
   }
   
     let ar = await db.questions
@@ -68,7 +74,9 @@ module.exports = class extends Command {
       questions: actualArr
     })
     
-    return message.channel.send(new discord.MessageEmbed().setColor(client.color.green).setDescription(language.addquestionSuccess))
+    return message.reply({ embeds: [new discord.MessageEmbed()
+									.setColor(client.color.green)
+									.setDescription(language.addquestionSuccess)]})
 })
   
   }

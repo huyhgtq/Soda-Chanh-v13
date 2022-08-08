@@ -7,7 +7,7 @@ module.exports = class extends Command {
     constructor(...args) {
       super(...args, {
         name: 'bird',
-        description: 'Get a bird picture!',
+        description: 'Nhận một hình ảnh con chim!',
         category: 'Images',
         cooldown: 5
       });
@@ -31,11 +31,11 @@ module.exports = class extends Command {
           .setFooter(`/shibe.online/api/birds`)
           .setTimestamp()
           .setColor(client.color.red);
-        message.channel.send(embed);
+        message.reply({ embeds: [embed]});
    
       } catch (err) {
       console.log(`${err}, command name: bird`)
-       message.reply(language.birdError)
+      this.client.emit(error, message);
   
       }
         }}    

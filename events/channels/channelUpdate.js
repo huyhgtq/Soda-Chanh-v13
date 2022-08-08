@@ -51,7 +51,7 @@ if(color == "#000000") color = this.client.color.yellow;
 
     const embed = new discord.MessageEmbed()
     .setDescription(`:pencil: ***${type} Updated***`)
-    .addField('Channel', newChannel, true)
+    .addField('Channel', `${newChannel}`)
     .setFooter(`Channel ID: ${newChannel.id}`)
     .setTimestamp()
     .setColor(color)
@@ -107,7 +107,7 @@ if(oldChannel.rateLimitPerUser === newChannel.rateLimitPerUser ){
         if(channelEmbed &&
       channelEmbed.viewable &&
       channelEmbed.permissionsFor(newChannel.guild.me).has(['SEND_MESSAGES', 'EMBED_LINKS'])){
-            channelEmbed.send(embed).catch(()=>{})
+            channelEmbed.send({ embeds: [embed] }).catch(()=>{})
                    cooldown.add(newChannel.guild.id);
             setTimeout(()=>{
 cooldown.delete(newChannel.guild.id)

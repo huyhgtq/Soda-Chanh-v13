@@ -2,7 +2,7 @@ const discord = require("discord.js")
 const Command = require('../../structures/Command');
 const Guild = require('../../database/schemas/Guild');
 const app = require("../../models/application/application.js");
-
+const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
 module.exports = class extends Command {
   constructor(...args) {
     super(...args, {
@@ -11,7 +11,7 @@ module.exports = class extends Command {
       usage: "",
       category: "Applications",
       examples: ["apply"],
-      description: "Apply in the current servers, or answer a few questions",
+      description: "Đăng ký trong các máy chủ hiện tại hoặc trả lời một số câu hỏi",
       cooldown: 5,
 
     })
@@ -45,17 +45,30 @@ module.exports = class extends Command {
       })
     await newAppDB.save().catch((err) => {console.log(err)})
     
-    return message.channel.send(closed)
+    return message.reply({ embeds: [closed]})
   }
   
 
-  if(db.questions.length === 0 || db.questions.length < 1) return message.channel.send(closed) ;
+const row = new MessageActionRow()
+          .addComponents(
+              new MessageButton()
+              .setLabel('by clicking here')
+              .setURL(`https://sodachan.tk/apply/${message.guild.id}`)
+              .setStyle('LINK')
+              .setEmoji('🔗')
+          )
+	  
+  if(db.questions.length === 0 || db.questions.length < 1) return message.reply({ embeds: [closed]}) ;
   const channel = await message.guild.channels.cache.get(db.appLogs);
-  if(!channel) return message.channel.send(closed);
-      await message.author.send(new discord.MessageEmbed().setColor(message.client.color.green).setFooter('Powered by Pogy.xyz').setDescription(`${message.client.emoji.success} | ${language.applaydone} **${message.guild.name}** [by clicking here](https://pogy.xyz/apply/${message.guild.id})`))
-      .then(message.channel.send(`Form sent by DMs - ${message.author}`))
+  if(!channel) return message.reply({ embeds: [closed]});
+      await message.author.send({ embeds: [new discord.MessageEmbed()
+								.setColor(message.client.color.green)
+								.setFooter('Powered by Sodachan.tk')
+								.setDescription(`${message.client.emoji.success} | ${language.applaydone} **${message.guild.name}** `)], components: [row]})
+		  
+      .then(message.reply(`${language.dmss} - ${message.author}`))
       .catch(()=>{
-        return message.channel.send(closed2)
+        return message.reply({ embeds: [closed2] });
         })
 
       

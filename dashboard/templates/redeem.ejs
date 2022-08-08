@@ -1,7 +1,7 @@
-<%- include("partials/head", { bot, user, path, title: "Pogy - Redeem" }) %>
+<%- include("partials/head", { bot, user, path, title: "Soda chanh - Redeem" }) %>
 <div class="content">
 
-<h2>SELECT A SERVER</h2>
+<h2>Chọn một máy chủ</h2>
 
 
 <div class="servers">
@@ -26,7 +26,7 @@
   <p class="guild-name"><%= guild.name %></p>
   </div>
   <% if (bot.guilds.cache.get(guild.id)) { %>
-    <a class="edit button" href="/redeem/<%= guild.id %>">Redeem</a>
+    <a class="edit button" href="/redeem/<%= guild.id %>">nhận</a>
   <% } %>
 </div>
   <% }); %>

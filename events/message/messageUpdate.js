@@ -67,7 +67,6 @@ if(!snipe){
           snipeSave.save().catch(()=>{})
       
           snipe = await Snipe.findOne({ guildId: newMessage.guild.id, channel: newMessage.channel.id})
-            
 
 } else {
 
@@ -127,14 +126,14 @@ if (oldMessage.content.length > 1024) oldMessage.content = oldMessage.content.sl
   
 
      const embed = new MessageEmbed()
-    .setAuthor(`${newMessage.member.user.tag} | Message Edited`, newMessage.member.user.displayAvatarURL({ dynamic: true }))
+    .setAuthor(`${newMessage.member.user.tag} | Đã chỉnh sửa tin nhắn`, newMessage.member.user.displayAvatarURL({ dynamic: true }))
     .setTimestamp()
     .setDescription(`
-          ${newMessage.member} edited a message in ${newMessage.channel}\n\n[Jump to message!](${newMessage.url})
+          ${newMessage.member} đã chỉnh sửa một tin nhắn trong ${newMessage.channel}\n\n[Chuyển đến tin nhắn!](${newMessage.url})
         `)
-.addField('Before', oldMessage.content)
- .addField('After', newMessage.content)
-    .setFooter(`Member ID: ${newMessage.member.id}`)
+.addField('Trước', oldMessage.content)
+ .addField('Sau', newMessage.content)
+    .setFooter(`ID thành viên: ${newMessage.member.id}`)
     .setColor(newMessage.guild.me.displayHexColor);
 
 
@@ -142,7 +141,7 @@ if (oldMessage.content.length > 1024) oldMessage.content = oldMessage.content.sl
     if(channelEmbed &&
       channelEmbed.viewable &&
       channelEmbed.permissionsFor(newMessage.guild.me).has(['SEND_MESSAGES', 'EMBED_LINKS'])){
-            channelEmbed.send(embed).catch(()=>{})
+            channelEmbed.send({ embeds: [embed] }).catch(()=>{})
       }
   }
 

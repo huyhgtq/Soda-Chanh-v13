@@ -8,10 +8,10 @@ module.exports = class extends Command {
       super(...args, {
         name: 'awooify',
         aliases: [ ],
-        description: 'awooify someone!',
+        description: 'chờ đợi ai đó!',
         category: 'Images',
         usage: '<user>',
-        examples: [ 'awooify @peter' ],
+        examples: [ 'awooify' ],
         cooldown: 5
       });
     }
@@ -32,7 +32,7 @@ module.exports = class extends Command {
            const data = await fetch(
               `https://nekobot.xyz/api/imagegen?type=awooify&url=${user.displayAvatarURL({ size: 512 })}`
             ).then((res) => res.json());
-          message.channel.send(new discord.MessageEmbed().setColor(client.color.blue).setImage(data.message));
+          message.reply({ embeds: [new discord.MessageEmbed().setColor(client.color.blue).setImage(data.message)]});
           
           
           function match(msg, i) {

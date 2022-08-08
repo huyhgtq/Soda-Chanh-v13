@@ -34,23 +34,23 @@ if(color == "#000000") color = oldGuild.client.color.yellow;
 
 
     const embed = new discord.MessageEmbed()
-    .setDescription(`:pencil: ***Guild Updated***`)
-    .setFooter(`Guild ID: ${oldGuild.id}`)
+    .setDescription(`***Đã cập nhật máy chủ***`)
+    .setFooter(`ID máy chủ: ${oldGuild.id}`)
     .setTimestamp()
     .setColor(color)
 
 
 if(oldGuild.name !== newGuild.name) {
-    embed.addField('Name Update', `${oldGuild.name} --> ${newGuild.name}`, true)
+    embed.addField('Cập nhật tên', `${oldGuild.name} --> ${newGuild.name}`, true)
 
  } else {
-    embed.addField('Name Update', `Name not updated`, true)
+    embed.addField('Cập nhật tên', `Tên không được cập nhật`, true)
 
  }
 
 
 if(oldGuild.verificationLevel !== newGuild.verificationLevel) {
-    embed.addField('verification Level', `${oldGuild.verificationLevel || 'none'} --> ${newGuild.verificationLevel || 'none'}`, true)
+    embed.addField('mức độ xác minh', `${oldGuild.verificationLevel || 'Không'} --> ${newGuild.verificationLevel || 'Không'}`, true)
 
  }
 
@@ -61,23 +61,23 @@ if(oldGuild.verificationLevel !== newGuild.verificationLevel) {
 
  
  if(oldGuild.region !== newGuild.region) {
-    embed.addField('region', `${oldGuild.region || 'none'} --> ${newGuild.region || 'none'}`, true)
+    embed.addField('vùng đất', `${oldGuild.region || 'Không'} --> ${newGuild.region || 'Không'}`, true)
 
  }
 
 
    if(oldGuild.ownerID !== newGuild.ownerID) {
-    embed.addField('Owner', `<@${oldGuild.ownerID || 'none'}> **(${oldGuild.ownerID})** --> <@${newGuild.ownerID}>**(${newGuild.ownerID})**`, true)
+    embed.addField('Chủ nhân', `<@${oldGuild.ownerID || 'Không'}> **(${oldGuild.ownerID})** --> <@${newGuild.ownerID}>**(${newGuild.ownerID})**`, true)
 
  }
 
    if(oldGuild.afkTimeout !== newGuild.afkTimeout) {
-    embed.addField('afk Timeout', `${oldGuild.afkTimeout || 'none'} --> ${newGuild.afkTimeout || 'none'}`, true)
+    embed.addField('afk Hết giờ', `${oldGuild.afkTimeout || 'Không'} --> ${newGuild.afkTimeout || 'Không'}`, true)
 
  }
 
    if(oldGuild.afkChannelID !== newGuild.afkChannelID) {
-    embed.addField('afk Channel', `${oldGuild.afkChannelID || 'none'}> --> ${newGuild.afkChannelID || 'none'}`, true)
+    embed.addField('Kênh afk', `${oldGuild.afkChannelID || 'Không'}> --> ${newGuild.afkChannelID || 'Không'}`, true)
 
  }
 
@@ -86,7 +86,7 @@ if(oldGuild.verificationLevel !== newGuild.verificationLevel) {
     if(channelEmbed &&
       channelEmbed.viewable &&
       channelEmbed.permissionsFor(newGuild.me).has(['SEND_MESSAGES', 'EMBED_LINKS'])){
-            channelEmbed.send(embed).catch(()=>{})
+            channelEmbed.send({ embeds: [embed] }).catch(()=>{})
       }
 
 

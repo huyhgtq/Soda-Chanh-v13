@@ -1,0 +1,92 @@
+{
+  "files": {
+    ".eslintrc.json": [
+      {
+        "id": "b6e08512-f06f-4abf-aa8f-0eb36c1ebab4",
+        "line": 4,
+        "version": 1,
+        "index": 69
+      }
+    ],
+    ".replit": [
+      {
+        "id": "ec1ae33c-ecf4-42ad-b2e9-f938338902ae",
+        "line": 2,
+        "version": 47,
+        "index": 20
+      }
+    ],
+    "commands/voice/speak.js": [
+      {
+        "id": "ffb3be5f-2955-4f3f-a74b-34784539b458",
+        "line": 94,
+        "version": 113,
+        "index": 4179
+      }
+    ],
+    "config.json": [
+      {
+        "id": "785e1e93-c95f-4a58-a4cb-f807b9404a1b",
+        "line": 19,
+        "version": 395,
+        "index": 728
+      }
+    ],
+    "dashboard/templates/404.ejs": [
+      {
+        "id": "520a25ff-c92d-4865-b293-e1d5cc25ea89",
+        "line": 429,
+        "version": 448,
+        "index": 19270
+      }
+    ],
+    "dashboard/templates/dashboard.ejs": [
+      {
+        "id": "60ff365b-0da3-41f5-a40f-09a9f15f8f8b",
+        "line": 92,
+        "version": 64,
+        "index": 3189
+      }
+    ],
+    "dashboard/templates/redeem.ejs": [
+      {
+        "id": "d1bafde2-b7cb-414b-8000-daa0e8e86d36",
+        "line": 55,
+        "version": 31,
+        "index": 1896
+      }
+    ],
+    "dashboard/templates/stats.ejs": [
+      {
+        "id": "d6a3fd72-707f-4e54-b4e0-b0f87afbd756",
+        "line": 75,
+        "version": 294,
+        "index": 2223
+      }
+    ],
+    "dashboard/templates/team.ejs": [
+      {
+        "id": "d661202c-4687-42bc-80ce-ed6bacaffd00",
+        "line": 1022,
+        "version": 600,
+        "index": 25144
+      }
+    ],
+    "data/language/vietnamese.json": [
+      {
+        "id": "f09a719b-611c-4e41-a632-2bc9cabab0d1",
+        "line": 651,
+        "version": 233,
+        "index": 38529
+      }
+    ],
+    "index.js": [
+      {
+        "id": "25c32fe3-8fd2-4291-bee6-9f7d3137030b",
+        "line": 27,
+        "version": 56,
+        "index": 629
+      }
+    ]
+  }
+}

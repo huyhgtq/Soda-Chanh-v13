@@ -31,14 +31,14 @@ module.exports = class extends Command {
       const success = message.client.emoji.success;
       const fail = message.client.emoji.fail;
 
-      if(!args[0]) return message.channel.send(`What command do i disable?`);
+      if(!args[0]) return message.reply(`What command do i disable?`);
 
        const command = this.client.commands.get(args[0]) || this.client.aliases.get(args[0])
 
     if (!command || (command && command.category == 'Owner')) 
-      return message.channel.send('Provide a valid command!')
+      return message.reply('Provide a valid command!')
 
-  if(command && command.category === "Config") return message.channel.send(`${fail} You may not disable Configuration Commands.`)
+  if(command && command.category === "Config") return message.reply(`${fail} You may not disable Configuration Commands.`)
 
        let disabled = guildDB.disabledCommands
        if (typeof(disabled) === 'string') disabled = disabled.split(' ');
@@ -61,18 +61,18 @@ module.exports = class extends Command {
       .setAuthor(message.author.tag, message.guild.iconURL({ dynamic: true }))
       .setDescription(description)
       .addField('Disabled Commands', disabledCommands, true)
-      .setFooter(`https://pogy.xyz`)
+      .setFooter(`https://sodachan.tk/`)
       .setTimestamp()
       .setColor(message.client.color.green);
- message.channel.send(embed).catch(()=>{
+ message.reply({ embeds: [embed]}).catch(()=>{
                const errorEmbed = new discord.MessageEmbed()
       .setAuthor(message.author.tag, message.guild.iconURL({ dynamic: true }))
       .setDescription(description)
       .addField('Disabled Commands', `[Too Large to Display]`, true)
-      .setFooter(`https://pogy.xyz`)
+      .setFooter(`https://sodachan.tk/`)
       .setTimestamp()
       .setColor(message.client.color.green);
-      message.channel.send(errorEmbed).catch(()=>{})
+      message.reply({ embeds: [errorEmbed]}).catch(()=>{})
     })
 
 

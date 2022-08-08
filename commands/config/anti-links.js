@@ -6,7 +6,7 @@ module.exports = class extends Command {
       super(...args, {
         name: 'anti-links',
         aliases: [ 'anti-link', 'antilink', 'antilink' ],
-        description: 'Sets anti-invite if the message contains a link',
+        description: 'Đặt chống lời mời nếu thư có chứa liên kết',
         category: 'Config',
         usage: [ '<enable | disable>' ],
         examples: [ 'anti-links enable', 'anti-links disable' ],
@@ -27,22 +27,22 @@ module.exports = class extends Command {
 
 
       if (args.length < 1) {
-        return message.channel.send( new MessageEmbed()
+        return message.reply({ embeds: [new MessageEmbed()
         .setColor(message.guild.me.displayHexColor)
-        .setDescription(`${message.client.emoji.fail} ${language.antiinvites1}`));
+        .setDescription(`${message.client.emoji.fail} ${language.antiinvites1}`)]});
       }
 
       if (!message.content.includes('enable') && !message.content.includes('disable')) {
-        return message.channel.send( new MessageEmbed()
+        return message.reply({ embeds: [new MessageEmbed()
         .setColor(message.guild.me.displayHexColor)
-        .setDescription(`${message.client.emoji.fail} ${language.antiinvites1}`));
+        .setDescription(`${message.client.emoji.fail} ${language.antiinvites1}`)]});
       }
 
       if (args.includes('disable')) {
 
-        if(guildDB.antiLinks === false) return message.channel.send( new MessageEmbed()
+        if(guildDB.antiLinks === false) return message.reply({ embeds: [new MessageEmbed()
         .setColor(message.guild.me.displayHexColor)
-        .setDescription(`${message.client.emoji.fail} ${language.moduleDisabled}`));
+        .setDescription(`${message.client.emoji.fail} ${language.moduleDisabled}`)]});
 
         await Guild.findOne({
           guildId: message.guild.id
@@ -52,17 +52,17 @@ module.exports = class extends Command {
           })
           .catch(err => console.error(err));
   
-          return message.channel.send( new MessageEmbed()
+          return message.reply({ embeds: [new MessageEmbed()
           .setColor(message.guild.me.displayHexColor)
-          .setDescription(`${message.client.emoji.success} ${language.antilinks3}`));
+          .setDescription(`${message.client.emoji.success} ${language.antilinks3}`)]});
         });
         return;
       }
 
       if (args.includes('enable')) {
-        if(guildDB.antiLinks === true) return message.channel.send( new MessageEmbed()
+        if(guildDB.antiLinks === true) return message.reply({ embeds: [new MessageEmbed()
         .setColor(message.guild.me.displayHexColor)
-        .setDescription(`${message.client.emoji.fail} ${language.moduleEnabled}`));
+        .setDescription(`${message.client.emoji.fail} ${language.moduleEnabled}`)]});
         
         await Guild.findOne({
           guildId: message.guild.id
@@ -72,9 +72,9 @@ module.exports = class extends Command {
           })
           .catch(err => console.error(err));
   
-          return message.channel.send( new MessageEmbed()
+          return message.reply({ embeds: [new MessageEmbed()
           .setColor(message.guild.me.displayHexColor)
-          .setDescription(`${message.client.emoji.success} ${language.antilinks4}`));
+          .setDescription(`${message.client.emoji.success} ${language.antilinks4}`)]});
         });
         return;
       }

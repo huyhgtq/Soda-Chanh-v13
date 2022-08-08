@@ -7,7 +7,7 @@ module.exports = class extends Command {
       super(...args, {
         name: 'simprate',
         aliases: [ 'howsimp' ],
-        description: 'See how simp you are',
+        description: 'Xem bạn là người simp như thế nào',
         category: 'Fun',
         usage: '[user]',
         examples: [ 'howsimp @user' ],
@@ -40,14 +40,14 @@ function randomInteger(min, max) {
 
   if (target === authorId){
   
-   message.channel.send(embedd)}
-  if(!target)return message.channel.send(embedd) 
+   message.reply({ embeds: [embedd]})}
+  if(!target)return message.reply({ embeds: [embedd]}) 
   let targett = target.username
    let embed = new discord.MessageEmbed()
   .setColor('GREEN')
   .setTitle(`${language.simpmachine}`)
   .setDescription(`${targett} ${language.simpIs} **${amount}%** simp`)
-   message.channel.send(embed)
+   message.reply({ embeds: [embed]})
  
    
 

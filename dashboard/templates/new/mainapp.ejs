@@ -16,7 +16,7 @@
 
 
 </head>
-<%- include("../partials/dashMenu", { bot, user, path, description, title: `Pogy - Dashboard`, arc, url})%>
+<%- include("../partials/dashMenu", { bot, user, path, description, title: `Soda Chan - Dashboard`, arc, url})%>
 
 
 
@@ -27,7 +27,7 @@
 <% if (guild.icon) {
  iconurl = "https://cdn.discordapp.com/icons/" + guild.id + "/" + guild.icon + ".png??size=512";
 } else {
- iconurl = "https://cdn.glitch.com/82fe990a-7942-42e3-9790-39807ccdb9f6%2Ficon-404-dark.png?v=1602427904949";
+ iconurl = "https://cdn.discordapp.com/attachments/893953110349852686/970760403976093716/soda_chan_new.png";
 }
 %>
 
@@ -124,12 +124,12 @@
 
  
   ">
-<h3 class="rr-box-title">Main Settings</h3>
-<p style="padding-left: 40px;">Pick Your application Settings in the guild.</p>
+<h3 class="rr-box-title">Cài đặt chính</h3>
+<p style="padding-left: 40px;">Chọn Cài đặt ứng dụng của bạn trong máy chủ.</p>
 
   <div style="padding-top: 30px">
 </div>
-<p style="padding-left: 40px;">Application Log</p>
+<p style="padding-left: 40px;">Nhật ký ứng dụng</p>
  <select class="select" name="log">
              <% if(app.appLogs && bot.channels.cache.has(app.appLogs)){ %>
                                                     <option selected="selected">#<%= bot.channels.cache.get(app.appLogs).name %></option>
@@ -138,13 +138,13 @@
                                                     <% }); %>
                                                         <option>Disabled</option>
                                                 <% } else { %>
-                                                    <option selected="selected">Disabled</option>
+                                                    <option selected="selected">vô hiệu hóa</option>
                                                     <% guild.channels.cache.filter((ch) => ch.type === "text").forEach((ch) => { %>
                                                         <option>#<%= ch.name %></option>
                                                     <% }); %>
                                                 <% } %>
 </select>
-<p style="padding-left: 40px;">Add role if accepted</p>
+<p style="padding-left: 40px;">Thêm vai trò nếu được chấp nhận</p>
  <select name="add_role">
            
              <% if(app.add_role && guild.roles.cache.has(app.add_role)){ %>
@@ -155,7 +155,7 @@
                                                     <% }); %>
                                                         <option>Disabled</option>
                                                     <% } else { %>
-                                                    <option selected="selected">Disabled</option>
+                                                    <option selected="selected">vô hiệu hóa</option>
                                                     <% guild.roles.cache.filter((r) => r.id !== guild.roles.cache.filter((r) => r.name !== "@everyone").first().id && r.name !== "@everyone" && !r.managed).forEach((r) => { %>
                                                       <option style="color: <%= r.hexColor === "#000000" ? {r:255,g:255,b:255} : r.hexColor%>">@<%= r.name %></option>
                                                     <% }); %>
@@ -165,7 +165,7 @@
 
 </select>
 </select>
-<p style="padding-left: 40px;">Remove Role if Declined</p>
+<p style="padding-left: 40px;">Xóa vai trò nếu bị từ chối</p>
  <select  name="remove_role">
            
              <% if(app.remove_role && guild.roles.cache.has(app.remove_role)){ %>
@@ -176,7 +176,7 @@
                                                     <% }); %>
                                                         <option>Disabled</option>
                                                     <% } else { %>
-                                                    <option selected="selected">Disabled</option>
+                                                    <option selected="selected">vô hiệu hóa</option>
                                                     <% guild.roles.cache.filter((r) => r.id !== guild.roles.cache.filter((r) => r.name !== "@everyone").first().id && r.name !== "@everyone" && !r.managed).forEach((r) => { %>
                                                       <option style="color: <%= r.hexColor === "#000000" ? {r:255,g:255,b:255} : r.hexColor%>">@<%= r.name %></option>
                                                     <% }); %>
@@ -187,14 +187,14 @@
 </select>
 </select>
 <div style="padding-left: 40px">
-<p>Application Status</p>
+<p>Trạng thái ứng dụng</p>
 <% if(app.appToggle === true) { %>
 <input id="c1" name="toggle" type="checkbox" class="switch" checked>
 <% } else { %>
 <input id="c1" name="toggle" type="checkbox" class="switch">
 <% } %>
 <div style="padding-top: 10px"></div>
-<p>DM user when accepted / declined </p>
+<p>Người dùng DM khi được chấp nhận / từ chối </p>
 <% if(app.dm === true) { %>
 <input id="c2" name="dm" type="checkbox" class="switch" checked>
 <% } else { %>
@@ -215,7 +215,7 @@
 
  
   <div class="row justify-content-center" style="    padding-bottom: 20px;"></div>
-<button class="save" name="save" type="submit">Save Changes</button>
+<button class="save" name="save" type="submit">Lưu thay đổi</button>
   <div class="row justify-content-center" style="    padding-bottom: 20px;"></div>
 </div>
 
@@ -226,8 +226,8 @@
 
 <div class="rr-box">
 <div class="col-md-4" style="background-color:#2f2f2f; box-shadow: 2px 2px 2px #2f2f2f; border-radius: 5px;  width: 45%; margin-right: 17px;">
-<h3 class="rr-box-title">Available Questions</h3>
- <p style="padding-left: 40px;">Displays all available questions.<br><br><i class="fa fa-chevron-circle-right" style="font-size:16px"></i>To add a question use <%= settings.prefix %>addquestion [question]<br><i class="fa fa-chevron-circle-right" style="font-size:16px"></i>To remove a question use <%= settings.prefix %>remquestion [number]</p>
+<h3 class="rr-box-title">Các câu hỏi có sẵn</h3>
+ <p style="padding-left: 40px;">Hiển thị tất cả các câu hỏi có sẵn.<br><br><i class="fa fa-chevron-circle-right" style="font-size:16px"></i>Để thêm một câu hỏi, hãy sử dụng <%= settings.prefix %>câu hỏi bổ sung [question]<br><i class="fa fa-chevron-circle-right" style="font-size:16px"></i>Để xóa một câu hỏi, hãy sử dụng <%= settings.prefix %>remquestion [number]</p>
   <div style="padding-top: 30px">
 </div>
 <% if(app.questions.length) {%>
@@ -240,7 +240,7 @@
 
  <% } %>
  <% } else { %>
-<p style="padding-left: 40px;">No questions found.</p>
+<p style="padding-left: 40px;">Không có câu hỏi nào được tìm thấy.</p>
  <% } %>
 
   </div>
@@ -257,7 +257,7 @@
 </div>
 
 <% } else { %>
-<p class="no-js">Make sure the guild has 1 channel, So please create a channel before accessing our dashboard</p>
+<p class="no-js">Đảm bảo Server của bạn có 1 kênh, Vì vậy, vui lòng tạo kênh trước khi truy cập trang tổng quan của chúng tôi</p>
 <% } %>
 
 </div>

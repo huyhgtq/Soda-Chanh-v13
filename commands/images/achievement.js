@@ -8,12 +8,11 @@ module.exports = class extends Command {
       super(...args, {
         name: 'achievement',
         aliases: ['minecraftachievement', 'mcachievement'],
-        description: 'Get a minecraft achievement!',
+        description: 'Nhận thành tích minecraft!',
         category: 'Images',
-        usage: '<text>',
-        examples: [ 'achievement Earnt a Diamond' ],
+        usage: '<bản văn>',
+        examples: [ 'thành tích Kiếm được một viên kim cương' ],
         cooldown: 5,
-        disabled: true,
       });
     }
 
@@ -28,13 +27,13 @@ module.exports = class extends Command {
       
           const text = args.join(" ");
      
-            if(!text) return message.channel.send(new discord.MessageEmbed().setColor(client.color.red).setDescription(`${client.emoji.fail} ${language.changeErrorValid}`));
+            if(!text) return message.reply({ embeds: [new discord.MessageEmbed().setColor(client.color.red).setDescription(`${client.emoji.fail} ${language.changeErrorValid}`)]});
     
     
-                if (text.length > 25) return message.channel.send(new discord.MessageEmbed().setColor(client.color.red).setDescription(`${client.emoji.fail} ${language.mcErrorCharacter}`));
+                if (text.length > 25) return message.reply({ embeds: [new discord.MessageEmbed().setColor(client.color.red).setDescription(`${client.emoji.fail} ${language.mcErrorCharacter}`)]});
                 
                 let numb = Math.ceil(Math.random() * 39)
-           /* const superagent = require('superagent')
+           const superagent = require('superagent')
             const { body } = await superagent
                 .get('https://www.minecraftskinstealer.com/achievement/a.php')
                 .query({
@@ -42,8 +41,8 @@ module.exports = class extends Command {
                     h: 'Achievement Got!',
                     t: text
                 });
-            message.channel.send({ files: [{ attachment: body, name: 'achievement.png' }] 
-          }); */
+            message.reply({ files: [{ attachment: body, name: 'achievement.png' }] 
+          });
         
     
         }}    

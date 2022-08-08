@@ -16,7 +16,7 @@
 
 
 </head>
-<%- include("../partials/dashMenu", { bot, user, path, description, title: `Pogy - Dashboard`, arc, url})%>
+<%- include("../partials/dashMenu", { bot, user, path, description, title: `Soda Chan - Dashboard`, arc, url})%>
 
 
 
@@ -27,7 +27,7 @@
 <% if (guild.icon) {
  iconurl = "https://cdn.discordapp.com/icons/" + guild.id + "/" + guild.icon + ".png??size=512";
 } else {
- iconurl = "https://cdn.glitch.com/82fe990a-7942-42e3-9790-39807ccdb9f6%2Ficon-404-dark.png?v=1602427904949";
+ iconurl = "https://cdn.discordapp.com/attachments/893953110349852686/970760403976093716/soda_chan_new.png";
 }
 %>
 
@@ -126,7 +126,7 @@
   ">
 <div class="rr-box-title">
 <div class="overviews">
-        <div class="overviewsTitle">Main Settings<span class="smallDesc"> - Customise Main Mod Settings</span></div>
+        <div class="overviewsTitle">Cài đặt chính<span class="smallDesc"> - Tùy chỉnh cài đặt mod chính</span></div>
 
 </div>
 </div>
@@ -139,31 +139,31 @@
 <% } else { %>
 <input id="c1" name="delete_after_executed" type="checkbox">
 <% } %>
- <label for="c1">Delete command after executed</label>
+ <label for="c1">Xóa lệnh sau khi thực hiện</label>
 <br>
 <% if(mod.delete_reply === "true"){ %>
 <input id="c7" name="delete_reply" type="checkbox" checked>
 <% } else { %>
 <input id="c7" name="delete_reply" type="checkbox">
 <% } %>
- <label for="c7">delete bot's reply message after 5 seconds</label>
+ <label for="c7">xóa tin nhắn trả lời của bot sau 5 giây</label>
 <br>
 <% if(mod.include_reason === "true"){ %>
  <input id="c2" name="include_reason" type="checkbox" checked>
  <% } else { %>
  <input id="c2" name="include_reason" type="checkbox">
 <% } %>
- <label for="c2">Include the Reason in Chat</label>
+ <label for="c2">Bao gồm lý do trong trò chuyện</label>
  <br>
  <% if(mod.remove_roles === "true"){ %>
   <input id="c3" name="remove_roles" type="checkbox" checked>
   <% } else { %>
   <input id="c3" name="remove_roles" type="checkbox">
 <% } %>
- <label for="c3">Remove all roles on Mute + Give back when unmuted</label>
+ <label for="c3">Xóa tất cả các vai trò trên Mute + Trả lại khi bị tắt tiếng</label>
 </div>
 <br>
-<p style="padding-left: 40px">Mute Role</p>
+<p style="padding-left: 40px">Vai trò tắt tiếng</p>
 <select class="select" name="role">
                                                 <% if(mod.mute_role && guild.roles.cache.has(mod.mute_role)){ %>
                                                     <option style="color: <%= guild.roles.cache.get(mod.mute_role).hexColor === "#000000" ? {r:255,g:255,b:255} : guild.roles.cache.get(mod.mute_role).hexColor%>" selected="selected">@<%= guild.roles.cache.get(mod.mute_role).name %></option>
@@ -179,41 +179,41 @@
                                                 <% } %>
                                             </select>
 <br>
-<p style="padding-left: 40px">Ban - DM settings</p>
+<p style="padding-left: 40px">Cấm - Cài đặt DMS</p>
 <% if(mod.ban_action === "1") { %>
 <select name="ban">
-<option value="1" selected>Don't DM</option>
-<option value="2">Send Action</option>
-<option value="3">Send Action + Reason</option>
-<option value="4">Send Action + Reason + Moderator</option>
+<option value="1" selected>Không DMS</option>
+<option value="2">Gửi hành động</option>
+<option value="3">Gửi hành động + lý do</option>
+<option value="4">Gửi hành động + Lý do + Người kiểm duyệt</option>
 </select>
 <% } else if(mod.ban_action === "2") { %>
 <select name="ban">
-<option value="1">Don't DM</option>
-<option value="2" selected>Send Action</option>
-<option value="3">Send Action + Reason</option>
-<option value="4">Send Action + Reason + Moderator</option>
+<option value="1">Không DMS</option>
+<option value="2" selected>Gửi hành động</option>
+<option value="3">Gửi hành động + lý do</option>
+<option value="4">Gửi hành động + Lý do + Người kiểm duyệt</option>
 </select>
 <% } else if(mod.ban_action === "3") { %>
 <select name="ban">
-<option value="1">Don't DM</option>
-<option value="2">Send Action</option>
-<option value="3" selected>Send Action + Reason</option>
-<option value="4">Send Action + Reason + Moderator</option>
+<option value="1">Không DMS</option>
+<option value="2">Gửi hành động</option>
+<option value="3" selected>Gửi hành động + lý do</option>
+<option value="4">Gửi hành động + Lý do + Người kiểm duyệt</option>
 </select>
 <% } else if(mod.ban_action === "4") { %>
 <select name="ban">
-<option value="1">Don't DM</option>
-<option value="2">Send Action</option>
-<option value="3">Send Action + Reason</option>
-<option value="4" selected>Send Action + Reason + Moderator</option>
+<option value="1">Không DMS</option>
+<option value="2">Gửi hành động</option>
+<option value="3">Gửi hành động + lý do</option>
+<option value="4" selected>Gửi hành động + Lý do + Người kiểm duyệt</option>
 </select>
 <% } else { %>
 <select name="ban">
-<option value="1" selected>Don't DM</option>
-<option value="2">Send Action</option>
-<option value="3">Send Action + Reason</option>
-<option value="4">Send Action + Reason + Moderator</option>
+<option value="1" selected>Không DMS</option>
+<option value="2">Gửi hành động</option>
+<option value="3">Gửi hành động + lý do</option>
+<option value="4">Gửi hành động + Lý do + Người kiểm duyệt</option>
 </select>
 <% } %>
 
@@ -221,41 +221,41 @@
 
 
 <br>
-<p style="padding-left: 40px">Kick - DM settings</p>
+<p style="padding-left: 40px">Kick - Cài đặt DMS</p>
 <% if(mod.kick_action === "1") { %>
 <select name="kick">
-<option value="1" selected>Don't DM</option>
-<option value="2">Send Action</option>
-<option value="3">Send Action + Reason</option>
-<option value="4">Send Action + Reason + Moderator</option>
+<option value="1" selected>Không DMS</option>
+<option value="2">Gửi hành động</option>
+<option value="3">Gửi hành động + lý do</option>
+<option value="4">Gửi hành động + Lý do + Người kiểm duyệt</option>
 </select>
 <% } else if(mod.kick_action === "2") { %>
 <select name="kick">
-<option value="1">Don't DM</option>
-<option value="2" selected>Send Action</option>
-<option value="3">Send Action + Reason</option>
-<option value="4">Send Action + Reason + Moderator</option>
+<option value="1">Không DMS</option>
+<option value="2" selected>Gửi hành động</option>
+<option value="3">Gửi hành động + lý do</option>
+<option value="4">Gửi hành động + Lý do + Người kiểm duyệt</option>
 </select>
 <% } else if(mod.kick_action === "3") { %>
 <select name="kick">
-<option value="1">Don't DM</option>
-<option value="2">Send Action</option>
-<option value="3" selected>Send Action + Reason</option>
-<option value="4">Send Action + Reason + Moderator</option>
+<option value="1">Không DMS</option>
+<option value="2">Gửi hành động</option>
+<option value="3" selected>Gửi hành động + lý do</option>
+<option value="4">Gửi hành động + Lý do + Người kiểm duyệt</option>
 </select>
 <% } else if(mod.kick_action === "4") { %>
 <select name="kick">
-<option value="1">Don't DM</option>
-<option value="2">Send Action</option>
-<option value="3">Send Action + Reason</option>
-<option value="4" selected>Send Action + Reason + Moderator</option>
+<option value="1">Không DMS</option>
+<option value="2">Gửi hành động</option>
+<option value="3">Gửi hành động + lý do</option>
+<option value="4" selected>Gửi hành động + Lý do + Người kiểm duyệt</option>
 </select>
 <% } else { %>
 <select name="kick">
-<option value="1" selected>Don't DM</option>
-<option value="2">Send Action</option>
-<option value="3">Send Action + Reason</option>
-<option value="4">Send Action + Reason + Moderator</option>
+<option value="1" selected>Không DMS</option>
+<option value="2">Gửi hành động</option>
+<option value="3">Gửi hành động + lý do</option>
+<option value="4">Gửi hành động + Lý do + Người kiểm duyệt</option>
 </select>
 <% } %>
 
@@ -264,38 +264,38 @@
 <p style="padding-left: 40px">Warn - DM settings</p>
 <% if(mod.warn_action === "1") { %>
 <select name="warn">
-<option value="1" selected>Don't DM</option>
-<option value="2">Send Action</option>
-<option value="3">Send Action + Reason</option>
-<option value="4">Send Action + Reason + Moderator</option>
+<option value="1" selected>Không DMS</option>
+<option value="2">Gửi hành động</option>
+<option value="3">Gửi hành động + lý do</option>
+<option value="4">Gửi hành động + Lý do + Người kiểm duyệt</option>
 </select>
 <% } else if(mod.warn_action === "2") { %>
 <select name="warn">
-<option value="1">Don't DM</option>
+<option value="1">Không DMS</option>
 <option value="2" selected>Send Action</option>
-<option value="3">Send Action + Reason</option>
-<option value="4">Send Action + Reason + Moderator</option>
+<option value="3">Gửi hành động + lý do</option>
+<option value="4">Gửi hành động + Lý do + Người kiểm duyệt</option>
 </select>
 <% } else if(mod.warn_action === "3") { %>
 <select name="warn">
-<option value="1">Don't DM</option>
-<option value="2">Send Action</option>
-<option value="3" selected>Send Action + Reason</option>
-<option value="4">Send Action + Reason + Moderator</option>
+<option value="1">Không DMS</option>
+<option value="2">Gửi hành động</option>
+<option value="3" selected>Gửi hành động + lý do</option>
+<option value="4">Gửi hành động + Lý do + Người kiểm duyệt</option>
 </select>
 <% } else if(mod.warn_action === "4") { %>
 <select name="warn">
-<option value="1">Don't DM</option>
-<option value="2">Send Action</option>
-<option value="3">Send Action + Reason</option>
-<option value="4" selected>Send Action + Reason + Moderator</option>
+<option value="1">Không DMS</option>
+<option value="2">Gửi hành động</option>
+<option value="3">Gửi hành động + lý do</option>
+<option value="4" selected>Gửi hành động + Lý do + Người kiểm duyệt</option>
 </select>
 <% } else { %>
 <select name="warn">
-<option value="1" selected>Don't DM</option>
-<option value="2">Send Action</option>
-<option value="3">Send Action + Reason</option>
-<option value="4">Send Action + Reason + Moderator</option>
+<option value="1" selected>Không DMS</option>
+<option value="2">Gửi hành động</option>
+<option value="3">Gửi hành động + lý do</option>
+<option value="4">Gửi hành động + Lý do + Người kiểm duyệt</option>
 </select>
 <% } %>
 
@@ -304,38 +304,38 @@
 <p style="padding-left: 40px">Mute - DM settings</p>
 <% if(mod.mute_action === "1") { %>
 <select name="mute">
-<option value="1" selected>Don't DM</option>
-<option value="2">Send Action</option>
-<option value="3">Send Action + Reason</option>
-<option value="4">Send Action + Reason + Moderator</option>
+<option value="1" selected>Không DMS</option>
+<option value="2">Gửi hành động</option>
+<option value="3">Gửi hành động + lý do</option>
+<option value="4">Gửi hành động + Lý do + Người kiểm duyệt</option>
 </select>
 <% } else if(mod.mute_action === "2") { %>
 <select name="mute">
-<option value="1">Don't DM</option>
-<option value="2" selected>Send Action</option>
-<option value="3">Send Action + Reason</option>
-<option value="4">Send Action + Reason + Moderator</option>
+<option value="1">Không DMS</option>
+<option value="2" selected>Gửi hành động</option>
+<option value="3">Gửi hành động + lý do</option>
+<option value="4">Gửi hành động + Lý do + Người kiểm duyệt</option>
 </select>
 <% } else if(mod.mute_action === "3") { %>
 <select name="mute">
-<option value="1">Don't DM</option>
-<option value="2">Send Action</option>
-<option value="3" selected>Send Action + Reason</option>
-<option value="4">Send Action + Reason + Moderator</option>
+<option value="1">Không DMS</option>
+<option value="2">Gửi hành động</option>
+<option value="3" selected>Gửi hành động + lý do</option>
+<option value="4">Gửi hành động + Lý do + Người kiểm duyệt</option>
 </select>
 <% } else if(mod.mute_action === "4") { %>
 <select name="mute">
-<option value="1">Don't DM</option>
-<option value="2">Send Action</option>
-<option value="3">Send Action + Reason</option>
-<option value="4" selected>Send Action + Reason + Moderator</option>
+<option value="1">Không DMS</option>
+<option value="2">Gửi hành động</option>
+<option value="3">Gửi hành động + lý do</option>
+<option value="4" selected>Gửi hành động + Lý do + Người kiểm duyệt</option>
 </select>
 <% } else { %>
 <select name="mute">
-<option value="1" selected>Don't DM</option>
-<option value="2">Send Action</option>
-<option value="3">Send Action + Reason</option>
-<option value="4">Send Action + Reason + Moderator</option>
+<option value="1" selected>Không DMS</option>
+<option value="2">Gửi hành động</option>
+<option value="3">Gửi hành động + lý do</option>
+<option value="4">Gửi hành động + Lý do + Người kiểm duyệt</option>
 </select>
 <% } %>
 
@@ -359,7 +359,7 @@
   <div class="row justify-content-center" style="    padding-bottom: 20px;"></div>
 
 <div style="text-align: center">
-<button type="submit" name="save_main" class="save">Save Changes</button>
+<button type="submit" name="save_main" class="save">Lưu thay đổi</button>
 </button>
 
   <div class="row justify-content-center" style="    padding-bottom: 20px;"></div>
@@ -384,11 +384,11 @@
   ">
 <div class="rr-box-title">
 <div class="overviews">
-        <div class="overviewsTitle">Auto Punish<span class="smallDesc"> - Punish Users through warns</span></div>
+        <div class="overviewsTitle">Tự động trừng phạt<span class="smallDesc"> - Trừng phạt người dùng thông qua cảnh báo</span></div>
 
 </div>
 </div>
-<p style="padding-left: 40px;">Warn Amount (Max. 50)</p>
+<p style="padding-left: 40px;">Số lần bị cảnh báo (tối đa. 50)</p>
 <div style="padding-left: 40px; padding-right: 40px; ">
 <input style="background-color: #2f2f2f; height: 30px; width: 100%; color: white;  border: 2px solid grey; border-radius: 5px " value="<%= mod.auto_punish.amount || 1%>" type="number" name="amount" min="1" max="50">
 </div>
@@ -426,27 +426,27 @@
 <p style="padding-left: 40px">DM settings</p>
 <% if(mod.auto_punish.dm === "1") { %>
 <select name="dm">
-<option value="1" selected>Don't DM</option>
-<option value="2">Send Action</option>
-<option value="3">Send Action + Warn Count</option>
+<option value="1" selected>Không DMS</option>
+<option value="2">Gửi hành động</option>
+<option value="3">Gửi hành động + Số lần bị cảnh báo</option>
 </select>
 <% } else if(mod.auto_punish.dm === "2") { %>
 <select name="dm">
-<option value="1">Don't DM</option>
-<option value="2" selected>Send Action</option>
-<option value="3">Send Action + Warn Count</option>
+<option value="1">Không DMS</option>
+<option value="2" selected>Gửi hành động</option>
+<option value="3">Gửi hành động + Số lần bị cảnh báo</option>
 </select>
 <% } else if(mod.auto_punish.dm === "3") { %>
 <select name="dm">
-<option value="1">Don't DM</option>
-<option value="2">Send Action</option>
-<option value="3" selected>Send Action + Warn Count</option>
+<option value="1">Không DMS</option>
+<option value="2">Gửi hành động</option>
+<option value="3" selected>Gửi hành động + Số lần bị cảnh báo</option>
 </select>
 <% } else { %>
 <select name="dm">
-<option value="1" selected>Don't DM</option>
-<option value="2">Send Action</option>
-<option value="3">Send Action + Warn Count</option>
+<option value="1" selected>Không DMS</option>
+<option value="2">Gửi hành động</option>
+<option value="3">Gửi hành động + Số lần bị cảnh báo</option>
 
 
 </select>
@@ -474,12 +474,12 @@
   <div class="w3-show-inline-block">
   <div class="w3-bar">
 
-<button type="submit" name="auto_punish_disable" class="disable">Disable</button>
-<button type="submit" name="auto_punish_update" class="update">Update</button>
+<button type="submit" name="auto_punish_disable" class="disable">Vô hiệu hóa</button>
+<button type="submit" name="auto_punish_update" class="update">Cập nhật</button>
   </div>
   </div>
 <% } else { %>
-<button type="submit" class="save" name="auto_punish_save">Enable</button>
+<button type="submit" class="save" name="auto_punish_save">Cho phép</button>
 <% } %>
 
 
@@ -513,7 +513,7 @@
   ">
 <div class="rr-box-title">
 <div class="overviews">
-        <div class="overviewsTitle">Ban Message<span class="smallDesc"> - DM The user once banned</span></div>
+        <div class="overviewsTitle">Gửi tin nhắn<span class="smallDesc"> - DMS Người dùng đã bị cấm</span></div>
 </div>
 </div>
 <div style="padding-left: 40px; padding-right: 40px;">
@@ -541,12 +541,12 @@ max-height:128px; min-height: 128px; background-color: #2f2f2f; color: white;  "
   <div class="w3-show-inline-block">
   <div class="w3-bar">
 
-<button type="submit" name="dm_disable" class="disable">Disable</button>
-<button type="submit" name="dm_update"  class="update">Update</button>
+<button type="submit" name="dm_disable" class="disable">Vô hiệu hóa</button>
+<button type="submit" name="dm_update"  class="update">Cập nhật</button>
   </div>
   </div>
 <% } else { %>
-<button type="submit" name="dm_save" class="save">Enable</button>
+<button type="submit" name="dm_save" class="save">Cho phép</button>
 <% } %>
 
 

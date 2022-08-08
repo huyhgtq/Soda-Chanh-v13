@@ -2,7 +2,9 @@ const { createLogger, format, transports } = require('winston');
 const { combine, timestamp, label, printf } = format;
 const Discord = require('discord.js');
 const config = require('./../config.json');
-const webhookClient = new Discord.WebhookClient(config.webhook_id, config.webhook_url);
+const webhookClient = new Discord.WebhookClient({ 
+	id: "927663649236070401", 
+	token: "WW1MdxgAE4d7PKVRN5vAK6MVqHpU3prSSzspeesyBtdceinh0yK28g6IFI2PhHtXQtE_" });
 const chalk = require('chalk');
 
 

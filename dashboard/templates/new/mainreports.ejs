@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap" rel="stylesheet">
 </head>
-<%- include("../partials/dashMenu", { bot, user, path, description, title: `Pogy - Dashboard`, arc, url})%>
+<%- include("../partials/dashMenu", { bot, user, path, description, title: `Soda Chan - Dashboard`, arc, url})%>
 
 
 
@@ -27,7 +27,7 @@
 <% if (guild.icon) {
  iconurl = "https://cdn.discordapp.com/icons/" + guild.id + "/" + guild.icon + ".png??size=512";
 } else {
- iconurl = "https://cdn.glitch.com/82fe990a-7942-42e3-9790-39807ccdb9f6%2Ficon-404-dark.png?v=1602427904949";
+ iconurl = "https://cdn.discordapp.com/attachments/893953110349852686/970760403976093716/soda_chan_new.png";
 }
 %>
 
@@ -82,11 +82,11 @@
     </div>
   </div>
 <% }  %>
-    <h2 class="reports-header" style="font-family: 'Cairo', sans-serif">Report Channel</h2>
+    <h2 class="reports-header" style="font-family: 'Cairo', sans-serif">Báo cáo kênh</h2>
     <br>
-    <h5>Sets the Report Channel for the current Guild</h5>
+    <h5>Đặt Kênh Báo cáo cho Server hiện tại</h5>
     <br>
-    <h3 style="font-family: 'Cairo', sans-serif" >Select Channel</h3>
+    <h3 style="font-family: 'Cairo', sans-serif" >Chọn kênh</h3>
 
            <div class="select-wrapper">
 <select class="select" name="reportChannel">
@@ -97,7 +97,7 @@
                                                     <% }); %>
                                                         <option>None</option>
                                                 <% } else { %>
-                                                    <option selected="selected">None</option>
+                                                    <option selected="selected">Không có</option>
                                                     <% guild.channels.cache.filter((ch) => ch.type === "text").forEach((ch) => { %>
                                                         <option>#<%= ch.name %></option>
                                                     <% }); %>
@@ -108,36 +108,36 @@
 
                   <div class="box-footer">
                                        
-                                            <button type="submit" name="saveChannel" class="save-button">Save</button>
+                                            <button type="submit" name="saveChannel" class="save-button">Lưu</button>
                                     
                                     </div>
                                     
   </div>
 
   <div class="reports" >
-<h2 class="reports-header" style="font-family: 'Cairo', sans-serif">Additional Settings</h2>
+<h2 class="reports-header" style="font-family: 'Cairo', sans-serif">Cài đặt thêm</h2>
     <br>
-    <h4>Additional Customizations for the guild.</h4>
+    <h4>Các tùy chỉnh bổ sung cho máy chủ.</h4>
     <br>
 
-<p><input name="reportColor" type="color" value="<%= settings.report.reportcolor %>">  Report Color</p>
-<p>Disable Issue Reports</p>
+<p><input name="reportColor" type="color" value="<%= settings.report.reportcolor %>">  Màu báo cáo</p>
+<p>Tắt báo cáo sự cố</p>
 <% if(settings.report.disableIssue == "true") {%>
 <input name="disableIssue" class="input-switch" type="checkbox" id="switch1" checked></input><label class="label-switch"for="switch1">Toggle</label>
 <% } else { %>
 <input name="disableIssue" class="input-switch" type="checkbox" id="switch1"></input><label class="label-switch"for="switch1">Toggle</label>
 <% } %>
 
-  <p>Disable User Reports</p>
+  <p>Tắt báo cáo người dùng</p>
 
 <% if(settings.report.disableUser == "true") {%>
 <input name="disableUser" class="input-switch" type="checkbox" id="switch2" checked></input><label class="label-switch"for="switch2">Toggle</label>
 <% } else { %>
 <input name="disableUser" class="input-switch" type="checkbox" id="switch2"></input><label class="label-switch"for="switch2">Toggle</label>
 <% } %>
-<p> <% if(settings.isPremium == "false"){ %>Enable report Upvotes <a href="https://pogy.xyz/premium"><i style="font-size:14px; color: yellow" class="fa">&#xf006;</i></a></p>
+<p> <% if(settings.isPremium == "false"){ %>Bật phiếu bầu báo cáo <a href="https://sodachan.tk/premium/"><i style="font-size:14px; color: yellow" class="fa">&#xf006;</i></a></p>
 <% } else { %>
-<p>Enable report Upvotes</p>
+<p>Bật phiếu ủng hộ báo cáo</p>
 <% } %>
 <% if(settings.report.upvote == "true") {%>
 <input name="upvote" onclick="myFunction()" class="input-switch" type="checkbox" id="switch3" checked></input><label class="label-switch"for="switch3">Toggle</label>
@@ -145,7 +145,7 @@
 <input name="upvote" class="input-switch" type="checkbox" id="switch3" onclick="myFunction()" ></input><label class="label-switch"for="switch3">Toggle</label>
 <% } %>
 <div id="text" style="display:none">
-<p>Pick your reaction</p>
+<p>Chọn phản ứng của bạn</p>
 <% if(settings.report.reaction == "1") {%>
 <div class="form-check">
   <input value="1" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>

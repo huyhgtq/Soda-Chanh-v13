@@ -1,6 +1,6 @@
 const Guild = require('../database/schemas/Guild');
 const logger = require('../utils/logger');
-
+const { Permissions } = require('discord.js');
 module.exports = async message => {
   const settings = await Guild.findOne({
     guildId: message.guild.id,
@@ -9,7 +9,7 @@ module.exports = async message => {
   });
 
   if (settings.antiLinks) {
-    if (!message.member.hasPermission('ADMINISTRATOR' || 'MANAGE_GUILD' || 'BAN_MEMBERS' || 'KICK_MEMBERS' || 'MANAGE_MESSAGES')) {
+    if (!message.member.permissions.has('ADMINISTRATOR' || 'MANAGE_GUILD' || 'BAN_MEMBERS' || 'KICK_MEMBERS' || 'MANAGE_MESSAGES')) {
       if (hasLink(message.content)) {
     
         return deleteLink(message);
@@ -29,7 +29,7 @@ module.exports = async message => {
       message.delete().catch(() => {});
     }
     
-    message.channel.send({
+    message.reply({
       embed: {
         color: 'RED',
         author: {

@@ -27,12 +27,12 @@ module.exports = class extends Command {
       await autoResponse.find({
         guildId: message.guild.id,
       }, (err, data) => {
-        if (!data && !data.name) return message.channel.send(`${message.client.emoji.fail} ${language.cc5}`);
+        if (!data && !data.name) return message.reply(`${message.client.emoji.fail} ${language.cc5}`);
         let array =[]
         data.map((d, i) => array.push(d.name));
 
         let embed = new MessageEmbed()
-      .setColor('PURPLE')
+      .setColor('RANDOM')
       .setTitle(`${language.cc6}`)
       .setDescription(array.join(" - "))
       .setFooter(message.guild.name)
@@ -43,7 +43,7 @@ module.exports = class extends Command {
 embed.setDescription(array.join(" - "))
 }
 
-      message.channel.send(embed)
+      message.reply({ embeds: [embed]})
       });
 
     }

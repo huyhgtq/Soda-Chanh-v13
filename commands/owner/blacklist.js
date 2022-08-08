@@ -1,6 +1,8 @@
 const Command = require('../../structures/Command');
 const { WebhookClient, MessageEmbed } = require('discord.js');
-const webhookClient = new WebhookClient('841206434615787520', 'pyXPiyh0CuV10DDndKAWP-nLziMUYcpXZD_WUkO1DxAO7cJbEYEtK2ejtUYjh0O_Z9sg');
+const webhookClient = new WebhookClient({ 
+id: '893957973032984646',
+token: 'AHoKy0CvTcDXH16kvXJx15llew6qhgxC6Nbca25azLZQGXvkPrvsOJNEG01tgbRUXd7J'});
 
 
 const logger = require('../../utils/logger');
@@ -28,19 +30,19 @@ module.exports = class extends Command {
       try {
 member =  match ? message.mentions.members.first() || message.guild.members.fetch(args[1]) : null;
       } catch {
-        return message.channel.send(`Provide me with a user`)
+        return message.reply(`Cung cấp cho tôi một người dùng`)
       }
    
       let guild = this.client.guilds.cache.get(args[1]);
-      let reason = args.slice(2).join(' ') || 'Not Specified';
+      let reason = args.slice(2).join(' ') || 'Không được chỉ định';
 
-      if (args.length < 1) return message.channel.send(`Please provide me with a user or guild blacklist`)
-      if (args.length < 2) return message.channel.send(`Provide me with a user`)
+      if (args.length < 1) return message.reply(`Vui lòng cung cấp cho tôi danh sách đen của người dùng hoặc máy chủ`)
+      if (args.length < 2) return message.reply(`Provide me with a user`)
  
    
 
 
-      if(!member) return message.channel.send(`Provide me with a valid user`)
+      if(!member) return message.reply(`Cung cấp cho tôi một người dùng hợp lệ`)
 
       if (args[0] === 'user') {
         await Blacklist.findOne({
@@ -56,25 +58,24 @@ member =  match ? message.mentions.members.first() || message.guild.members.fetc
 
        
 
-        message.channel.send({
+        channel.send({
           embed: {
             color: "BLURPLE",
-            title: `User added to the blacklist! `,
+            title: `Người dùng đã được thêm vào danh sách đen! `,
             description: `${member.user.tag} - \`${reason}\``,
           }
         });
 
         const embed = new MessageEmbed()
           .setColor('BLURPLE')
-          .setTitle(`Blacklist Report`)
-          .addField('Status', 'Added to the blacklist.')
-          .addField('User', `${member.user.tag} (${member.id})`)
-          .addField('Responsible', `${message.author} (${message.author.id})`)
-          .addField('Reason', reason)
+          .setTitle(`Báo cáo danh sách đen`)
+          .addField('Status', 'Đã thêm vào danh sách đen.')
+          .addField('Người sử dụng', `${member.user.tag} (${member.id})`)
+          .addField('Chịu trách nhiệm', `${message.author} (${message.author.id})`)
+          .addField('Lý do', reason)
 
         return webhookClient.send({
-          username: 'Pogy',
-          avatarURL: `${message.client.domain}/logo.png`,
+          username: 'Soda chan',
           embeds: [embed]
         });
       }
@@ -94,25 +95,24 @@ member =  match ? message.mentions.members.first() || message.guild.members.fetc
         });
         
 
-        message.channel.send({
+        channel.send({
           embed: {
             color: "BLURPLE",
-            title: 'Server added to the blacklist!',
+            title: 'Máy chủ được thêm vào danh sách đen!',
             description: `${guild.name} - \`${reason}\``,
           }
         });
 
         const embed = new MessageEmbed()
           .setColor('BLURPLE')
-          .setTitle(`Blacklist Report`)
-          .addField('Status', 'Added to the blacklist.')
-          .addField('Server', `${guild.name} (${guild.id})`)
-          .addField('Responsible', `${message.author} (${message.author.id})`)
-          .addField('Reason', reason)
+          .setTitle(`Báo cáo danh sách đen`)
+          .addField('Status', 'Đã thêm vào danh sách đen.')
+          .addField('Máy chủ', `${guild.name} (${guild.id})`)
+          .addField('Chịu trách nhiệm', `${message.author} (${message.author.id})`)
+          .addField('Lý do', reason)
 
         return webhookClient.send({
-          username: 'Pogy Blacklists',
-          avatarURL: `${message.client.domain}/logo.png`,
+          username: 'Soda Blacklists',
           embeds: [embed]
         });
       }

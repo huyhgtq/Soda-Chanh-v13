@@ -6,7 +6,7 @@ module.exports = class extends Command {
       super(...args, {
         name: 'reverse',
         aliases: [ 'rev' ],
-        description: 'Sends the same message that you had sent but reversed.',
+        description: 'Gửi cùng một tin nhắn mà bạn đã gửi nhưng đã bị đảo ngược.',
         category: 'Fun',
         usage: '<text>',
         examples: [ 'reverse Hello World' ]
@@ -21,10 +21,12 @@ module.exports = class extends Command {
       const language = require(`../../data/language/${guildDB.language}.json`)
     
     
-    if(!args[0]) return message.channel.send(`${language.reverseError}`)
+    if(!args[0]) return message.reply(`${language.reverseError}`)
             const text = args.join(' ')
             const converted = text.split('').reverse().join('');
-            message.channel.send(new  discord.MessageEmbed().setDescription(`\u180E${converted}`).setColor(message.client.color.blue)).catch(() => {});
+            message.reply({ embeds: [new discord.MessageEmbed()
+								 .setDescription(`\u180E${converted}`)
+								 .setColor(message.client.color.blue)]}).catch(() => {});
     
     
 

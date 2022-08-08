@@ -4,15 +4,15 @@ const moment = require('moment');
 const { stripIndent } = require('common-tags');
 
 const verificationLevels = {
-  NONE: '`None`',
-  LOW: '`Low`',
-  MEDIUM: '`Medium`',
-  HIGH: '`High`',
-  VERY_HIGH: '`Highest`'
+  NONE: '`Không`',
+  LOW: '`Thấp`',
+  MEDIUM: '`Trung bình`',
+  HIGH: '`Cao`',
+  VERY_HIGH: '`Cao nhất`'
 };
 const notifications = {
-  ALL: '`All`',
-  MENTIONS: '`Mentions`'
+  ALL: '`Tất cả`',
+  MENTIONS: '`Đề cập`'
 };
 
 module.exports = class extends Command {
@@ -20,8 +20,9 @@ module.exports = class extends Command {
       super(...args, {
         name: 'server',
         aliases: [],
-        description: 'Check the server',
+        description: 'Kiểm tra máy chủ',
         category: 'Owner',
+		disabled: true,
         ownerOnly: true
       });
     }
@@ -34,7 +35,7 @@ module.exports = class extends Command {
       let days = Math.floor(diff / 86400000);
       return days + (days == 1 ? " day" : " days") + " ago";
   };
-  let verifLevels = ["None", "Low", "Medium", "(╯°□°）╯︵  ┻━┻", "┻━┻ミヽ(ಠ益ಠ)ノ彡┻━┻"];
+  let verifLevels = ["Không", "Thấp", "Trung bình", "(╯°□°）╯︵  ┻━┻", "┻━┻ミヽ(ಠ益ಠ)ノ彡┻━┻"];
   let region = {
     "eu-central": ":flag_eu: Central Europe",
     "singapore": ":flag_sg: Singapore",
@@ -54,24 +55,27 @@ module.exports = class extends Command {
 };
 const guildId = args[0];
 const guild = message.client.guilds.cache.get(guildId);
-if (!guild) return message.channel.send(`Invalid guild ID`)
+if (!guild) return message.reply(`Invalid guild ID`)
 
 const embed = new MessageEmbed() 
 .setAuthor(guild.name, guild.iconURL())
-.addField("Server ID", guild.id, true)
-.addField("Owner", `${guild.owner.user.username}#${guild.owner.user.discriminator}`, true)
-.addField("Owner ID", `${guild.owner.user.id}`, true)
-.addField('Owner Joined Discord on', `\`${moment(guild.owner.user.createdAt).format('MMMM Do YYYY, h:mm:ss a')}\``, true)
-.addField("Region", guild.region, true)
-.addField("Total | Humans | Bots", `${guild.members.cache.size} | ${guild.members.cache.filter(member => !member.user.bot).size} | ${guild.members.cache.filter(member => member.user.bot).size}`, true)
-.addField("Verification Level", guild.verificationLevel, true)
-.addField("Channels", guild.channels.cache.size, true)
-.addField("Roles", guild.roles.cache.size, true)
-.addField("Creation Date", `${guild.createdAt.toUTCString().substr(0, 16)} (${checkDays(guild.createdAt)})`, true)
+.addField("General", [
+                `**--> ID máy chủ, ${guild.id}`,
+                `**--> Chủ sở hữu, <@${guild.ownerId}>`,
+                `**--> ID chủ sở hữu, ${guild.ownerId}`,
+                `**--> Vùng đất, ${guild.region}`,
+                `**--> Tổng số | Người dùng | Bots, ${guild.members.cache.size} | ${guild.members.cache.filter(member => !member.user.bot).size} | ${guild.members.cache.filter(member => member.user.bot).size}`,
+                `**--> Mức độ xác minh, ${guild.verificationLevel}`,
+                `**--> Kênh, ${guild.channels.cache.size}`,
+                `**--> Vai trò, ${guild.roles.cache.size}`,
+                `**--> Ngày thành lập, ${guild.createdAt.toUTCString().substr(0, 16)} (${checkDays(guild.createdAt)})`,
+                '\u200b',
+            ])
+
 .setThumbnail(guild.iconURL())
 .setColor(message.guild.me.displayHexColor);
-    message.channel.send({embed}).catch(error => {
-        message.channel.send(`Error: ${error}`)
+    message.channel.send({ embeds: [embed]}).catch(error => {
+        mmessage.reply(`Lỗi: ${error}`)
 
   });
     

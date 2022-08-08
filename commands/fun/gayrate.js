@@ -7,10 +7,10 @@ module.exports = class extends Command {
       super(...args, {
         name: 'howgay',
         aliases: [ 'gayrate' ],
-        description: 'See how gay you are',
+        description: 'Xem bạn là người đồng tính như thế nào',
         category: 'Fun',
         usage: '[user]',
-        examples: [ 'howgay @Peter' ],
+        examples: [ 'howgay' ],
         cooldown: 3
       });
     }
@@ -39,14 +39,14 @@ module.exports = class extends Command {
     
         if (target === authorId){
         
-         message.channel.send(embedd)}
-        if(!target)return message.channel.send(embedd) 
+         message.reply({ embeds: [embedd]})}
+        if(!target)return message.reply({ embeds: [embedd]}) 
         let targett = target.username
          let embed = new discord.MessageEmbed()
         .setColor('GREEN')
         .setTitle(`${language.simpmachinee}`)
         .setDescription(`${targett} ${language.simpIs} **${amount}%** gay`)
-         message.channel.send(embed)
+         message.reply({ embeds: [embed]})
        
          
         }

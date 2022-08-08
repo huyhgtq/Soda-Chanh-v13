@@ -7,7 +7,7 @@ module.exports = class extends Command {
       super(...args, {
         name: 'leaveguild',
         aliases: ['lg'],
-        description: 'Leave a guild!',
+        description: 'Rời khỏi một hội!',
         category: 'Owner',
         ownerOnly: true
       });
@@ -17,17 +17,17 @@ module.exports = class extends Command {
       
       const guildId = args[0];
     if (!rgx.test(guildId))
-      return message.channel.send(`Provide a guild`)
+      return message.reply(`Cung cấp một máy chủ`)
     const guild = message.client.guilds.cache.get(guildId);
-    if (!guild) return message.channel.send(`Invalid guild ID`)
+    if (!guild) return message.reply(`ID máy chủ không hợp lệ`)
     await guild.leave();
     const embed = new MessageEmbed()
-      .setTitle('Leave Guild')
-      .setDescription(`I have successfully left **${guild.name}**.`)
+      .setTitle('Rời máy chủ')
+      .setDescription(`Tôi đã rời đi thành công **${guild.name}**.`)
       .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
-    message.channel.send(embed);
+    message.reply({ embeds: [embed] })
 
     }
 };

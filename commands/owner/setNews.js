@@ -5,17 +5,17 @@ module.exports = class extends Command {
   constructor(...args) {
     super(...args, {
       name: 'setnews',
-      description: 'This is for the developers.',
+      description: 'Điều này dành cho các nhà phát triển.',
       category: 'Owner',
-      usage: [ '<text>' ],
+      usage: [ '<bản văn>' ],
       ownerOnly: true
     });
   }
 
   async run(message, args) {
     let news = args.join(' ').split('').join('') 
-    if(!SlayBotDB.news) return  await SlayBotDB.create({ news: news, tag: '710465231779790849', time: new Date() }) + await SlayBotDB.updateOne({ news: news, tag: '710465231779790849', time: new Date()}) +  message.channel.send(' Updated News!')
-    await SlayBotDB.updateOne({ news: news, tag: '710465231779790849', time: new Date() })
-    message.channel.send(' Updated News!')
+    if(!SlayBotDB.news) return  await SlayBotDB.create({ news: news, tag: '893953109334843422', time: new Date() }) + await SlayBotDB.updateOne({ news: news, tag: '893953109334843422', time: new Date()}) +  message.reply(' Tin tức cập nhật!')
+    await SlayBotDB.updateOne({ news: news, tag: '893953109334843422', time: new Date() })
+    message.reply(' Tin tức cập nhật!')
   }
 };

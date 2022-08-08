@@ -64,55 +64,40 @@ opacity: 1;
 }
 
 .spinner {
-width: 550px;
-height: 550px;
-position: absolute;
-background: url(https://i.imgur.com/83q5LqX.png);
-top: 0;
-bottom: 0;
-left: 0;
-right: 0;
-margin: auto;
-animation: spinning 3s infinite linear;
+ width: 80px;
+ height: 80px;
+ border: 2px solid var(--spinner-border);
+ border-top: 3px solid var(--spinner);
+ border-radius: 100%;
+ position: absolute;
+ top: 0;
+ bottom: 0;
+ left: 0;
+ right: 0;
+ margin: auto;
+ animation: spinning 1s infinite linear;
 }
 
 .preloader.fade {
-opacity: 0
+ opacity: 0;
 }
 
 @keyframes spinning {
-  0%   {top: 0px; background: url(https://i.imgur.com/83q5LqX.png)}
-  12%  {top: 0px; background: url(https://i.imgur.com/83q5LqX.png) }
-  15%  {top: 0px; background: url(https://i.imgur.com/kPAqFEM.png) }
-  17%  {top: 0px; background: url(https://i.imgur.com/kPAqFEM.png) }
-  50%  {top: 80px; background: url(https://i.imgur.com/83q5LqX.png)}
-  100% {top: 0px; background: url(https://i.imgur.com/83q5LqX.png)}
+ from {
+  transform: rotate(0);
+ }
+ to {
+  transform: rotate(360deg);
+ }
 }
 
-@keyframes comeUp {
-    from {
-        opacity: 0;
-        bottom: -50px;
-    }
-}
-/* 
-
-@keyframes spin {
-  0%   {top: 0px; left: 0px; }
-  25%  {top: 0px; left: 100px; }
-  50%  {top: 100px; left: 100px; }
-  75%  {top: 100px; left: 0px; }
-  100% {top: 0px; left: 0px;}
-}
-
-*/
 @keyframes ico {
-from {
-transform: rotateY(0);
-}
-to {
-transform: rotateY(360deg);
-}
+ from {
+  transform: rotateY(0);
+ }
+ to {
+  transform: rotateY(360deg);
+ }
 }
 
 * {

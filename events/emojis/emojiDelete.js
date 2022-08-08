@@ -35,10 +35,10 @@ if(color == "#000000") color = emoji.client.color.red;
 
 
     const embed = new discord.MessageEmbed()
-    .setDescription(`🗑️ ***Emoji Delete***`)
-    .addField('Emoji Name', emoji.name, true)
-    .addField('Emoji', emoji, true)
-    .setFooter(`Emoji ID: ${emoji.id}`)
+    .setDescription(`🗑️ ***Xóa biểu tượng cảm xúc***`)
+    .addField('Tên biểu tượng cảm xúc', `${emoji.name}`)
+    .addField('Biểu tượng cảm xúc', `${emoji}`)
+    .setFooter(`ID biểu tượng cảm xúc: ${emoji.id}`)
     .setTimestamp()
     .setColor(color)
 
@@ -46,7 +46,7 @@ if(color == "#000000") color = emoji.client.color.red;
     if(channelEmbed &&
       channelEmbed.viewable &&
       channelEmbed.permissionsFor(emoji.guild.me).has(['SEND_MESSAGES', 'EMBED_LINKS'])){
-            channelEmbed.send(embed).catch(()=>{})
+            channelEmbed.send({ embeds: [embed] }).catch(()=>{})
       }
 
 

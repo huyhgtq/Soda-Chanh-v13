@@ -16,7 +16,7 @@
 
 
 </head>
-<%- include("../partials/dashMenu", { bot, user, path, description, title: `Pogy - Dashboard`, arc, url})%>
+<%- include("../partials/dashMenu", { bot, user, path, description, title: `Soda Chan - Dashboard`, arc, url})%>
 
 
 
@@ -26,7 +26,7 @@
 <% if (guild.icon) {
  iconurl = "https://cdn.discordapp.com/icons/" + guild.id + "/" + guild.icon + ".png??size=512";
 } else {
- iconurl = "https://cdn.glitch.com/82fe990a-7942-42e3-9790-39807ccdb9f6%2Ficon-404-dark.png?v=1602427904949";
+ iconurl = "https://cdn.discordapp.com/attachments/893953110349852686/970760403976093716/soda_chan_new.png";
 }
 %>
 
@@ -125,7 +125,7 @@
   ">
 <div class="autorole-box-title">
 <div class="overviews">
-        <div class="overviewsTitle">Auto Role<span class="smallDesc"> - Automatically give the role on join.</span></div>
+        <div class="overviewsTitle">Auto Role<span class="smallDesc"> - Automatically cung cấp vai trò khi tham gia.</span></div>
 
 </div>
 </div>
@@ -133,7 +133,7 @@
   <div style="padding-top: 10px">
 </div>
 
- <p style="padding-left: 40px">This feature will automatically add the specified role<br>every time a member joins your guild.</p>
+ <p style="padding-left: 40px">Tính năng này sẽ tự động thêm vai trò được chỉ định<br>mỗi khi một thành viên tham gia guild của bạn.</p>
  <br>
  <p style="padding-left: 40px">Role</p>
 <div class="select-wrapper">
@@ -174,12 +174,12 @@
 
                   <div style="text-align: center">
                                         <% if(settings.autoroleToggle === true){ %>
-                                            <button type="submit" name="autoroleDisable" class="disable">Disable</button>
-                                            <button type="submit" name="autoroleUpdate" class="update">Update</button>
+                                            <button type="submit" name="autoroleDisable" class="disable">Vô hiệu hóa</button>
+                                            <button type="submit" name="autoroleUpdate" class="update">Cập nhật</button>
                                         <% } else { %>
                                                                                 <br>
                                         <br>
-                                            <button type="submit" name="autoroleEnable" class="save-button">Enable</button>
+                                            <button type="submit" name="autoroleEnable" class="save-button">Cho phép</button>
                                         <% } %>
                                     </div>
 
@@ -206,7 +206,7 @@
   ">
 <div style="text-align: center">
 <div class="overviews">
-        <div class="overviewsTitle">Sticky Role<span class="smallDesc"> - give the role if had</span></div>
+        <div class="overviewsTitle">Sticky Role<span class="smallDesc"> - cung cấp cho vai trò nếu có</span></div>
 
 </div>
 </div>
@@ -214,7 +214,7 @@
   <div style="padding-top: 10px">
 </div>
 
- <p style="padding-left: 40px">This feature will automatically add the specified role<br>if the user had it when he left.</p>
+ <p style="padding-left: 40px">Tính năng này sẽ tự động thêm vai trò được chỉ định<br>nếu người dùng có nó khi anh ta rời đi.</p>
 <br>
  <p style="padding-left: 40px">Role</p>
 <div class="select-wrapper">
@@ -245,12 +245,12 @@
   <div class="row justify-content-center" style="    padding-bottom: 20px;"></div>
                   <div style="text-align: center">
                                         <% if(sticky.stickyroleToggle == "true"){ %>
-                                            <button type="submit" name="stickyroleDisable" class="disable">Disable</button>
-                                            <button type="submit" name="stickyUpdate" class="update">Update</button>
+                                            <button type="submit" name="stickyroleDisable" class="disable">Vô hiệu hóa</button>
+                                            <button type="submit" name="stickyUpdate" class="update">Cập nhật</button>
                                         <% } else { %>
                                         <br>
                                         <br>
-                                            <button type="submit" name="stickyroleEnable" class="save-button">Enable</button>
+                                            <button type="submit" name="stickyroleEnable" class="save-button">Cho phép</button>
                                         <% } %>
                                     </div>
                                   
@@ -269,7 +269,7 @@
 </div>
 
 <% } else { %>
-<p class="no-js">Make sure the guild has 1 Role, So please create a channel before accessing our dashboard</p>
+<p class="no-js">Đảm bảo Server có 1 Vai trò, Vì vậy, vui lòng tạo kênh trước khi truy cập trang tổng quan của chúng tôi</p>
 <% } %>
 
 </div>

@@ -12,7 +12,7 @@ module.exports = class extends Command {
       super(...args, {
         name: 'rrbuilder',
         aliases: ["rrb", "reactionrolebuilder", "reactionbuilder", "rolebuilder"],
-        description: 'Start a prompt and create your reaction role',
+        description: 'Bắt đầu lời nhắc và tạo vai trò phản ứng của bạn',
         category: 'Reaction Role',
         cooldown: 3,
         userPermission: ['MANAGE_GUILD'],
@@ -31,29 +31,29 @@ module.exports = class extends Command {
       let fail = message.client.emoji.fail
       let success = message.client.emoji.success
   const missingPermEmbed = new MessageEmbed()
-  .setAuthor(`Missing User Permissions`, message.author.displayAvatarURL())
-  .setDescription(`${fail} The following command the **Administrator** Permission`)
-  .setFooter(`https://pogy.xyz`)
+  .setAuthor(`Thiếu quyền của người dùng`, message.author.displayAvatarURL())
+  .setDescription(`${fail} Lệnh sau cần Quyền **Administrator **`)
+  .setFooter(`https://sodachan.tk/`)
 
 
  
   const cancelledEmbed = new MessageEmbed()
     .setAuthor(message.author.tag, message.author.displayAvatarURL())
-  .setDescription(`${success} Reaction Builder Cancelled!`)
-  .setFooter(`https://pogy.xyz`)
+  .setDescription(`${success} Trình tạo phản ứng đã bị hủy!`)
+  .setFooter(`https://sodachan.tk/`)
 
   const cancelledEmbed2 = new MessageEmbed()
     .setAuthor(message.author.tag, message.author.displayAvatarURL())
-  .setDescription(`${fail} Wrong Response, Reaction Builder Cancelled!`)
-  .setFooter(`https://pogy.xyz`)
+  .setDescription(`${fail} Phản hồi sai, trình tạo phản ứng bị hủy!`)
+  .setFooter(`https://sodachan.tk/`)
 
     const timeEnd = new MessageEmbed()
     .setAuthor(message.author.tag, message.author.displayAvatarURL())
-  .setDescription(`${fail} Time has Ended, Reaction Builder Cancelled!`)
-  .setFooter(`https://pogy.xyz`)
+  .setDescription(`${fail} Thời gian đã kết thúc, Trình tạo phản ứng đã bị hủy!`)
+  .setFooter(`https://sodachan.tk/`)
 const filter = m => m.author.id === message.author.id
 
-message.channel.send("Please specify a channel! **[channel / ID]**\n\n**Type Cancel to cancel**").then(() => {
+message.channel.send("Vui lòng chỉ định kênh! **[Kênh / ID]**\n\n**Gõ Cancel để hủy bỏ**").then(() => {
   message.channel.awaitMessages(filter, { max: 1, time: 60000, errors: ["time"] }).then(async collected => {
     let channel = collected.first().content
     let channelMention = collected.first().mentions
@@ -66,7 +66,7 @@ message.channel.send("Please specify a channel! **[channel / ID]**\n\n**Type Can
    
     if(!channelToSend) return message.channel.send(cancelledEmbed2)
     
-    message.channel.send(`Provide me with a message ID\n\nMake sure the message is in ${channelToSend}\n\n**Type Cancel to Cancel**`).then(() => {
+    message.channel.send(`Cung cấp cho tôi một tin nhắn ID\n\nĐảm bảo tin nhắn ở trong ${channelToSend}\n\n**Gõ Cancel để hủy bỏ**`).then(() => {
         message.channel.awaitMessages(filter, { max: 1, time: 60000, errors: ["time"] }).then(async collected1 => {
         let ID = collected1.first().content
             if(ID.toLowerCase() === 'cancel'){
@@ -75,7 +75,7 @@ message.channel.send("Please specify a channel! **[channel / ID]**\n\n**Type Can
     }
         let messageID = await channelToSend.messages.fetch(ID).catch(() => { return message.channel.send(cancelledEmbed2) })
           
-          message.channel.send("Please provide me with a role **[Role / ID]**\n\nThe following Role will be given when the user reacts!\n\n**Type Cancel to cancel**").then(() => {
+          message.channel.send("Vui lòng cung cấp cho tôi một vai trò **[Vai trò / ID]**\n\nVai trò sau sẽ được đưa ra khi người dùng phản ứng!\n\n**Gõ Cancel để hủy bỏ**").then(() => {
             message.channel.awaitMessages(filter, { max: 1, time: 60000, errors: ["time"] }).then(collected2 => {
               let roleName = collected2.first().content
               let roleMention = collected2.first().mentions
@@ -86,11 +86,11 @@ message.channel.send("Please specify a channel! **[channel / ID]**\n\n**Type Can
     }
               if(!role) return message.channel.send(cancelledEmbed2)
                   if(role.managed){
-      return message.channel.send(`${message.client.emoji.fail} Please do not use a integration role.`)
+      return message.channel.send(`${message.client.emoji.fail} Vui lòng không sử dụng vai trò tích hợp.`)
     }
               //wtf
               
-              message.channel.send("Now Please Provide me with an Emoji, make sure its not a custom One!\n\nThe Following Emoji will be the emoji that the user will react to!\n\n**Type Cancel to cancel**").then(() => {
+              message.channel.send("Bây giờ, Vui lòng cung cấp cho tôi một Biểu tượng cảm xúc, đảm bảo rằng nó không phải là Biểu tượng cảm xúc tùy chỉnh!\n\nBiểu tượng cảm xúc sau sẽ là biểu tượng cảm xúc mà người dùng sẽ phản ứng!\n\n**Gõ Cancel để hủy bỏ**").then(() => {
             message.channel.awaitMessages(filter, { max: 1, time: 60000, errors: ["time"] }).then(async (collected3) => {
               let emoji = collected3.first().content
 
@@ -98,16 +98,16 @@ message.channel.send("Please specify a channel! **[channel / ID]**\n\n**Type Can
               
     if (!emoji) return message.channel.send(new MessageEmbed()
      .setAuthor(message.author.tag, message.author.displayAvatarURL())
-  .setDescription(`${fail} Provide me with a valid Emoji`)
-  .setFooter(`https://pogy.xyz`)
+  .setDescription(`${fail} Cung cấp cho tôi một Biểu tượng cảm xúc hợp lệ`)
+  .setFooter(`https://sodachan.tk/`)
    .setColor(client.color.red)
     );
 
 
     if (isCustomEmoji(emoji)) return message.channel.send(new MessageEmbed()
      .setAuthor(message.author.tag, message.author.displayAvatarURL())
-  .setDescription(`${fail} Do Not use custom Emojis!`)
-  .setFooter(`https://pogy.xyz`)
+  .setDescription(`${fail} Không sử dụng Biểu tượng cảm xúc tùy chỉnh!`)
+  .setFooter(`https://sodachan.tk/`)
    .setColor(client.color.red)
     );
 
@@ -118,27 +118,27 @@ await messageID.react(emoji)
 } catch(err){
  return message.channel.send(new MessageEmbed()
      .setAuthor(message.author.tag, message.author.displayAvatarURL())
-  .setDescription(`${fail} Please Provide a valid Emoji.`)
+  .setDescription(`${fail} Vui lòng cung cấp một biểu tượng cảm xúc hợp lệ.`)
   .setColor(client.color.red)
-  .setFooter(`https://pogy.xyz`));
+  .setFooter(`https://sodachan.tk/`));
 }
               
-              message.channel.send("__**Finally Pick:**__\n\n`1` - React adds the role, unreacting removes the role\n`2`- Reacting will give the role but unreaction won't remove the role\n`3` - Reacting will remove the user's role and unreacting won't give it back\n`4` - When reacting it will remove the role, unreacting will add the role\n`5` - Same concept as number 3 but removes the user's reaction\n`6` - React to recieve the role and react again to remove the role").then(() => {
+              message.channel.send("__**Cuối cùng chọn:**__\n\n`1` - React thêm vai trò, việc không thực hiện sẽ xóa vai trò\n`2`- Phản ứng sẽ mang lại vai trò nhưng không phản ứng sẽ không loại bỏ vai trò\n`3` - Phản ứng sẽ xóa vai trò của người dùng và không phản ứng sẽ không trả lại vai trò đó\n`4` - Khi phản ứng, nó sẽ xóa vai trò, không phản ứng sẽ thêm vai trò\n`5` - Khái niệm tương tự như số 3 nhưng loại bỏ phản ứng của người dùng\n`6` - Phản ứng để nhận vai trò và phản ứng lại để xóa vai trò").then(() => {
               message.channel.awaitMessages(filter, { max: 1, time: 60000, errors: ["time"] }).then(collected4 => {
                 let option = collected4.first().content
                 let numbers = ["1", "2", "3", "4", "5", "6"]
-                if(!numbers.includes(option)) return message.channel.send("You must specify between 1, 2, 3, 4 or 5")
+                if(!numbers.includes(option)) return message.channel.send("Bạn phải chỉ định giữa 1, 2, 3, 4 hoặc 5")
                 
                 message.channel.send(new MessageEmbed()
-                .setAuthor('Reaction Roles - Setup Done', message.guild.iconURL(),messageID.url)
+                .setAuthor('Vai trò phản ứng - Thiết lập xong', message.guild.iconURL(),messageID.url)
                 .setColor(client.color.green)
-                .addField('Channel', channelToSend, true)
+                .addField('Kênh', channelToSend, true)
                 .addField('Emoji', emoji, true)
-                .addField('Type', option, true)
-                .addField('Message ID', ID, true)
-                .addField('Message', `[Jump To Message](${messageID.url})`, true)
-                .addField('Role', role, true)
-                .setFooter('https://pogy.xyz')
+                .addField('Thể loại', option, true)
+                .addField('ID tin nhắn', ID, true)
+                .addField('Tin nhắn', `[Chuyển đến tin nhắn](${messageID.url})`, true)
+                .addField('Vai trò', role, true)
+                .setFooter('https://sodachan.tk/')
                 ).then(async () => {
                   messageID.react(emoji)
                   

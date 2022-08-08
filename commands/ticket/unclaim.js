@@ -7,9 +7,10 @@ module.exports = class extends Command {
   constructor(...args) {
     super(...args, {
       name: "unclaim",
-      description: "Unclaim a ticket so another ticket support or staff claims it again",
+      description: "Hủy xác nhận một vé để nhân viên hoặc nhân viên hỗ trợ vé khác yêu cầu lại",
       aliases: [],
       cooldown: 3,
+	  disabled: true,
       usage: ' ',
       category: 'Tickets'
     })

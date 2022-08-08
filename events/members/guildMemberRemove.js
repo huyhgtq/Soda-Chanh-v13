@@ -1,7 +1,6 @@
 const Event = require('../../structures/Event');
 const logger = require('../../utils/logger');
 const Guild = require('../../database/schemas/Guild');
-const Canvas = require('canvas');
 const { MessageAttachment } = require('discord.js');
 const discord = require("discord.js");
 const moment = require('moment');
@@ -37,14 +36,14 @@ if(color == "#000000") color = member.client.color.red;
 
 
     const embed = new discord.MessageEmbed()
-      .setTitle(':outbox_tray: Member Left')
+      .setTitle('Thành viên đã rời')
       .setAuthor(`${member.guild.name}`, member.guild.iconURL({ dynamic: true }))
       .setThumbnail(member.user.displayAvatarURL({ dynamic: true }))
       .setDescription(`${member} (**${member.user.tag}**)`)
-      .addField('Account created on', moment(member.user.createdAt).format('dddd, MMMM Do YYYY'))
+      .addField('Tài khoản được tạo vào', moment(member.user.createdAt).format('MM-DD-YYYY'))
       .setTimestamp()
       .setColor(member.guild.me.displayHexColor);
-    channelEmbed.send(embed).catch(()=>{})
+    channelEmbed.send({ embeds: [embed] }).catch(()=>{})
 
 
   
@@ -108,7 +107,7 @@ let text = leave.leaveMessage.replace(/{user}/g, `${member}`)
         .replace(/{size}/g, `${member.guild.memberCount}`)
         .replace(/{guild}/g, `${member.guild.name}`)
         .replace(/{member_createdAtAgo}/g, `${moment(member.user.createdTimestamp).fromNow()}`)
-        .replace(/{member_createdAt}/g, `${moment(member.user.createdAt).format('MMMM Do YYYY, h:mm:ss a')}`)
+        .replace(/{member_createdAt}/g, `${moment(member.user.createdAt).format('MM-DD-YYYY')}`)
         
         if(leave.leaveEmbed == "false") {
         member.send(`${text}`).catch(() => {})
@@ -135,7 +134,7 @@ let text = leave.leaveMessage.replace(/{user}/g, `${member}`)
         .replace(/{size}/g, `${member.guild.memberCount}`)
         .replace(/{guild}/g, `${member.guild.name}`)
         .replace(/{member_createdAtAgo}/g, `${moment(member.user.createdTimestamp).fromNow()}`)
-        .replace(/{member_createdAt}/g, `${moment(member.user.createdAt).format('MMMM Do YYYY, h:mm:ss a')}`)
+        .replace(/{member_createdAt}/g, `${moment(member.user.createdAt).format('MM-DD-YYYY')}`)
 
           if(textEmbed !== null) embed.setDescription(textEmbed)
           
@@ -191,7 +190,7 @@ let text = leave.leaveMessage.replace(/{user}/g, `${member}`)
         .replace(/{size}/g, `${member.guild.memberCount}`)
         .replace(/{guild}/g, `${member.guild.name}`)
         .replace(/{member_createdAtAgo}/g, `${moment(member.user.createdTimestamp).fromNow()}`)
-        .replace(/{member_createdAt}/g, `${moment(member.user.createdAt).format('MMMM Do YYYY, h:mm:ss a')}`)
+        .replace(/{member_createdAt}/g, `${moment(member.user.createdAt).format('MM-DD-YYYY')}`)
         
         if(leave.leaveEmbed == "false") {
         greetChannel.send(`${text}`).catch(() => {})
@@ -218,7 +217,7 @@ let text = leave.leaveMessage.replace(/{user}/g, `${member}`)
         .replace(/{size}/g, `${member.guild.memberCount}`)
         .replace(/{guild}/g, `${member.guild.name}`)
         .replace(/{member_createdAtAgo}/g, `${moment(member.user.createdTimestamp).fromNow()}`)
-        .replace(/{member_createdAt}/g, `${moment(member.user.createdAt).format('MMMM Do YYYY, h:mm:ss a')}`)
+        .replace(/{member_createdAt}/g, `${moment(member.user.createdAt).format('MM-DD-YYYY')}`)
 
           if(textEmbed !== null) embed.setDescription(textEmbed)
           
@@ -254,7 +253,7 @@ let text = leave.leaveMessage.replace(/{user}/g, `${member}`)
           if(thumbnail === "{userAvatar}") thumbnail = member.user.displayAvatarURL({ dynamic: true, size: 512 })
           if(thumbnail !== null) embed.setThumbnail(thumbnail)
           
-          greetChannel.send(embed).catch(()=>{})
+          greetChannel.send({ embeds: [embed] }).catch(()=>{})
         }
       }
     }

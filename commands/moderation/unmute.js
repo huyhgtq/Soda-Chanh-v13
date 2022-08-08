@@ -12,10 +12,10 @@ module.exports = class extends Command {
       super(...args, {
         name: 'unmute',
         aliases: [ 'unm','um' ],
-        description: 'UnMute the specified user from the guild',
+        description: 'Bỏ tắt tiếng người dùng được chỉ định khỏi máy chủ',
         category: 'Moderation',
         usage: '<user> [reason]',
-        examples: [ 'unmute @Peter ' ],
+        examples: [ 'unmute @Yuunya ' ],
         guildOnly: true,
         botPermission: ['MANAGE_ROLES'],
         userPermission: ['MANAGE_ROLES'],
@@ -41,7 +41,7 @@ module.exports = class extends Command {
                 .then(result => console.log(result))
                 .catch(err => console.error(err));
 
-                return message.channel.send('This server was not in our database! We have added it, please retype this command.').then(m => m.delete({timeout: 10000}));
+                return message.reply('Máy chủ này không có trong cơ sở dữ liệu của chúng tôi! Chúng tôi đã thêm nó, vui lòng nhập lại lệnh này.').then(m => m.delete({timeout: 10000}));
             }
         });
   
@@ -56,14 +56,14 @@ module.exports = class extends Command {
 const muteRole = message.guild.roles.cache.find(r => r.name == 'Muted')
 
  if (!mentionedMember) {
-  return message.channel.send(new Discord.MessageEmbed()
+  return message.reply({ embeds: [new Discord.MessageEmbed()
       .setDescription(`${client.emoji.fail} | ${language.unmuteNoUser}`)
-      .setColor(client.color.red))
+      .setColor(client.color.red)]})
 }
 else if (!muteRole) {
-  return message.channel.send(new Discord.MessageEmbed()
+  return message.reply({ embeds: [new Discord.MessageEmbed()
       .setDescription(`${client.emoji.fail} | ${language.unmuteNoMutedRole}`)
-      .setColor(client.color.red))
+      .setColor(client.color.red)]})
 }
 
 const muteDoc = await muteModel.findOne({
@@ -72,22 +72,22 @@ const muteDoc = await muteModel.findOne({
 })
 
 if (!muteDoc) {
-  return message.channel.send(new Discord.MessageEmbed()
+  return message.reply({ embeds: [new Discord.MessageEmbed()
       .setDescription(`${client.emoji.fail} | ${language.unmuteNotMuted}`)
-      .setColor(client.color.red))
+      .setColor(client.color.red)]})
 }
 else if (mentionedMember.roles.highest.potision >= message.guild.me.roles.highest.potision) {
-  return message.channel.send(new Discord.MessageEmbed()
+  return message.reply({ embeds: [new Discord.MessageEmbed()
       .setDescription(`${client.emoji.fail} | ${language.unmuteUserRoleHigher}`)
-      .setColor(client.color.red))
+      .setColor(client.color.red)]})
 }
 else if (muteRole.potision >= message.guild.me.roles.highest.potision) {
-  return message.channel.send(new Discord.MessageEmbed()
+  return message.reply({ embeds: [new Discord.MessageEmbed()
       .setDescription(`${client.emoji.fail} | ${language.unmuteRolePosition}`)
-      .setColor(client.color.red))
+      .setColor(client.color.red)]})
 }
 
-mentionedMember.roles.remove(muteRole.id, [`UnMute Command / Responsible User: ${message.author.tag}`]).catch(()=>{})
+mentionedMember.roles.remove(muteRole.id, [`Lệnh tắt tiếng / Người dùng có trách nhiệm: ${message.author.tag}`]).catch(()=>{})
 
 /*for (const role of muteDoc.memberRoles) {
   mentionedMember.roles.add(role).catch(err => console.log(err))
@@ -102,7 +102,7 @@ let delaynumber = 2000;
     for (const role of muteDoc.memberRoles) {
  const roleM = await message.guild.roles.cache.get(role);
 if(roleM){
- await mentionedMember.roles.add(roleM, [`Unmute Command / Responsible user: ${message.author.tag}`]).catch(()=>{})
+ await mentionedMember.roles.add(roleM, [`Bật tiếng lệnh / Người dùng có trách nhiệm: ${message.author.tag}`]).catch(()=>{})
  
  await delay(delaynumber);
 }
@@ -114,7 +114,7 @@ await muteDoc.deleteOne()
 
 const reason = args.slice(1).join(' ') || language.unbanNoReason
 
-    message.channel.send(new Discord.MessageEmbed().setColor(message.client.color.green).setDescription(`${message.client.emoji.success} | Unmuted **${mentionedMember.user.tag}** ${logging && logging.moderation.include_reason === "true" ?`\n\n**Reason:** ${reason}`:``}`)).then(async(s)=>{
+    message.reply({ embeds: [new Discord.MessageEmbed().setColor(message.client.color.green).setDescription(`${message.client.emoji.success} | Bỏ tắt tiếng **${mentionedMember.user.tag}** ${logging && logging.moderation.include_reason === "true" ?`\n\n**Lý do:** ${reason}`:``}`)]}).then(async(s)=>{
           if(logging && logging.moderation.delete_reply === "true"){
             setTimeout(()=>{
             s.delete().catch(()=>{})
@@ -145,14 +145,14 @@ let logcase = logging.moderation.caseN
 if(!logcase) logcase = `1`
 
 const logEmbed = new MessageEmbed()
-.setAuthor(`Action: \`UnMute\` | ${mentionedMember.user.tag} | Case #${logcase}`, mentionedMember.user.displayAvatarURL({ format: 'png' }))
-.addField('User', mentionedMember, true)
-.addField('Moderator', message.member, true)
+.setAuthor(`Hoạt động: \`UnMute\` | ${mentionedMember.user.tag} | Trường hợp #${logcase}`, mentionedMember.user.displayAvatarURL({ format: 'png' }))
+.addField('Người dùng', mentionedMember, true)
+.addField('Người điều hành', message.member, true)
 .setFooter(`ID: ${mentionedMember.id}`)
 .setTimestamp()
 .setColor(color)
 
-channel.send(logEmbed).catch(()=>{})
+channel.send({ embeds: [logEmbed]}).catch(()=>{})
 
 logging.moderation.caseN = logcase + 1
 await logging.save().catch(()=>{})

@@ -8,7 +8,7 @@ module.exports = class extends Command {
       super(...args, {
         name: 'setlanguage',
         aliases: [ 'setlang', 'lang' ],
-        description: 'Set a guild language',
+        description: 'Đặt lại ngôn ngữ bot cho máy chủ ',
         category: 'Config',
         guildOnly: true,
         userPermission: ['MANAGE_GUILD'],
@@ -25,16 +25,22 @@ module.exports = class extends Command {
           
 
           
-          let languages = ["english", "french", "spanish"]
-          
-          if(!args[0]) return message.channel.send(new discord.MessageEmbed().setColor(message.client.color.red).setDescription(`${message.client.emoji.fail} | ${language.setLangMissingArgument}`))
-          
-          
+          let languages = ["english", "french", "spanish", "vietnamese"]
           let setLangInvalidOption = language.setLangInvalidOption.replace("{languages}", languages.join(", "))
-          if(!languages.includes(args[0].toLowerCase())) return message.channel.send(new discord.MessageEmbed().setColor(message.client.color.red).setDescription(`${message.client.emoji.fail} | ${setLangInvalidOption}`))
+          if(!args[0]) return message.reply({ embeds: [new discord.MessageEmbed()
+												   .setColor(message.client.color.red)
+												   .setDescription(`${message.client.emoji.fail} | ${language.setLangMissingArgument} **${languages}**`)]})
+          
+          
+          
+          if(!languages.includes(args[0].toLowerCase())) return message.reply({ embeds: [new discord.MessageEmbed()
+																					 .setColor(message.client.color.red)
+																					 .setDescription(`${message.client.emoji.fail} | ${setLangInvalidOption}`)]})
           
           let setLangChange = language.setLangChange.replace("{language}", args[0].toLowerCase())
-          message.channel.send(new discord.MessageEmbed().setColor(message.client.color.green).setDescription(`${message.client.emoji.success} | ${setLangChange}`))
+         message.reply({ embeds: [new discord.MessageEmbed()
+							   .setColor(message.client.color.green)
+							   .setDescription(`${message.client.emoji.success} | ${setLangChange}`)]})
           
           await guildDB.updateOne({
                     language: args[0].toLowerCase()

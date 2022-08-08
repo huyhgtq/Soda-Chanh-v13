@@ -11,7 +11,7 @@ module.exports = class extends Command {
       super(...args, {
         name: 'rrwipe',
         aliases: ["reactionrolewipe", "reactionroleswipe"],
-        description: 'Wipe all reaction Roles from the current guild',
+        description: 'Xóa tất cả các trò chơi Vai trò phản hồi từ máy chủ hiện tại',
         category: 'Reaction Role',
         cooldown: 3,
         userPermission: ['MANAGE_GUILD'],
@@ -58,8 +58,8 @@ if (resultsHeheLol === '0' || !results || !results.length){
 let wipeEmbed3 = new MessageEmbed()
 .setColor(message.client.color.green)
 .setAuthor(message.author.tag, message.author.displayAvatarURL())
-.setDescription(`The Current Guild has no Existing Reaction Roles!`)
-.setFooter(`https://pogy.xyz`)
+.setDescription(`Máy chủ hiện tại không có Vai trò phản ứng hiện tại!`)
+.setFooter(`https://sodachan.tk/`)
 
 message.channel.send(wipeEmbed3)
 
@@ -69,8 +69,8 @@ message.channel.send(wipeEmbed3)
 let wipeEmbed = new MessageEmbed()
 .setColor(message.client.color.green)
 .setAuthor(message.author.tag, message.author.displayAvatarURL())
-.setDescription(`Successfuly deleted **${results.length}** ${resultsHehe}`)
-.setFooter(`https://pogy.xyz`)
+.setDescription(`Đã xóa thành công **${results.length}** ${resultsHehe}`)
+.setFooter(`https://sodachan.tk/`)
 
 
 message.channel.send(wipeEmbed)

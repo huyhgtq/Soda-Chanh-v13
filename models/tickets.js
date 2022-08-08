@@ -25,7 +25,7 @@ let ticketSchema = mongoose.Schema({
   ticketEmbedColor: {type: String, default: `#000000`},
   ticketTitle: {type: String, default: `Server Tickets`},
   ticketDescription: {type: String, default: `Please react with 🎫 to open a ticket!`},
-  ticketFooter: {type: String, default: `Powered by Pogy.xyz`},
+  ticketFooter: {type: String, default: `Powered by SodaChan.tk`},
   ticketReaction: {type: String, default: `🎫`},
   ticketWelcomeColor: {type: String, default: `#000000`},
   requireReason: {type: String, default: true},

@@ -10,7 +10,7 @@ module.exports = class extends Command {
       super(...args, {
         name: 'permissions',
         aliases: ['perms'],
-        description: `Shows a user's permissions`,
+        description: `Hiển thị quyền của người dùng`,
         category: 'Information',
         cooldown: 3
       });
@@ -31,12 +31,12 @@ module.exports = class extends Command {
     }
 
     const embed = new MessageEmbed()
-      .setTitle(`${member.displayName}'s Permissions`)
+      .setTitle(`Quyền của bạn ${member.displayName}'s`)
       .setDescription(`\`\`\`diff\n${finalPermissions.join('\n')}\`\`\``)
       .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
-    message.channel.send(embed);
+    message.reply({ embeds: [embed]})
   }
 
 }

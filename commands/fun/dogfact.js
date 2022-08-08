@@ -23,7 +23,7 @@ module.exports = class extends Command {
         .setFooter(`/dog-api.kinduff/api/fact`)
         .setTimestamp()
         .setColor(message.client.color.blue);
-      message.channel.send(embed).catch(() => {});
+      message.reply({ embeds: [embed]}).catch(() => {});
 
     }
 };

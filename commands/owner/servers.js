@@ -13,7 +13,7 @@ module.exports = class extends Command {
     }
 
     async run(message) {
-     
+     const client = message.client
     const servers = message.client.guilds.cache.array().map(guild => {
       return `\`${guild.id}\` - **${guild.name}** - \`${guild.memberCount}\` members`;
     });

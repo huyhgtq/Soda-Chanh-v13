@@ -55,7 +55,7 @@ module.exports = class extends Command {
     constructor(...args) {
       super(...args, {
         name: 'pickupline',
-        description: 'Generate some pickuplines!',
+        description: 'Tạo một số đường cho bạn!',
         category: 'Fun',
         cooldown: 3
       });
@@ -67,6 +67,6 @@ module.exports = class extends Command {
         const embed = new MessageEmbed()
                     .setDescription(line[Math.round(Math.random() * (line.length - 1))])
                     .setColor(message.client.color.pink);
-                return message.channel.send({ embed }).catch(() => {});
+                return message.reply({ embeds: [embed] }).catch(() => {});
     }
 };

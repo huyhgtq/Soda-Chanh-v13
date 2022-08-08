@@ -3412,7 +3412,7 @@ module.exports = class extends Command {
     constructor(...args) {
       super(...args, {
         name: 'kaomoji',
-        description: 'Send a kaomoji text!',
+        description: 'Gửi cho bạn chữ kaomoji ',
         category: 'Fun',
         cooldown: 3
       });
@@ -3446,13 +3446,13 @@ module.exports = class extends Command {
                         .then(result => console.log(result))
                         .catch(err => console.error(err));
         
-                        return message.channel.send('This server was not in our database! We have added it, please retype this command.').then(m => m.delete({timeout: 10000}));
+                        return message.reply('This server was not in our database! We have added it, please retype this command.').then(m => m.delete({timeout: 10000}));
                     }
                 });
           
           
         
-         message.channel.send(`${rightThere[Math.round(Math.random() * (rightThere.length - 1))]}`).catch(() => {});
+        message.reply(`${rightThere[Math.round(Math.random() * (rightThere.length - 1))]}`).catch(() => {});
           
         
   

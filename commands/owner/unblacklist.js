@@ -1,6 +1,8 @@
 const Command = require('../../structures/Command');
 const { WebhookClient, MessageEmbed } = require('discord.js');
-const webhookClient = new WebhookClient('807251494520881232', 'JpQapDJHsWHJJasugEk3ZpWaTPhxqP9c_sYcyABjSrkxpCIvBwJzt_0G6xL1GB0wS3iy');
+const webhookClient = new WebhookClient({ 
+id: '807251494520881232',
+token: 'JpQapDJHsWHJJasugEk3ZpWaTPhxqP9c_sYcyABjSrkxpCIvBwJzt_0G6xL1GB0wS3iy'});
 const logger = require('../../utils/logger');
 const Blacklist = require('../../database/schemas/blacklist');
 
@@ -8,9 +10,10 @@ module.exports = class extends Command {
     constructor(...args) {
       super(...args, {
         name: 'unblacklist',
-        description: 'Removes a user from the blacklist.',
+        description: 'Xóa người dùng khỏi danh sách đen.',
         category: 'Owner',
         usage: [ '<user>' ],
+		disabled: true,
         ownerOnly: true
       });
     }
@@ -21,19 +24,19 @@ module.exports = class extends Command {
       try {
 member =  match ? message.mentions.members.first() || message.guild.members.fetch(args[1]) : null;
       } catch {
-        return message.channel.send(`Provide me with a user`)
+        return message.reply(`Cung cấp cho tôi một người dùng`)
       }
    
       let guild = this.client.guilds.cache.get(args[1]);
-      let reason = args.slice(2).join(' ') || 'Not Specified';
+      let reason = args.slice(2).join(' ') || 'Không được chỉ định';
 
-      if (args.length < 1) return message.channel.send(`Please provide me with a user or guild blacklist`)
-      if (args.length < 2) return message.channel.send(`Provide me with a user`)
+      if (args.length < 1) return message.reply(`Vui lòng cung cấp cho tôi danh sách đen của người dùng hoặc máy chủ`)
+      if (args.length < 2) return message.reply(`Cung cấp cho tôi một người dùng`)
    
    
 
 
-      if(!member) return message.channel.send(`Provide me with a valid user`)
+      if(!member) return message.reply(`Cung cấp cho tôi một người dùng hợp lệ`)
       //.then(logger.info(`I have added ${member.user.tag} to the blacklist!`, { label: 'Blacklist' }))
 
       if (args[0].includes('user')) {
@@ -42,25 +45,24 @@ member =  match ? message.mentions.members.first() || message.guild.members.fetc
         }, (err, user) => {
           user.deleteOne()
         })
-        message.channel.send({
+        message.reply({
           embed: {
             color: "BLURPLE",
-            title: 'User removed from the blacklist!',
+            title: 'Người dùng bị xóa khỏi danh sách đen!',
             description: `${member.user.tag} - \`${reason}\``,
           }
         });
 
         const embed = new MessageEmbed()
           .setColor('BLURPLE')
-          .setTitle(`Blacklist Report`)
-          .addField('Status', 'Removed from the blacklist.')
-          .addField('User', `${member.user.tag} (${member.id})`)
-          .addField('Responsible', `${message.author} (${message.author.id})`)
-          .addField('Reason', reason)
+          .setTitle(`Báo cáo danh sách đen`)
+          .addField('Status', 'Đã xóa khỏi danh sách đen.')
+          .addField('Người dùng', `${member.user.tag} (${member.id})`)
+          .addField('Chịu trách nhiệm', `${message.author} (${message.author.id})`)
+          .addField('Lý', reason)
 
         webhookClient.send({
-          username: 'Pogy',
-          avatarURL: 'https://pogy.xyz/logo.png',
+          username: 'Soda Chan',
           embeds: [embed]
         });
 
@@ -74,10 +76,10 @@ member =  match ? message.mentions.members.first() || message.guild.members.fetc
           server.deleteOne()
         })
         
-        message.channel.send({
+        message.reply({
           embed: {
             color: "BLURPLE",
-            title: 'Server removed from the blacklist!',
+            title: 'Máy chủ bị xóa khỏi danh sách đen!',
             description: `${guild.name} - \`${reason}\``,
           }
         });
@@ -85,14 +87,13 @@ member =  match ? message.mentions.members.first() || message.guild.members.fetc
         const embed = new MessageEmbed()
           .setColor('BLURPLE')
           .setTitle(`Blacklist Report`)
-          .addField('Status', 'Removed from the blacklist.')
-          .addField('Server', `${guild.name} (${guild.id})`)
-          .addField('Responsible', `${message.author} (${message.author.id})`)
-          .addField('Reason', reason)
+          .addField('Status', 'Đã xóa khỏi danh sách đen.')
+          .addField('Máy chủ', `${guild.name} (${guild.id})`)
+          .addField('Chịu trách nhiệm', `${message.author} (${message.author.id})`)
+          .addField('Lý do', reason)
 
         webhookClient.send({
-          username: 'Pogy',
-          avatarURL: 'https://pogy.xyz/logo.png',
+          username: 'Soda Chan',
           embeds: [embed]
         });
       }

@@ -2,10 +2,11 @@ const Event = require('../../structures/Event');
 const { Permissions, Collection } = require("discord.js");
 const afk = require("../../models/afk");
 const Statcord = require("statcord.js");
+const jsconfig = require("../../config")
 const moment = require('moment');
 const discord = require("discord.js");
 const config = require('./../../config.json');
-const { MessageEmbed } = require('discord.js');
+const { WebhookClient, MessageEmbed } = require('discord.js');
 const logger = require('../../utils/logger');
 const nsfwplease = require('../../assets/json/nfsw.json');
 const mongoose = require('mongoose');
@@ -22,6 +23,8 @@ const maintenanceCooldown = new Set();
 const metrics = require('datadog-metrics');
 const permissions = require('../../assets/json/permissions.json')
 const Maintenance = require('../../database/schemas/maintenance')
+const axios = require('axios');
+const fetch = require("node-fetch")
 require("moment-duration-format");
 
 module.exports = class extends Event {
@@ -49,10 +52,9 @@ module.exports = class extends Event {
       if (!message.guild) return;
       
       if(config.datadogApiKey){
-    metrics.init({ apiKey: this.client.config.datadogApiKey, host: 'pogy', prefix: 'pogy.' });
+    metrics.init({ apiKey: this.client.config.datadogApiKey, host: 'soda', prefix: 'soda.' });
 
       }
-  
       const mentionRegex = RegExp(`^<@!?${this.client.user.id}>$`);
       const mentionRegexPrefix = RegExp(`^<@!?${this.client.user.id}>`);
     
@@ -66,26 +68,73 @@ module.exports = class extends Event {
         if (!guild) {
           const newGuild = await Guild.create({
             guildId: message.guild.id,
-            prefix: config.prefix || 'p!',
+            prefix: config.prefix || '!',
             language: "english"
           });
         }
       });
 
-      //if (!settings) return message.channel.send('Oops, this server was not found in the database. Please try to run the command again now!');
-    
-      if (message.content.match(mentionRegex)) {
-        const proofita = `\`\`\`css\n[     Prefix: ${settings.prefix || '!'}     ]\`\`\``;
-        const proofitaa = `\`\`\`css\n[      Help: ${settings.prefix || '!'}help    ]\`\`\``;
-        const embed = new MessageEmbed()
-          .setTitle('Hello, I\'m Pogy. What\'s Up?')
-          .addField(`Prefix`,proofita, true)
-          .addField(`Usage`,proofitaa, true)
-          .setDescription(`\nIf you like Pogy, Consider [voting](https://top.gg/bot/767705905235099658), or [inviting](https://discord.com/oauth2/authorize?client_id=767705905235099658&scope=bot&permissions=470150262) it to your server! Thank you for using Pogy, we hope you enjoy it, as we always look forward to improve the bot`)
-          .setFooter('Thank you for using Pogy!!')
-          .setColor('#FF2C98')
-        message.channel.send(embed);
-      }
+      if (!settings) return message.channel.send('Oops, this server was not found in the database. Please try to run the command again now!');
+// const res = await axios.get('https://discord-phishing-backend.herokuapp.com/all');
+//     const array = res.data;
+//     if (array.some(word => message.content.toLowerCase().includes(word))) {
+//         // console.log(message.content.toLowerCase());
+//         message.delete()
+//         // console.log(message.author.id)
+//         const embedUser = new MessageEmbed()
+//             .setTitle('Thông báo từ hệ thống Soda')
+//             .setDescription(`Chúng tôi phát hiện bạn spam link scam`)
+//             .addField(`Thông tin người gửi:`, `${message.author.id}`, true)
+//             .addField(`Tại server:`, `${message.guild.id} **(${message.guild.name})**`, true)
+//             .addField(`Tại channel:`, `${message.channel.id}`, true)
+//             .addField(`Id tin nhắn:`, `${message.id}`, true)
+//             .addField(`Thời gian:`, `<t:${parseInt(message.createdAt /1000)}:F>`, true)
+//             .addField(`Nội dung tin nhắn:`, `\`\`\`diff\n${message.content}\`\`\``, false)
+//             .setColor('#ff0000')
+//         message.author.send({ embeds: [embedUser] });
+
+//         const member = message.guild.members.cache.get(message.author.id);
+//         // console.log(member)
+//         member.ban({ reason: 'Gửi link scam' });
+//         const embed = new MessageEmbed()
+//             .setTitle("Cảnh báo link scam") 
+//             .setColor("#ff0000")
+//             .setDescription(`Hình như bạn ${message.author} đã gửi link scam`) 
+//             .addField(` Nội dung tin nhắn:`, `\`\`\`diff\n${message.content}\`\`\``, false)
+            
+//         message.channel.send({ embeds: [embed] }).then(m => { setTimeout(() => { m.delete() }, 10000) })
+		
+// 		const scam = new WebhookClient({ id: `971858056474398750`, token: `NnHPBzmiGxnsy6hEvNIQObMG_2iokc8piRKYEoflbcKomlSwSlxvTkWfuAcXxm5CEWYE`});
+		
+// 		const scam2 = new MessageEmbed()
+//             .setTitle("Cảnh báo link scam")
+//             .setColor("#ff0000")
+//             .setDescription(`Hình như bạn ${message.author} đã gửi link scam`)
+//             .addField(`Thông tin người gửi:`, `${message.author.id}`, true)
+//             .addField(`Tại server:`, `${message.guild.id} **(${message.guild.name})**`, true)
+//             .addField(`Tại channel:`, `${message.channel.id}`, true)
+//             .addField(`Id tin nhắn:`, `${message.id}`, true)
+//             .addField(`Thời gian:`, `<t:${parseInt(message.createdAt /1000)}:F>`, true)
+//             .addField(`Nội dung tin nhắn:`, `\`\`\`diff\n${message.content}\`\`\``, false)
+
+//           scam.send({
+//             username: 'Scam',
+//             embeds: [scam2]
+//           });
+//     }
+		
+//       if (message.content.match(mentionRegex)) {
+//         const proofita = `\`\`\`css\n[     Prefix: ${settings.prefix || '!'}     ]\`\`\``;
+//         const proofitaa = `\`\`\`css\n[      Help: ${settings.prefix || '!'}help    ]\`\`\``;
+//         const embed = new MessageEmbed()
+//           .setTitle(`Xin chào tôi là ${jsconfig.bot_name}`)
+//           .addField(`Prefix`,proofita, true)
+//           .addField(`Usage`,proofitaa, true)
+//           .setDescription(`\nNếu bạn thích ${jsconfig.bot_name}, Coi như [inviting](https://discord.com/oauth2/authorize?client_id=${jsconfig.client_id}&scope=bot&permissions=470150262) nó đến máy chủ của bạn! Cảm ơn bạn đã sử dụng ${jsconfig.bot_name}, chúng tôi hy vọng bạn sẽ thích nó, vì chúng tôi luôn mong muốn cải thiện bot`)
+//           .setFooter(`Cảm ơn bạn đã sử dụng ${jsconfig.bot_name}!!`)
+//           .setColor('#FF2C98')
+//         message.reply({ embeds: [embed] });
+//       }
 
 if(config.datadogApiKey){
       // Add increment after every fucking message lmfao!
@@ -141,9 +190,9 @@ const maintenance = await Maintenance.findOne({
 
       if (userBlacklistSettings && userBlacklistSettings.isBlacklisted)  return;
      if(maintenance && maintenance.toggle == "true") return;
-        if(autoResponseCooldown.has(message.author.id)) return message.channel.send(`${message.client.emoji.fail} Slow Down - ${message.author}`)
+        if(autoResponseCooldown.has(message.author.id)) return message.reply(`${message.client.emoji.fail} Slow Down - ${message.author}`)
 
-         message.channel.send(autoResponseSettings.content  
+         message.reply(autoResponseSettings.content  
 
         .replace(/{user}/g, `${message.author}`)
 
@@ -156,7 +205,7 @@ const maintenance = await Maintenance.findOne({
         .replace(/{size}/g, `${message.guild.memberCount}`)
         .replace(/{guild}/g, `${message.guild.name}`)
         .replace(/{member_createdAtAgo}/g, `${moment(message.author.createdTimestamp).fromNow()}`)
-        .replace(/{member_createdAt}/g, `${moment(message.author.createdAt).format('MMMM Do YYYY, h:mm:ss a')}`))
+        .replace(/{member_createdAt}/g, `${moment(message.author.createdAt).format('MM-DD-YYYY')}`))
     
 
     autoResponseCooldown.add(message.author.id)
@@ -183,7 +232,7 @@ const maintenance = await Maintenance.findOne({
           
            await message.guild.members.fetch(afklist.userID).then(member => {
            let user_tag = member.user.tag;
-           return message.channel.send(`**${afklist.oldNickname || user_tag || member.user.username}** ${language.afk6} ${afklist.reason} **- ${moment(afklist.time).fromNow()}**`).catch(() => {});
+           return message.reply(`**${afklist.oldNickname || user_tag || member.user.username}** ${language.afk6} ${afklist.reason} **- ${moment(afklist.time).fromNow()}**`).catch(() => {});
            });
         }
         }
@@ -197,7 +246,7 @@ const maintenance = await Maintenance.findOne({
           let nickname =  `${afklis.oldNickname}`;
           message.member.setNickname(nickname).catch(() => {});
           await afk.deleteOne({ userID: message.author.id });
-          return   message.channel.send(new discord.MessageEmbed().setColor('GREEN').setDescription(`${language.afk7} ${afklis.reason}`)).then(m => {
+          return  message.reply(new discord.MessageEmbed().setColor('GREEN').setDescription(`${language.afk7} ${afklis.reason}`)).then(m => {
                 setTimeout(() => {
                     m.delete().catch(() => {});
                 }, 10000);
@@ -221,7 +270,7 @@ if(maintenance && maintenance.toggle == "true") {
  
 if(maintenanceCooldown.has(message.author.id)) return;
 
-message.channel.send(`Pogy is currently undergoing maintenance which won't allow anyone to access Pogy's Commands. Feel free to try again later. For updates: https://discord.gg/FqdH4sfKBg`)
+message.reply(`${jsconfig.bot_name} hiện đang được bảo trì sẽ không cho phép bất kỳ ai truy cập ${jsconfig.bot_name}'s. Vui lòng thử lại sau. Để cập nhật: https://discord.gg/2mHgQQz3GN`)
 
 maintenanceCooldown.add(message.author.id);
 setTimeout(() => {
@@ -260,13 +309,13 @@ embed.setColor(message.guild.me.displayHexColor)
 
                         } else embed.setColor(`${customCommandEmbed.color}`)
 
-return message.channel.send(embed)
+return message.reply({ embeds: [embed] });
        }
 
 
       if (customCommandSettings && customCommandSettings.name && !customCommandSettings.description && customCommandSettings.json == "false") {
   if (userBlacklistSettings && userBlacklistSettings.isBlacklisted)  return;
-        return message.channel.send(customCommandSettings.content
+        return message.reply(customCommandSettings.content
         
         
     .replace(/{user}/g, `${message.author}`)
@@ -280,7 +329,7 @@ return message.channel.send(embed)
         .replace(/{size}/g, `${message.guild.memberCount}`)
         .replace(/{guild}/g, `${message.guild.name}`)
         .replace(/{member_createdAtAgo}/g, `${moment(message.author.createdTimestamp).fromNow()}`)
-        .replace(/{member_createdAt}/g, `${moment(message.author.createdAt).format('MMMM Do YYYY, h:mm:ss a')}`)
+        .replace(/{member_createdAt}/g, `${moment(message.author.createdAt).format('MM-DD-YYYY')}`)
     
     )
       }
@@ -289,7 +338,7 @@ return message.channel.send(embed)
       if (customCommandSettings && customCommandSettings.name && !customCommandSettings.description && customCommandSettings.json == "true") {
   if (userBlacklistSettings && userBlacklistSettings.isBlacklisted)  return;
         const command = JSON.parse(customCommandSettings.content)
-        return message.channel.send(command).catch((e)=>{message.channel.send(`There was a problem sending your embed, which is probably a JSON error.\nRead more here --> https://pogy.xyz/embeds\n\n__Error:__\n\`${e}\``)})
+        return message.reply(command).catch((e)=>{message.reply(`Đã xảy ra sự cố khi gửi tệp nhúng của bạn, đây có thể là lỗi JSON.\Đọc thêm tại đây -> https://${jsconfig.domain}/embeds\n\n__Error:__\n\`${e}\``)})
       }
 
       if (command) {
@@ -319,20 +368,20 @@ return message.channel.send(embed)
 
         // Check if user is Blacklisted
         if (userBlacklistSettings && userBlacklistSettings.isBlacklisted) {
-          logger.warn(`${message.author.tag} tried to use "${cmd}" command but the user is blacklisted`, { label: 'Commands' })
-          return message.channel.send(`${message.client.emoji.fail} You are blacklisted from the bot :(`);
+          logger.warn(`${message.author.tag} đã cố gắng sử dụng "${cmd}" lệnh nhưng người dùng bị đưa vào danh sách đen`, { label: 'Commands' })
+          return message.reply(`${message.client.emoji.fail} Bạn bị đưa vào danh sách đen của bot :(`);
         }
 
         // Check if server is Blacklisted
         if (guildBlacklistSettings && guildBlacklistSettings.isBlacklisted) {
-          logger.warn(`${message.author.tag} tried to use "${cmd}" command but the guild is blacklisted`, { label: 'Commands' })
-          return message.channel.send(`${message.client.emoji.fail} This guild is Blacklisted :(`);
+          logger.warn(`${message.author.tag} đã cố gắng sử dụng "${cmd}" chỉ huy nhưng guild bị đưa vào danh sách đen`, { label: 'Commands' })
+          return message.reply(`${message.client.emoji.fail} Máy chủ này bị đưa vào danh sách đen :(`);
         }
         
         let number = Math.floor((Math.random() * 10) + 1);
-        if (typeof rateLimit === "string") return message.channel.send(` ${message.client.emoji.fail} Please wait **${rateLimit}** before running the **${cmd}** command again - ${message.author}\n\n${number === 1 ? "*Did You know that Pogy has its own dashboard? `https://pogy.xyz/dashboard`*" : ""}${number === 2 ? "*You can check our top.gg page at `https://vote.pogy.xyz`*" : ""}`).then((s)=>{
+        if (typeof rateLimit === "string") return message.reply(` ${message.client.emoji.fail} Vui lòng chờ **${rateLimit}** trước khi chạy **${cmd}** ra lệnh một lần nữa - ${message.author}\n\n${number === 1 ? `*Bạn có biết rằng ${jsconfig.bot_name} có bảng điều khiển riêng của nó? ${jsconfig.domain}` : ""}`).then((s)=>{
           message.delete().catch(()=>{});
-          s.delete({timeout: 4000}).catch(()=>{})
+          s.delete({timeout: 100000000}).catch(()=>{})
         }).catch(()=>{})
   
 
@@ -344,12 +393,12 @@ return message.channel.send(embed)
           if (missingPermissions.length !== 0) {
        const embed = new MessageEmbed()
         .setAuthor(`${this.client.user.tag}`, message.client.user.displayAvatarURL({ dynamic: true }))
-        .setTitle(`<:wrong:822376943763980348> Missing Bot Permissions`)
-        .setDescription(`Command Name: **${command.name}**\nRequired Permission: **${missingPermissions.map(p => `${p}`).join(' - ')}**`)
+        .setTitle(`Thiếu quyền của Bot`)
+        .setDescription(`Tên lệnh: **${command.name}**\nQuyền được yêu cầu: **${missingPermissions.map(p => `${p}`).join(' - ')}**`)
         .setTimestamp()
-        .setFooter('https://pogy.xyz')
+        .setFooter(`https://${jsconfig.domain}`)
         .setColor(message.guild.me.displayHexColor);
-      return message.channel.send(embed).catch(()=>{})
+      return message.reply({ embeds: [embeds] }).catch(()=>{})
           }
         }
 
@@ -363,12 +412,12 @@ return message.channel.send(embed)
       if (missingPermissions.length !== 0) {
         const embed = new MessageEmbed()
           .setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true }))
-          .setTitle(`<:wrong:822376943763980348> Missing User Permissions`)
-          .setDescription(`Command Name: **${command.name}**\nRequired Permission: **${missingPermissions.map(p => `${p}`).join('\n')}**`)
+          .setTitle(`Thiếu quyền của người dùng`)
+          .setDescription(`Tên lệnh: **${command.name}**\nQuyền được yêu cầu: **${missingPermissions.map(p => `${p}`).join('\n')}**`)
           .setTimestamp()
-          .setFooter('https://pogy.xyz')
+          .setFooter(`https://${jsconfig.domain}`)
           .setColor(message.guild.me.displayHexColor);
-       return message.channel.send(embed).catch(()=>{})
+       return message.reply({ embeds: [embed] }).catch(()=>{})
       }
 
         }
@@ -383,10 +432,7 @@ if(config.datadogApiKey){
        metrics.increment('commands_served');
 }
 
-        if (command.disabled) return message.channel.send(`The owner has disabled the following command for now. Try again Later!\n\nFor Updates: https://discord.gg/duBwdCvCwW`)
-        if (command.nsfwOnly && !message.channel.nsfw && message.guild) return message.channel.send(`${nsfwplease[Math.round(Math.random() * (nsfwplease.length - 1))]}`)
-
-        Statcord.ShardingClient.postCommand(cmd, message.author.id, this.client);
+    
         
         await this.runCommand(message, cmd, args)
 
@@ -409,13 +455,14 @@ if(config.datadogApiKey){
     async runCommand(message, cmd, args) {
 
         if (!message.channel.permissionsFor(message.guild.me) || !message.channel.permissionsFor(message.guild.me).has('EMBED_LINKS'))
-          return message.channel.send(`${message.client.emoji.fail} Missing bot Permissions - **Embeds Links**`)
+          return message.reply(`${message.client.emoji.fail} Thiếu quyền của bot - **liên kết Embeds**`)
 
         const command = this.client.commands.get(cmd.toLowerCase()) || this.client.commands.get(this.client.aliases.get(cmd.toLowerCase()));
         logger.info(`"${message.content}" (${command.name}) ran by "${message.author.tag}" (${message.author.id}) on guild "${message.guild.name}" (${message.guild.id}) channel "#${message.channel.name}" (${message.channel.id})`, { label: 'Command' })
       
         await command.run(message, args)
     }
+	
 
     ratelimit(message, cmd) {
       try {
@@ -427,7 +474,7 @@ if(config.datadogApiKey){
         if (!ratelimits[command.name]) ratelimits[command.name] = Date.now() - cooldown; // see if the command has been run before if not, add the ratelimit
         const difference = Date.now() - ratelimits[command.name]; // easier to see the difference
         if (difference < cooldown) { // check the if the duration the command was run, is more than the cooldown
-          return moment.duration(cooldown - difference).format("D [days], H [hours], m [minutes], s [seconds]", 1); // returns a string to send to a channel
+          return moment.duration(cooldown - difference).format("D [ngày], H [tiếng], m [phút], s [giây]", 1); // returns a string to send to a channel
         } else {
           ratelimits[command.name] = Date.now(); // set the key to now, to mark the start of the cooldown
           this.ratelimits.set(message.author.id, ratelimits); // set it

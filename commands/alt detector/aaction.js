@@ -11,7 +11,7 @@ module.exports = class extends Command {
       usage: "<ban | kick | none>",
       category: "Alt Detector",
       examples: ["aaction kick"],
-      description: "Pick the action fired towards the alt.",
+      description: "Chọn hành động được kích hoạt đối với Alt.",
       cooldown: 5,
       userPermission: ['MANAGE_GUILD'],
     })
@@ -25,9 +25,11 @@ module.exports = class extends Command {
     
   
   let choices = ["none", "kick", "ban"]
-  if(!args[0]) return message.channel.send(new discord.MessageEmbed().setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ format: 'png' })).setDescription(`${message.client.emoji.fail} ${language.aactionNotValidChoice.replace("{allChoices}", choices.join(", "))}`).setFooter('https://pogy.xyz').setTimestamp().setColor('RED'));
+  if(!args[0]) return message.reply({ embeds: [new discord.MessageEmbed()
+											   .setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ format: 'png' }))
+											   .setDescription(`${message.client.emoji.fail} ${language.aactionNotValidChoice.replace("{allChoices}", choices.join(", "))}`).setFooter('https://sodachan.tk/').setTimestamp().setColor('RED')]});
 
-  if(!choices.includes(args[0].toLowerCase())) return message.channel.send(new discord.MessageEmbed().setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ format: 'png' })).setDescription(`${message.client.emoji.fail} ${language.aactionNotValidChoice.replace("{allChoices}", choices.join(", ") )}`).setFooter('https://pogy.xyz').setTimestamp().setColor('RED'));
+  if(!choices.includes(args[0].toLowerCase())) return message.reply({ embeds: [new discord.MessageEmbed().setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ format: 'png' })).setDescription(`${message.client.emoji.fail} ${language.aactionNotValidChoice.replace("{allChoices}", choices.join(", ") )}`).setFooter('https://sodachan.tk/').setTimestamp().setColor('RED')]});
   
   await alt.findOne({ guildID: message.guild.id }, async (err, db) => {
               if(!db) {
@@ -43,13 +45,21 @@ module.exports = class extends Command {
             
             await newGuild.save()
             .catch(err => { console.log( err ) })
-            return message.channel.send(new discord.MessageEmbed().setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ format: 'png' })).setDescription(`${message.client.emoji.success} ${language.aactionSuccess.replace("{action}", args[0])}`).setFooter('https://pogy.xyz').setTimestamp().setColor('RED'));
+            return message.reply({ embeds: [new discord.MessageEmbed()
+											.setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ format: 'png' }))
+											.setDescription(`${message.client.emoji.success} ${language.aactionSuccess.replace("{action}", args[0])}`)
+											.setFooter('https://sodachan.tk/').setTimestamp().setColor('RED')]});
           }
       await db.updateOne({
         altAction: args[0].toLowerCase()
       })
 
-      return message.channel.send(new discord.MessageEmbed().setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ format: 'png' })).setDescription(`${message.client.emoji.success} ${language.aactionSuccess.replace("{action}", args[0])}`).setFooter('https://pogy.xyz').setTimestamp().setColor('RED'));
+      return message.reply({ embeds: [new discord.MessageEmbed()
+									  .setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ format: 'png' }))
+									  .setDescription(`${message.client.emoji.success} ${language.aactionSuccess.replace("{action}", args[0])}`)
+									  .setFooter('https://sodachan.tk/')
+									  .setTimestamp()
+									  .setColor('RED')]});
     
   })
   }

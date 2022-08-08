@@ -12,10 +12,10 @@ module.exports = class extends Command {
       super(...args, {
         name: 'editreaction',
         aliases: ["editreactionrole", "err"],
-        description: 'Edit the role which a certain reaction give',
+        description: 'Chỉnh sửa vai trò mà một phản ứng nhất định đưa ra',
         category: 'Reaction Role',
         cooldown: 3,
-        usage: '<channel> <messageID> <newRoleID> <emoji>',
+        usage: '<Kênh> <ID tin nhắn> <ID vai trò mới> <emoji>',
         userPermission: ['MANAGE_GUILD'],
       });
     }
@@ -33,30 +33,30 @@ module.exports = class extends Command {
       let fail = message.client.emoji.fail
       let success = message.client.emoji.success
   const missingPermEmbed = new MessageEmbed()
-  .setAuthor(`Missing User Permissions`, message.author.displayAvatarURL())
-  .setDescription(`${fail} The following command the **Administrator** Permission`)
-  .setFooter(`https://pogy.xyz`)
+  .setAuthor(`Thiếu quyền của người dùng`, message.author.displayAvatarURL())
+  .setDescription(`${fail} Lệnh sau Quyền **Administrator**`)
+  .setFooter(`https://sodachan.tk/`)
    .setColor(client.color.red)
 
 
        let channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[0]) || message.guild.channels.cache.find(ch => ch.name === args[0])
     if (!channel) return message.channel.send(new MessageEmbed()
      .setAuthor(message.author.tag, message.author.displayAvatarURL())
-  .setDescription(`${fail} Provide me with a valid Channel`)
-  .setFooter(`https://pogy.xyz`)
+  .setDescription(`${fail} Cung cấp cho tôi một Kênh hợp lệ`)
+  .setFooter(`https://sodachan.tk/`)
    .setColor(client.color.red)
     );
     
     let ID = args[1]
     if(!ID) return message.channel.send(new MessageEmbed()
      .setAuthor(message.author.tag, message.author.displayAvatarURL())
-  .setDescription(`${fail} Provide me with a valid message ID`)
-  .setFooter(`https://pogy.xyz`)
+  .setDescription(`${fail} Cung cấp cho tôi ID tin nhắn hợp lệ`)
+  .setFooter(`https://sodachan.tk/`)
     );
     let messageID = await channel.messages.fetch(ID).catch(() => { return message.channel.send(new MessageEmbed()
      .setAuthor(message.author.tag, message.author.displayAvatarURL())
-  .setDescription(`${fail} I could not find the following ID`)
-  .setFooter(`https://pogy.xyz`)
+  .setDescription(`${fail} Tôi không thể tìm thấy ID sau`)
+  .setFooter(`https://sodachan.tk/`)
    .setColor(client.color.red)
     ); })
 
@@ -64,13 +64,13 @@ module.exports = class extends Command {
        let role = message.mentions.roles.first() || message.guild.roles.cache.get(args[2]) || message.guild.roles.cache.find(rl => rl.name === args[2])
     if (!role) return message.channel.send(new MessageEmbed()
      .setAuthor(message.author.tag, message.author.displayAvatarURL())
-  .setDescription(`${fail} Provide me with a valid Role`)
-  .setFooter(`https://pogy.xyz`)
+  .setDescription(`${fail} Cung cấp cho tôi một vai trò hợp lệ`)
+  .setFooter(`https://sodachan.tk/`)
    .setColor(client.color.red)
     );
 
         if(role.managed){
-      return message.channel.send(`${message.client.emoji.fail} Please do not use a integration role.`)
+      return message.channel.send(`${message.client.emoji.fail} Vui lòng không sử dụng vai trò tích hợp.`)
     }
 
       
@@ -81,15 +81,15 @@ module.exports = class extends Command {
     await react.reactionEdit(client, message.guild.id , ID, role.id, emoji);
     
                 message.channel.send(new MessageEmbed()
-                .setAuthor('Reaction Roles Edit', message.guild.iconURL(),messageID.url)
+                .setAuthor('Vai trò phản ứng Chỉnh sửa', message.guild.iconURL(),messageID.url)
                 .setColor(client.color.green)
-                .addField('Channel', channel, true)
+                .addField('Kênh', channel, true)
                 .addField('Emoji', emoji, true)
-                .addField('Type', option, true)
-                .addField('Message ID', ID, true)
-                .addField('Message', `[Jump To Message](${messageID.url})`, true)
-                .addField('Role', role, true)
-                .setFooter('https://pogy.xyz'))
+                .addField('Thể loại', option, true)
+                .addField('ID tin nhắn', ID, true)
+                .addField('Tin nhắn', `[Chuyển đến tin nhắn](${messageID.url})`, true)
+                .addField('Vai trò', role, true)
+                .setFooter('https://sodachan.tk/'))
 
 
         function isCustomEmoji(emoji) {

@@ -1,7 +1,10 @@
 const Event = require('../../structures/Event');
 const Discord = require('discord.js');
 const config = require('../../config.json');
-const webhookClient = new Discord.WebhookClient(config.webhook_id, config.webhook_url);
+const webhookClient = new Discord.WebhookClient({ 
+id: `${config.webhook_id}`,
+token: `${config.webhook_url}`});
+
 const fatalCooldown = new Set();
 const uuid = require("uuid");
 const id = uuid.v4();
@@ -10,9 +13,8 @@ module.exports = class extends Event {
 
   async run(error, message, command) {
     console.log(error);
-
 /*
-                  if(message.channel &&
+	  if(message.channel &&
       message.channel.viewable &&
       message.channel.permissionsFor(message.guild.me).has(['SEND_MESSAGES', 'EMBED_LINKS'])){
      if(!fatalCooldown.has(message.channel.id)){
@@ -26,13 +28,13 @@ module.exports = class extends Event {
      }, 100000)
      }
       }
- */
+*/
     const embed = new Discord.MessageEmbed()
     .setColor('GREEN')
-    .setDescription(`**User:** ${message.author} (${message.author.tag} - ${message.author.id})\n**Message:** ${message.content}\n**Error:** ${error}\n**ID:** \`${id}\`\n\n__**Guild Info**__\nName: ${message.guild.name}\nID: ${message.guild.id}\nChannel: ${message.channel.name} (${message.channel.id})`)
+    .setDescription(`**Người sử dụng:** ${message.author} (${message.author.tag} - ${message.author.id})\n**Tin nhắn:** ${message.content}\n**Lỗi:** ${error}\n**ID:** \`${id}\`\n\n__**Thông tin Bang hội**__\nTên: ${message.guild.name}\nID: ${message.guild.id}\nKênh: ${message.channel.name} (${message.channel.id})`)
     .setTimestamp()
 
-    webhookClient.send(embed)
+    webhookClient.send({ embeds: [embed] })
 
   }
 };

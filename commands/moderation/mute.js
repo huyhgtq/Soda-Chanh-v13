@@ -12,10 +12,11 @@ module.exports = class extends Command {
       super(...args, {
         name: 'mute',
         aliases: [ 'm','tempmute' ],
-        description: 'Mute the specified user from the guild',
+        description: 'Tắt tiếng người dùng được chỉ định khỏi guild',
         category: 'Moderation',
         usage: '<user> [time]',
-        examples: [ 'mute @Peter 1h Stop spamming' ],
+        examples: [ 'mute @Yuunya 1h Ngừng gửi thư rác' ],
+		disabled: true,
         guildOnly: true,
         botPermission: ['MANAGE_ROLES', 'MANAGE_CHANNELS'],
         userPermission: ['MANAGE_ROLES'],
@@ -42,7 +43,7 @@ module.exports = class extends Command {
                 .then(result => console.log(result))
                 .catch(err => console.error(err));
 
-                return message.channel.send('This server was not in our database! We have added it, please retype this command.').then(m => m.delete({timeout: 10000}));
+                return message.reply('Máy chủ này không có trong cơ sở dữ liệu của chúng tôi! Chúng tôi đã thêm nó, vui lòng nhập lại lệnh này.').then(m => m.delete({timeout: 10000}));
             }
         });
     const logging = await Logging.findOne({ guildId: message.guild.id })
@@ -57,14 +58,14 @@ module.exports = class extends Command {
     let muteRole = await message.guild.roles.cache.get(logging.moderation.mute_role);
 
      if (!mentionedMember) {
-        return message.channel.send(new Discord.MessageEmbed()
+        return message.reply({ embeds: [new Discord.MessageEmbed()
             .setDescription(`${client.emoji.fail} | ${language.banUserValid}`)
-            .setColor(client.color.red))
+            .setColor(client.color.red)]})
     }
     else if (!msRegex.test(args[1])) {
-        return message.channel.send(new Discord.MessageEmbed()
+        return message.reply({ embeds: [new Discord.MessageEmbed()
             .setDescription(`${client.emoji.fail} | ${language.muteTime}`)
-            .setColor(client.color.red))
+            .setColor(client.color.red)]})
     }
 
     if (!muteRole) {
@@ -80,14 +81,14 @@ module.exports = class extends Command {
     }
 
     if (mentionedMember.roles.highest.position >= message.guild.me.roles.highest.position) {
-        return message.channel.send(new Discord.MessageEmbed()
+        return message.reply({ embeds: [new Discord.MessageEmbed()
             .setDescription(`${client.emoji.fail} | ${language.muteRolePosition}`)
-            .setColor(client.color.red))
+            .setColor(client.color.red)]})
     }
     else if (muteRole.position >= message.guild.me.roles.highest.position) {
-        return message.channel.send(new Discord.MessageEmbed()
+        return message.reply({ embeds: [new Discord.MessageEmbed()
             .setDescription(`${client.emoji.fail} | ${language.muteRolePositionBot}`)
-            .setColor(client.color.red))
+            .setColor(client.color.red)]})
     }
 
     const isMuted = await muteModel.findOne({
@@ -96,9 +97,9 @@ module.exports = class extends Command {
     })
 
     if (isMuted) {
-        return message.channel.send(new Discord.MessageEmbed()
+        return message.reply({ embeds: [new Discord.MessageEmbed()
             .setDescription(`${client.emoji.fail} | ${language.muteMuted}`)
-            .setColor(client.color.red))
+            .setColor(client.color.red)]})
     }
 let reason = args.slice(1).join(' ');
 if (!reason) reason = `${language.noReasonProvided}`;
@@ -107,18 +108,18 @@ if (reason.length > 1024) reason = reason.slice(0, 1021) + '...';
 if(logging && logging.moderation.mute_action && logging.moderation.mute_action !== "1"){
 
   if(logging.moderation.mute_action === "2"){
-dmEmbed = `${message.client.emoji.fail} You've been muted in **${message.guild.name}** for **${msRegex.exec(args[1])[1]}**`
+dmEmbed = `${message.client.emoji.fail} Bạn đã bị tắt tiếng trong **${message.guild.name}** vì **${msRegex.exec(args[1])[1]}**`
   } else if(logging.moderation.mute_action === "3"){
-dmEmbed = `${message.client.emoji.fail} You've been muted in **${message.guild.name} ** for **${msRegex.exec(args[1])[1]}**\n\n__**Reason:**__ ${reason}`
+dmEmbed = `${message.client.emoji.fail} Bạn đã bị tắt tiếng trong **${message.guild.name} ** vì **${msRegex.exec(args[1])[1]}**\n\n__**Lý do:**__ ${reason}`
   } else if(logging.moderation.mute_action === "4"){
-dmEmbed = `${message.client.emoji.fail} You've been muted in **${message.guild.name}** for **${msRegex.exec(args[1])[1]}**\n\n__**Moderator:**__ ${message.author} **(${message.author.tag})**\n__**Reason:**__ ${reason}`
+dmEmbed = `${message.client.emoji.fail} Bạn đã bị tắt tiếng trong **${message.guild.name}** vì **${msRegex.exec(args[1])[1]}**\n\n__**Người điều hành:**__ ${message.author} **(${message.author.tag})**\n__**Lý do:**__ ${reason}`
   }
 
-mentionedMember.send(new MessageEmbed().setColor(message.client.color.red)
+mentionedMember.send({ embeds: [new MessageEmbed().setColor(message.client.color.red)
 .setDescription(dmEmbed)
-).catch(()=>{})
+]}).catch(()=>{})
 }
-    message.channel.send(new Discord.MessageEmbed().setColor(message.client.color.green).setDescription(`${message.client.emoji.success} | Muted **${mentionedMember.user.tag}** for **${msRegex.exec(args[1])[1]}** ${logging && logging.moderation.include_reason === "true" ?`\n\n**Reason:** ${reason}`:``}`)).then(async(s)=>{
+   message.reply({ embeds: [new Discord.MessageEmbed().setColor(message.client.color.green).setDescription(`${message.client.emoji.success} | Đã tắt tiếng **${mentionedMember.user.tag}** vì **${msRegex.exec(args[1])[1]}** ${logging && logging.moderation.include_reason === "true" ?`\n\n**Lý do:** ${reason}`:``}`)]}).then(async(s)=>{
           if(logging && logging.moderation.delete_reply === "true"){
             setTimeout(()=>{
             s.delete().catch(()=>{})
@@ -142,14 +143,14 @@ mentionedMember.send(new MessageEmbed().setColor(message.client.color.red)
     if(logging && logging.moderation.remove_roles === "true"){
     for (const role of noEveryone) {
   
- await mentionedMember.roles.remove(role, [`Reason: Mute Command - ${reason} | Responsible User: ${message.author.tag}`]).catch(()=>{})
+ await mentionedMember.roles.remove(role, [`Lý do: Lệnh tắt tiếng - ${reason} | Người dùng có trách nhiệm: ${message.author.tag}`]).catch(()=>{})
  await delay(delaynumber);
       
        
     }
     }
 
-    await mentionedMember.roles.add(muteRole.id, [`Mute Command - ${reason} / Responsible User: ${message.author.tag}`]).catch(()=>{})
+    await mentionedMember.roles.add(muteRole.id, [`Lệnh tắt tiếng - ${reason} / Người dùng có trách nhiệm: ${message.author.tag}`]).catch(()=>{})
 
     const muteDoc = new muteModel({
         guildID: message.guild.id,
@@ -184,15 +185,15 @@ let logcase = logging.moderation.caseN
 if(!logcase) logcase = `1`
 
 const logEmbed = new MessageEmbed()
-.setAuthor(`Action: \`Mute\` | ${mentionedMember.user.tag} | Case #${logcase}`, mentionedMember.user.displayAvatarURL({ format: 'png' }))
-.addField('User', mentionedMember, true)
-.addField('Moderator', message.member, true)
-.addField('Length',  msRegex.exec(args[1])[1], true)
+.setAuthor(`Hoạt động: \`Mute\` | ${mentionedMember.user.tag} | Trường hợp #${logcase}`, mentionedMember.user.displayAvatarURL({ format: 'png' }))
+.addField('Người dùng', mentionedMember, true)
+.addField('Người điều hành', message.member, true)
+.addField('Thời gian',  msRegex.exec(args[1])[1], true)
 .setFooter(`ID: ${mentionedMember.id}`)
 .setTimestamp()
 .setColor(color)
 
-channel.send(logEmbed).catch(()=>{})
+channel.send({ embeds: [logEmbed]}).catch(()=>{})
 
 logging.moderation.caseN = logcase + 1
 await logging.save().catch(()=>{})
@@ -213,14 +214,14 @@ await logging.save().catch(()=>{})
         let muteRole = await message.guild.roles.cache.get(logging.moderation.mute_role);
 
   
-    await mentionedMember.roles.remove(muteRole.id, [`Mute Command / Responsible User: ${message.author.tag}`]).catch(()=>{})
+    await mentionedMember.roles.remove(muteRole.id, [`Lệnh tắt tiếng / Người dùng có trách nhiệm: ${message.author.tag}`]).catch(()=>{})
 
 
     if(logging && logging.moderation.remove_roles === "true"){
     for (const role of isMuted.memberRoles) {
  const roleM = await message.guild.roles.cache.get(role);
 if(roleM){
- await mentionedMember.roles.add(roleM, ["Mute Command, mute duration expired."]).catch(()=>{})
+ await mentionedMember.roles.add(roleM, ["Lệnh tắt tiếng, thời lượng tắt tiếng đã hết hạn."]).catch(()=>{})
  await delay(750);
 }
  
@@ -252,14 +253,14 @@ let logcase = logging.moderation.caseN
 if(!logcase) logcase = `1`
 
 const logEmbedm = new MessageEmbed()
-.setAuthor(`Action: \`Un Mute\` | ${mentionedMember.user.tag} | Case #${logcase}`, mentionedMember.user.displayAvatarURL({ format: 'png' }))
-.addField('User', mentionedMember, true)
-.addField('Reason',  'Mute Duration Expired', true)
+.setAuthor(`Hoạt động: \`Un Mute\` | ${mentionedMember.user.tag} | Trường hợp #${logcase}`, mentionedMember.user.displayAvatarURL({ format: 'png' }))
+.addField('Người sử dụng', mentionedMember, true)
+.addField('Lý do',  'Thời lượng tắt tiếng đã hết hạn', true)
 .setFooter(`ID: ${mentionedMember.id}`)
 .setTimestamp()
 .setColor(color)
 
-channel.send(logEmbedm).catch(()=>{})
+channel.send({ embeds: [logEmbedm]}).catch(()=>{})
 
 logging.moderation.caseN = logcase + 1
 await logging.save().catch(()=>{})

@@ -12,7 +12,7 @@ module.exports = class extends Command {
       super(...args, {
         name: 'rrdm',
         aliases: ["reactionrolesdm", "rrdirectmessages"],
-        description: 'Enable / Disable Reaction Role DMs',
+        description: 'Enable / Disable DMs của vai trò phản ứng',
         category: 'Reaction Role',
         cooldown: 3,
         usage: 'on / off',
@@ -35,18 +35,18 @@ module.exports = class extends Command {
       const prefix = guildDB.prefix;
 
       if(guildDB.isPremium == "false"){
-      return message.channel.send(new MessageEmbed().setColor(message.guild.me.displayHexColor).setDescription(`${fail} Slow down here, the current command is only for premium guilds.\n\n[Check Premium Here](https://pogy.xyz/premium)`))}
+      return message.channel.send(new MessageEmbed().setColor(message.guild.me.displayHexColor).setDescription(`${fail} Làm chậm ở đây, lệnh hiện tại chỉ dành cho các máy chủ cao cấp.\n\n[Kiểm tra Premium tại đây](https://sodachan.tk/premium/)`))}
 
   const missingPermEmbed = new MessageEmbed()
-  .setAuthor(`Missing User Permissions`, message.author.displayAvatarURL())
-  .setDescription(`${fail} The following command the **Administrator** Permission`)
-  .setFooter(`https://pogy.xyz`)
+  .setAuthor(`Thiếu quyền của người dùng`, message.author.displayAvatarURL())
+  .setDescription(`${fail} Lệnh sau cần Quyền **Administrator**`)
+  .setFooter(`https://sodachan.tk/`)
    .setColor(client.color.red)
 
    let properUsage = new MessageEmbed()
         .setColor(message.guild.me.displayHexColor)
-        .setDescription(`__**Proper Usage**__\n\n\`1-\` ${prefix}rrdm on\n\`2-\` ${prefix}rrdm off`)
-        .setFooter('https://pogy.xyz')
+        .setDescription(`__**Sử dụng hợp lý**__\n\n\`1-\` ${prefix}rrdm on\n\`2-\` ${prefix}rrdm off`)
+        .setFooter('https://sodachan.tk/')
 
       if (args.length < 1) {
         return message.channel.send(properUsage);
@@ -60,8 +60,8 @@ module.exports = class extends Command {
     }, async (err, guild) => {
  if(guild.reactionDM === false) return message.channel.send(new MessageEmbed()
    .setAuthor(message.author.tag, message.author.displayAvatarURL())
-  .setDescription(`${fail} DMs are already disabled`)
-  .setFooter(`https://pogy.xyz`)
+  .setDescription(`${fail} DMs đã bị tắt`)
+  .setFooter(`https://sodachan.tk/`)
    .setColor(client.color.red)
  )
         guild.updateOne({
@@ -71,8 +71,8 @@ module.exports = class extends Command {
 
 message.channel.send(new MessageEmbed()
    .setAuthor(message.author.tag, message.author.displayAvatarURL())
-  .setDescription(`${success} Reaction Role DMs have been disabled!`)
-  .setFooter(`https://pogy.xyz`)
+  .setDescription(`${success} DM của vai trò phản ứng đã bị tắt!`)
+  .setFooter(`https://sodachan.tk/`)
    .setColor(client.color.red)
  )
     })
@@ -85,8 +85,8 @@ message.channel.send(new MessageEmbed()
 
  if(guild.reactionDM === true) return message.channel.send(new MessageEmbed()
    .setAuthor(message.author.tag, message.author.displayAvatarURL())
-  .setDescription(`${fail} DMs are already enabled`)
-  .setFooter(`https://pogy.xyz`)
+  .setDescription(`${fail} DMs đã được bật`)
+  .setFooter(`https://sodachan.tk/`)
    .setColor(client.color.red))
         guild.updateOne({
           reactionDM: true
@@ -96,8 +96,8 @@ message.channel.send(new MessageEmbed()
  
 message.channel.send(new MessageEmbed()
    .setAuthor(message.author.tag, message.author.displayAvatarURL())
-  .setDescription(`${success} Reaction Role DMs have been enabled!`)
-  .setFooter(`https://pogy.xyz`)
+  .setDescription(`${success} Các DM của Vai trò phản ứng đã được bật!`)
+  .setFooter(`https://sodachan.tk/`)
    .setColor(client.color.red)
  )
 

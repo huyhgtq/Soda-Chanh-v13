@@ -13,7 +13,7 @@ module.exports = class extends Command {
       usage: "<date>",
       category: "Alt Detector",
       examples: ["identifyalts 30"],
-      description: "Find all alts in the guild with the provided account age (days)",
+      description: "Tìm tất cả các tuổi tài khoản được cung cấp (ngày)",
       cooldown: 10,
       userPermission: ['MANAGE_GUILD'],
     })
@@ -24,17 +24,25 @@ module.exports = class extends Command {
     });
     const language = require(`../../data/language/${guildDB.language}.json`)
     const client = message.client
+	   const mention = (await message.mentions.members.first()) || message.guild.members.cache.get(args[0]) || message.guild.members.cache.find((r) => r.user.username.toLowerCase().includes() === args.join(" ").toLocaleLowerCase()) || message.guild.members.cache.find((r) => r.displayName.toLowerCase().includes() === args.join(" ").toLocaleLowerCase()) || message.member;
+   const user = await message.guild.members.fetch(mention.id);
  
 
 
       let days = args[0]
-      if(!days) return message.channel.send(new discord.MessageEmbed().setColor(client.color.red).setDescription(`${message.client.emoji.fail} | Please provide a valid Days Duration`))
+      if(!days) return message.reply({ embeds: [new discord.MessageEmbed()
+											.setColor(client.color.red)
+											.setDescription(`${message.client.emoji.fail} | ${language.daysduration}`)]})
 
-      if(isNaN(days)) return message.channel.send(new discord.MessageEmbed().setColor(client.color.red).setDescription(`${message.client.emoji.fail} | Please provide a valid Days Duration`))
+      if(isNaN(days)) return message.reply({ embeds: [new discord.MessageEmbed()
+												  .setColor(client.color.red)
+												  .setDescription(`${message.client.emoji.fail} | ${language.daysduration}`)]})
    
     let day = Number(days)
 
-    if(day > 100) return message.channel.send(new discord.MessageEmbed().setColor(client.color.red).setDescription(`${message.client.emoji.fail} | You may only find alts of an account age of **100 days** or below`))
+    if(day > 1000 ) return message.reply({ embeds: [new discord.MessageEmbed()
+											  .setColor(client.color.red)
+											  .setDescription(`${message.client.emoji.fail} | ${language.accountageof}`)]})
 
     let array = []
 
@@ -47,7 +55,7 @@ module.exports = class extends Command {
       
     if(day > created) {
 
-    array.push(`${user} (${user.user.tag} | ${user.id})\nCreated At: **${user.user.createdAt}**`)
+    array.push(`${user} (${user.user.tag} | ${user.id})\n${language.created}: <t:${parseInt(user.user.createdAt / 1000)}> (<t:${parseInt(user.user.createdAt / 1000)}:R>)`)
     }
    
     })
@@ -56,22 +64,22 @@ module.exports = class extends Command {
 
 
     const embed = new discord.MessageEmbed()
-    .setTitle(`Alt Detector - Account age < ${days} Days`)
-    .setDescription(array.join("\n\n") || "No alts found")
+    .setTitle(`${language.altdetector} ${days} ${language.day}`)
+    .setDescription(array.join("\n\n") || `${language.noaltsfound}`)
     .setColor(message.client.color.green)
 
 if (array.length <= interval) {
     
     const range = (array.length == 1) ? '[1]' : `[1 - ${array.length}]`;
-      message.channel.send(embed
-        .setTitle(`Alt Detector - Account age < ${days} Days`)
+      message.reply({ embeds: [embed
+        .setTitle(`${language.altdetector} ${days} ${language.day}`)
         .setDescription(array.join('\n\n'))
-      );
+      ]});
 
     } else {
 
       embed
-        .setTitle(`Alt Detector - Account age < ${days} Days`)
+        .setTitle(`${language.altdetector} ${days} ${language.day}`)
         .setFooter(message.author.tag,  
           message.author.displayAvatarURL({ dynamic: true })
         );

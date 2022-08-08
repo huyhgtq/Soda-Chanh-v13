@@ -7,37 +7,16 @@ const Nickname = require('../../database/schemas/nicknames');
 const Usernames = require('../../database/schemas/usernames');
 const moment = require('moment');
 const emojis = require('../../assets/emojis.json');
-const statuses = {
-  online: `${emojis.online} \`Online\``,
-  idle: `${emojis.idle} \`AFK\``,
-  offline: `${emojis.offline} \`Offline\``,
-  dnd: `${emojis.dnd} \`Do Not Disturb\``
-};
-const flags = {
-  DISCORD_EMPLOYEE: `${emojis.discord_employee} \`Discord Employee\``,
-  DISCORD_PARTNER: `${emojis.discord_partner} \`Partnered Server Owner\``,
-  BUGHUNTER_LEVEL_1: `${emojis.bughunter_level_1} \`Bug Hunter (Level 1)\``,
-  BUGHUNTER_LEVEL_2: `${emojis.bughunter_level_2} \`Bug Hunter (Level 2)\``,
-  HYPESQUAD_EVENTS: `${emojis.hypesquad_events} \`HypeSquad Events\``,
-  HOUSE_BRAVERY: `${emojis.house_bravery} \`House of Bravery\``,
-  HOUSE_BRILLIANCE: `${emojis.house_brilliance} \`House of Brilliance\``,
-  HOUSE_BALANCE: `${emojis.house_balance} \`House of Balance\``,
-  EARLY_SUPPORTER: `${emojis.early_supporter} \`Early Supporter\``,
-  TEAM_USER: 'Team User',
-  SYSTEM: 'System',
-  VERIFIED_BOT: `${emojis.verified_bot} \`Verified Bot\``,
-  VERIFIED_DEVELOPER: `${emojis.verified_developer} \`Early Verified Bot Developer\``
-};
 
 module.exports = class extends Command {
     constructor(...args) {
       super(...args, {
         name: 'userinfo',
         aliases: ['ui', 'user', 'whois'],
-        description: 'Displays information about a provided user.',
+        description: 'Hiển thị thông tin về người dùng được cung cấp.',
         category: 'Information',
         usage: '[user]',
-        examples: [ 'userinfo', 'userinfo 267386908382855169' ],
+        examples: [ 'userinfo', 'userinfo 451699780423385089' ],
         guildOnly: true,
         cooldown: 3
       });
@@ -51,11 +30,7 @@ module.exports = class extends Command {
       });
     
       const language = require(`../../data/language/${guildDB.language}.json`)
-  
-
-
-
-let member = message.mentions.members.last() || message.member;
+  let member = message.mentions.members.last() || message.member;
  
      
      if(!member) {
@@ -93,116 +68,57 @@ member = message.member;
 let badge;
 if(userFind && userFind.badges){
 badge = userFind.badges.join(" ")
-if(!badge || !badge.length) badge = `\`None\``
+if(!badge || !badge.length) badge = `\`Không có\``
 } else {
-  badge = `\`None\``
+  badge = `\`Không có\``
 }
-
-let usernames = []
-
-// user  tags
-let userName = await Usernames.findOne({
-  discordId: member.id
-})
-if(!userName){
-
-const newUser = new Usernames({
-              discordId: member.id
-})
-  
-newUser.save()
-
-
-usernames = `No Tags Tracked`;
-
-} else {
-
-
-usernames = userName.usernames.join(' - ')
-if(!userName.usernames.length) usernames = `No Tags Tracked`
-
-
-}
-
-
-
-      
-let nickname = []
-
-// user nicknames
-const nicknames = await Nickname.findOne({
-discordId: member.id,
-guildId: message.guild.id
-})
-if(!nicknames){
-
-const newUser = new Nickname({
-              discordId: member.id,
-              guildId: message.guild.id
-})
-  
-newUser.save()
-
-
-nickname = `No Nicknames Tracked`
-} else {
-
-  nickname = nicknames.nicknames.join(" - ")
-  if(!nicknames.nicknames.length) nickname = `No Nicknames Tracked`
-
-}
-
- 
-    const userFlags = (await member.user.fetchFlags()).toArray();
-    const activities = [];
-    let customStatus;
-    for (const activity of member.presence.activities.values()) {
-      switch (activity.type) {
-        case 'PLAYING':
-          activities.push(`Playing **${activity.name}**`);
-          break;
-        case 'LISTENING':
-          if (member.user.bot) activities.push(`Listening to **${activity.name}**`);
-          else activities.push(`Listening to **${activity.details}** by **${activity.state}**`);
-          break;
-        case 'WATCHING':
-          activities.push(`Watching **${activity.name}**`);
-          break;
-        case 'STREAMING':
-          activities.push(`Streaming **${activity.name}**`);
-          break;
-        case 'CUSTOM_STATUS':
-          customStatus = activity.state;
-          break;
-      }
-    }
-    
-    // Trim roles
-let rolesNoob;
-let roles = member.roles.cache
-        .sort((a, b) => b.position - a.position)
-        .map(role => role.toString())
-        .slice(0, -1);
-
-rolesNoob = roles.join(" ")
-if(member.roles.cache.size < 1) rolesNoob = "No Roles"
-
-
-if(!member.roles.cache.size || member.roles.cache.size - 1 < 1) roles = `\`None\``
-    const embed = new MessageEmbed()
-   
-
-    .setAuthor(`${member.user.tag}`, member.user.displayAvatarURL({ dynamic : true }))
-      .setThumbnail(member.user.displayAvatarURL({ dynamic: true }))
-      .setFooter(`ID: ${member.id}`)
-      .setTimestamp()
-      .setColor(member.displayHexColor)
-      .setDescription(`**• ${language.userh}** \`${member.user.username}\` | \`#${member.user.discriminator}\`\n** • ID:** \`${member.id}\`\n**• ${language.joinedDiscord}** \`${moment(member.user.createdAt).format('MMMM Do YYYY, h:mm:ss a')}\`\n**• ${language.joinedServer}** \`${moment(member.joinedAt).format('MMMM Do YYYY, h:mm:ss a')}\`\n**• Roles [${roles.length || '0'}]: ** ${rolesNoob || `\`${language.noRoles}\``}\n\n**• ${language.badgeslmao}** ${userFlags.map(flag => flags[flag]).join('\n') || `\`${language.noBadge}\``}\n**• ${language.botBadges}** ${badge ||`\`None\``}\n**• Last 5 Nicknames:**\n\`\`\`${nickname || `No Nicknames Tracked`}\`\`\`**• Last 5 Tags:**\n\`\`\`${usernames || `No Tags Tracked`}\`\`\` `)
-
-
-      
-      
-    message.channel.send(embed);
-
-    }
+  try {
+   const mention = (await message.mentions.members.first()) || message.guild.members.cache.get(args[0]) || message.guild.members.cache.find((r) => r.user.username.toLowerCase().includes() === args.join(" ").toLocaleLowerCase()) || message.guild.members.cache.find((r) => r.displayName.toLowerCase().includes() === args.join(" ").toLocaleLowerCase()) || message.member;
+   const user = await message.guild.members.fetch(mention.id);
+   var flags = {
+    "": "Không có!",
+    DISCORD_EMPLOYEE: '<:blurpleemployee:964295442919718992>',
+    DISCORD_PARTNER: '<:Partner:964297173682511962>',
+    BUGHUNTER_LEVEL_1: '<:Bug_Hunter_1:964297411965124619>',
+    BUGHUNTER_LEVEL_2: '<:Bug_Hunter_2:964297513899290644>',
+    HYPESQUAD_EVENTS: '<:WumpusHypeSquad:964297999389962313>',
+    HOUSE_BRILLIANCE: '<:hypesquad_brilliance:964298196299948062>',
+    HOUSE_BRAVERY: '<:hypesquad_bravery:964298382128603216>',
+    HOUSE_BALANCE: '<:hypesquad_balance:964298558851407882>',
+    EARLY_SUPPORTER: '<:early_supporter:964298784400105502>',
+    TEAM_USER: "Team User (?)",
+    VERIFIED_BOT: `<:bot_badge_1:964299524262727690><:bot_badge_2:964299583498878996>`,
+    EARLY_VERIFIED_DEVELOPER: '<:verified_bot_developer:964300273155735562>',
+   };
+   const embed = new MessageEmbed() // Prettier
+    .setColor("RANDOM")
+    .setAuthor(`${language.userinformation}`, user.user.displayAvatarURL())
+    .setThumbnail(
+     user.user.displayAvatarURL({
+      dynamic: true,
+      format: "png",
+      size: 2048,
+     })
+    )
+    .setTimestamp()
+    .setFooter(
+     `${language.requested} ${message.author.username}`, message.author.displayAvatarURL({ dynamic: true })
+    );
+   embed.addField(`<:member_role:964292126814900234> ID`, `> \`${user.user.id}\``, true);
+   embed.addField(`<:Channel:964292621478531072> ${language.usertag}`, `> \`#${user.user.discriminator}\``, true);
+   if (user.nickname) 
+   embed.addField(`<:member_role:964292126814900234> ${language.nickname}`, `> \`${user.nickname}\``);
+   embed.addField(`<:stopwatch:964300969414373466> ${language.joinedserver}`, `> <t:${parseInt(user.joinedTimestamp / 1000)}> (<t:${parseInt(user.joinedTimestamp / 1000)}:R>)`);
+   embed.addField(`<:stopwatch:964300969414373466> ${language.accountcreated}`, `> <t:${parseInt(user.user.createdAt / 1000)}> (<t:${parseInt(user.user.createdAt / 1000)}:R>)`);
+   embed.addField(`<:member_role:964292126814900234> ${language.highestrole}`, `> ${user.roles.highest}`, true);
+   embed.addField(`<:Badge:964294685243875338> ${language.badges}`, `> ${flags[mention.user.flags.toArray().join(", ")]}`, true);
+   embed.addField(`<:sodaa:963940635675623424> ${language.botBadges}`, `>  ${badge ||`\`**Không có**\``}`, true);
+   embed.addField(`<:member_role:964292126814900234> ${language.accountbanned}`, `> ${user.deleted ? `${language.accountbanned2}` : `${language.accountbanned3}`}`);
+   embed.setTitle(`${user.user.tag} ${user.user.bot ? `<:bot_badge_1:964299524262727690><:bot_badge_2:964299583498878996>` : ""}`);
+	  message.reply({ embeds: [embed]})
+  } catch (err) {
+   console.log(err);
+	this.client.emit(error, message);
+  }
+ }
 };

@@ -34,16 +34,16 @@ if(color == "#000000") color = role.client.color.red
   if(logging.server_events.role_create == "true"){
 
  const embed = new discord.MessageEmbed()
-    .setDescription(`🗑️ ***Role Deleted***`)
-    .addField('Role Name', role.name, true)
-    .setFooter(`Role ID: ${role.id}`)
+    .setDescription(`🗑️ ***Vai trò đã bị xóa***`)
+    .addField('Tên vai trò', role.name, true)
+    .setFooter(`ID vai trò: ${role.id}`)
     .setTimestamp()
     .setColor(color)
 
     if(channelEmbed &&
       channelEmbed.viewable &&
       channelEmbed.permissionsFor(role.guild.me).has(['SEND_MESSAGES', 'EMBED_LINKS'])){
-            channelEmbed.send(embed).catch(()=>{})
+            channelEmbed.send({ embeds: [embed] }).catch(()=>{})
       }
 
 

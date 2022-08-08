@@ -9,7 +9,7 @@ module.exports = class extends Command {
     constructor(...args) {
       super(...args, {
         name: 'news',
-        description: `Shows Pogy's latest news`,
+        description: `Hiển thị tin tức mới nhất của Soda chan`,
         category: 'Information',
         cooldown: 3
       });
@@ -18,7 +18,7 @@ module.exports = class extends Command {
     async run(message) {
            const client = message.client;
       const guildDB = await Guild.findOne({
-        tag: '710465231779790849'
+        tag: '893953109334843422'
       });
       
  
@@ -28,19 +28,19 @@ module.exports = class extends Command {
 
       const language = require(`../../data/language/${guildDB2.language}.json`)
 
-      if(!guildDB) return message.channel.send(`${language.noNews}`)
+      if(!guildDB) return message.reply(`${language.noNews}`)
 
 
         
         let embed = new MessageEmbed()
       .setColor(message.guild.me.displayHexColor)
-      .setTitle(`Pogy News`)
-      .setDescription(`***__${language.datePublished}__ ${moment(guildDB.time).format("dddd, MMMM Do YYYY")}*** *__[\`(${moment(guildDB.time).fromNow()})\`](https://pogy.xyz)__*\n\n ${guildDB.news}`)
-      .setFooter('https://pogy.xyz')
+      .setTitle(`Soda Chan News`)
+      .setDescription(`***__${language.datePublished}__ ${moment(guildDB.time).format("MM-DD-YYYY")}*** *__[\`(${moment(guildDB.time).fromNow()})\`](https://sodachan.tk/)__*\n\n ${guildDB.news}`)
+      .setFooter('https://sodachan.tk/')
       .setTimestamp();
 
-      message.channel.send(embed).catch(() => {
-        message.channel.send(`${language.noNews}`)
+      message.reply(embed).catch(() => {
+        message.reply(`${language.noNews}`)
       });
     
     }

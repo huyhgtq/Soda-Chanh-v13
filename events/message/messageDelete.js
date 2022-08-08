@@ -150,7 +150,7 @@ if (message.content) {
       if (message.content.length > 1024) message.content = message.content.slice(0, 1021) + '...';
 
       embed
-      .setDescription(`${message.member}'s message got deleted in ${message.channel}`)
+      .setDescription(`${message.member}'s tin nhắn đã bị xóa trong ${message.channel}`)
         .addField('Message', message.content);
         
     
@@ -159,7 +159,7 @@ if (message.content) {
   } else { 
 
       embed
-        .setDescription(`${message.member} deleted an **embed** in ${message.channel}`);
+        .setDescription(`${message.member} đã xóa một **embed** trong ${message.channel}`);
 
     
   }
@@ -167,7 +167,7 @@ if (message.content) {
     if(channelEmbed &&
       channelEmbed.viewable &&
       channelEmbed.permissionsFor(message.guild.me).has(['SEND_MESSAGES', 'EMBED_LINKS'])){
-            channelEmbed.send(embed).catch(()=>{})
+            channelEmbed.send({ embeds: [embed] }).catch(()=>{})
       }
   }
 

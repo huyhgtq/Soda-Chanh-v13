@@ -3,14 +3,17 @@ const { MessageEmbed } = require('discord.js');
 const Discord = require('discord.js');
 const crypto = require("crypto");
 const config = require('../../config.json');
-const webhookClient = new Discord.WebhookClient(config.webhook_id, config.webhook_url);
+const webhookClient = new Discord.WebhookClient({ 
+id: `${config.webhook_id}`,
+token: `${config.webhook_url}`});
+
 const Guild = require('../../database/schemas/Guild');
 module.exports = class extends Command {
     constructor(...args) {
       super(...args, {
         name: 'suggestbot',
         aliases: [ 'botsuggest' ],
-        description: `Suggest a new feature for Pogy!`,
+        description: `Đề xuất một tính năng mới cho Soda Chan!`,
         category: 'Utility',
         examples: [ 'suggest Can you add music Please!' ],
         cooldown: 60
@@ -48,33 +51,33 @@ let invite = await message.channel.createInvite({
 
 let report = args.join(' ').split('').join('')
       const embed = new MessageEmbed()
-      .setTitle('New Suggestion')
+      .setTitle('Đề xuất mới')
       .setThumbnail(message.author.displayAvatarURL({ dynamic: true }))
       .setDescription(report) 
-      .addField('User', message.member, true)
-      .addField('User username', message.member.user.username, true)
-      .addField('User ID', message.member.id, true)
-      .addField('User Tag', message.member.user.tag, true)
-      .addField('Server',  `[${message.guild.name}](${invite ||'none '})`, true)
-      .addField('Feedback ID:', `#${id}`, true)
+      .addField('Người dùng', message.member, true)
+      .addField('Tên người dùng', message.member.user.username, true)
+      .addField('Tên người dùng', message.member.id, true)
+      .addField('Thẻ người dùng', message.member.user.tag, true)
+      .addField('Máy chủ',  `[${message.guild.name}](${invite ||'none '})`, true)
+      .addField('ID phản hồi:', `#${id}`, true)
       .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
       .setTimestamp()
       .setColor('GREEN');
 
       const confirmation = new MessageEmbed()
-      .setTitle('Bot Suggestions')
+      .setTitle('Đề xuất Bot')
       .setThumbnail(message.author.displayAvatarURL({ dynamic: true }))
-      .setDescription(`${language.suggest3} Support [**Server**](https://discord.gg/duBwdCvCwW)`)
-      .addField('Member', message.member, true)
-      .addField('Message', report, true)
-      .addField('Suggestion ID:', `#${id}`, true)
-      .setFooter(`https://pogy.xyz`)
+      .setDescription(`${language.suggest3} Support [**Server**](https://discord.gg/2mHgQQz3GN)`)
+      .addField('Thành viên', message.member, true)
+      .addField('Tin nhắn', report, true)
+      .addField('ID đề xuất:', `#${id}`, true)
+      .setFooter(`https://sodachan.tk/`)
       .setTimestamp()
       .setColor('GREEN');
      
         
       webhookClient.send({
-        username: 'Pogy Suggestions',
+        username: 'Soda Chan Gợi ý',
         avatarURL: `${message.client.domain}/logo.png`,
         embeds: [embed],
            });
