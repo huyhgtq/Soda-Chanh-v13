@@ -1,12 +1,12 @@
 <h1 align="center">
  <br>
-  <a href="https://github.com/peterhanania"><img src="https://pogy.xyz/thumb.png"></a>
+  <a href="https://github.com/huyhgtq"><img src="https://sodachan.tk/thumb.png"></a>
   <br>
-  Pogy the Discord Bot [ Discord.js v12 ]
+  Soda chanh Bot Discord [Discord.js v13]
   <br>
 </h1>
 
-<h3 align=center>A fully customizable bot built with 183 commands, 12 categories and a dashboard!</h3>
+<h3 align=center>Một bot hoàn toàn có thể tùy chỉnh được xây dựng với 200+ lệnh, 15 danh mục và một bảng điều khiển!</h3>
 
 
 <div align=center>
@@ -43,40 +43,42 @@
 
 ## About
 
-Pogy is a discord bot that took over 4 months of work to make. I decided to make the bot open sourced to whoever wants to run a copy in their server! You can click [this](https://pogy.xyz/invite) link to invite the official Bot! Also, you can join the official [Pogy's Support Server](https://pogy.xyz/support) for assistance.
+Pogy là một bot bất hòa đã mất hơn 10 tháng làm việc và chỉnh. Tôi quyết định đặt bot có nguồn mở cho bất kỳ ai muốn chạy một bản sao trong máy chủ của họ! Bạn có thể nhấp vào liên kết [này] (https://sodachan.tk/invite) để mời Bot chính thức! Ngoài ra, bạn có thể tham gia [Máy chủ hỗ trợ của Soda Chanh] (https://sodachan.tk/support) chính thức để được hỗ trợ.
 
-If you like this repository, feel free to leave a star ⭐ and follow me, it actually means a lot.
+Nếu bạn thích kho này, hãy để lại dấu sao ⭐ và theo tôi, nó thực sự có ý nghĩa rất lớn.
 
-**183+** commands and **12** different categories!
+**200+** commands and **14** different categories!
 
-  * **alt detector:** Blocks alts from the guild
-  * **applications:** Manage applications from the website
-  * **config:** Configure server settings
-  * **utility:** Some utility commands
-  * **economy:** Started but not done
-  * **fun:** A ton of commands to keep your server active
-  * **images:** Image Commands
-  * **information:** Information Commands
-  * **moderation:** Mod commands to moderate your discord server
+  * **alt detector:** Chặn alts từ guild
+  * **applications:** Quản lý các ứng dụng từ trang web
+  * **config:** Định cấu hình cài đặt máy chủ
+  * **utility:** Một số lệnh tiện ích
+  * **economy:** Vừa bắt đầu nhưng chưa hoàn thành
+  * **fun:** Rất nhiều lệnh để giữ cho máy chủ của bạn hoạt động
+  * **images:** Lệnh hình ảnh
+  * **information:** Lệnh thông tin
+  * **moderation:** Các lệnh mod để kiểm duyệt máy chủ Discord của bạn
   * **nsfw:** 👀
-  * **reaction roles:** Reaction roles
-  * **tickets:** Guild tickets for support 
+  * **reaction roles:** Vai trò phản ứng
+  * **game:** chơi may rủi
+  * **voice:** chuyển đổi tin nhắn thành lời nói
+  * **activities:** chơi game trên Discord
 
-Pogy even has the following features on the website
+Soda chan hiện đang có các tính năng sau trên trang web
 
   * **Ticket Transcripts** + **Application Transcripts**
-  * **Contact & Report** page
-  * **Welcome messages** and **farewell messages** including embeds.
-  * Full customizable **Logging** and **moderation**
-  * Full customizable **Suggestions** and **Server Reports**
-  * A built in **Premium system**
-  * A built in maintenance mode
-  * A members Page
-  * Auto Mod, Levelling, and Commands ( not done )
-  * Built in TOP.gg API
+  * **Contact & Report** trang
+  * **Welcome messages** và **farewell messages** bao gồm embeds.
+  * Có thể tùy chỉnh đầy đủ **Logging** và **moderation**
+  * Có thể tùy chỉnh đầy đủ **Suggestions** và **Server Reports**
+  * Được tuỳ chỉnh trong **Premium system**
+  * Một chế độ bảo trì được tuỳ chỉnh
+  * Một trang thành viên
+  * Auto Mod, Leveling và Commands (chưa hoàn tất)
+  * Tích hợp API TOP.gg
  
  <h1 align="center">
-  <a href="https://github.com/peterhanania"><img src="https://i.imgur.com/On7mMNg.jpg["></a>
+  <a href="https://github.com/huyhgtq"><img src="https://i.imgur.com/InfTIuP.png"></a>
 </h1>
 
   
@@ -84,16 +86,16 @@ Pogy even has the following features on the website
 With Pogy You can even log everything using webhooks. ( you will have to change each webhook using visual studio code )
 
 <h1 align="center">
-  <a href="https://github.com/peterhanania"><img src="https://i.imgur.com/vbGuLdL.jpg"></a>
+  <a href="https://github.com/huyhgtq"><img src="https://i.imgur.com/3TnVdn5.png"></a>
 </h1>
 
 ## Installation
 
-First clone the repo:
+Đầu tiên sao chép repo: 
 ```
-git clone https://github.com/peterhanania/Pogy.git
+git clone https://github.com/huyhgtq/Soda-Chanh-v13.git
 ```
-After cloning, run an
+Sau khi nhân bản, chạy một lệnh
 ```
 npm install
 ```
@@ -101,7 +103,7 @@ npm install
 
 ## Setting Up
 
-Your `config.json` should look like this:
+Của bạn `config.json` sẽ trông như thế này:
 ```
 {
   "main_token": process.env.token, 
@@ -119,7 +121,7 @@ Your `config.json` should look like this:
 
 ```
 
-Your `config.js` should look like this:
+Của bạn `config.js` ssẽ trông như thế này:
 ```
 module.exports = {
  "verification": "",
@@ -135,7 +137,7 @@ module.exports = {
 
 }
 ```
-Your `.env` file should be:
+Của bạn `.env` tệp phải là:
 ```
 TOKEN=BOT_TOKEN
 ```
@@ -147,25 +149,25 @@ TOKEN=BOT_TOKEN
 `https://domain/window`
 `https://domain/thanks`
 
-Please make sure you have enabled `Privileged Intents` on your Discord [developer portal](https://discordapp.com/developers/applications/). You can find these intents under the "Bot" section, and there are two ticks you have to switch on. For more information on Gateway Intents, check out [this link](https://discordjs.guide/popular-topics/intents.html#the-intents-bit-field-wrapper).
+Hãy chắc chắn rằng bạn đã bật `Privileged Intents` trong discord [developer portal](https://discordapp.com/developers/applications/). Bạn có thể tìm thấy những thứ này trong "Bot" và có hai dấu tích bạn phải bật. Để biết thêm thông tin về Gateway Intents, hãy xem [this link](https://discordjs.guide/popular-topics/intents.html#the-intents-bit-field-wrapper).
 
-You can launch the bot with `npm run start` (make sure you have node and npm installed).
+Bạn có thể khởi chạy bot với lệnh `npm run start` (đảm bảo rằng bạn đã cài đặt node và npm).
 
-**Important Note:** Pogy has so many bugs and requires a lot of js knowledge. You will have some difficulty running the bot if you have no experience in discord.js. 
+**Important Note:** Soda chanh có rất nhiều lỗi và đòi hỏi rất nhiều kiến thức về js của bạn. Bạn sẽ gặp một số khó khăn khi chạy bot nếu bạn không có kinh nghiệm về discord.js.
 
 ### Emojis 
-- You can change the emojis in: <br>
+- Bạn có thể thay đổi biểu tượng cảm xúc trong: <br>
 1- `assets/emojis.json` <br>
 2- `data/emoji.js`
 
 ### Colors
-- You can change the colors in `data/colors.js`
+- Bạn có thể thay đổi màu sắc trong `data/colors.js`
 
 ## License
-Released under the [Apache License](http://www.apache.org/licenses/LICENSE-2.0) license.
-
+Phát hành theo [Apache License](http://www.apache.org/licenses/LICENSE-2.0) giấy phép.
+https://paypal.me/huyhgtq
 ## Donate
-You can donate Pogy and make it stronger than ever [by clicking here](https://paypal.me/pogybot)!
+If you want to support the creator of this source code, please support them [donate Pogy](https://paypal.me/pogybot)!
 
 ## Credits
 * **Peter Hanania** - *head developer* - [github](https://github.com/peterhanania)
@@ -176,9 +178,4 @@ You can donate Pogy and make it stronger than ever [by clicking here](https://pa
 * **loom** - *Contributor + Translation* - [github](https://github.com/loom4k/) [website](https://loom4k.me)
 * **Mezo** - *German Translation* - [github](https://github.com/mezotv/) [website](https://devdominik.com)
 
-
-## Localization `README.md`'s
-|          Language          |
-| -------------------------- |
-| [French](README-fr.md)     |
-| [German](README-de.md)     |
+I'm just the source code editor of pogy , if you have any problem feel free to contact me
