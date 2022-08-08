@@ -83,7 +83,7 @@ Soda chan hiện đang có các tính năng sau trên trang web
 
   
 **Webhooks: (for developers)**
-With Pogy You can even log everything using webhooks. ( you will have to change each webhook using visual studio code )
+Với Soda chanh, bạn thậm chí có thể ghi lại mọi thứ bằng cách sử dụng webhooks. (bạn sẽ phải thay đổi từng webhook bằng visual studio code)
 
 <h1 align="center">
   <a href="https://github.com/huyhgtq"><img src="https://i.imgur.com/3TnVdn5.png"></a>
