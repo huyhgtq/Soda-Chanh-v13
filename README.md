@@ -165,7 +165,7 @@ Bạn có thể khởi chạy bot với lệnh `npm run start` (đảm bảo r�
 
 ## License
 Phát hành theo [Apache License](http://www.apache.org/licenses/LICENSE-2.0) giấy phép.
-https://paypal.me/huyhgtq
+
 ## Donate
 If you want to support the creator of this source code, please support them [donate Pogy](https://paypal.me/pogybot)!
 
