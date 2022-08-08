@@ -37,7 +37,7 @@ const no = new MessageEmbed()
         .setFooter(message.guild.name)
         .setTimestamp()
         .setColor(message.guild.me.displayHexColor)
-        .setDescription(`${message.client.emoji.fail} | Couldn't find any edited message in **${channel.name}**`)
+        .setDescription(`${message.client.emoji.fail} | Không thể tìm thấy bất kỳ tin nhắn đã chỉnh sửa nào trong **${channel.name}**`)
 
 if(!snipe){
   return message.channel.send(no)
@@ -61,7 +61,7 @@ const data = []
 for (let i = 0; snipe.oldmessage.length  > i; i++) {
             data.push(`**${i + 1}**`)
 
-            embed.addField(`Message #${i + 1}`, `**User:** ${await message.client.users.fetch(snipe.id[i]) || 'Unknown'}\n**Message:** ${snipe.oldmessage[i] || 'None'} ➜ ${snipe.newmessage[i]}\n[Jump To Message](${snipe.url[i]})\n`)
+            embed.addField(`Message #${i + 1}`, `**User:** ${await message.client.users.fetch(snipe.id[i]) || 'Unknown'}\n**tin nhắn** ${snipe.oldmessage[i] || 'None'} ➜ ${snipe.newmessage[i]}\n[Chuyển đến tin nhắn](${snipe.url[i]})\n`)
 
         };
         
@@ -71,7 +71,7 @@ for (let i = 0; snipe.oldmessage.length  > i; i++) {
 
         message.channel.send(embed).catch(async(err)=>{
           await snipe.deleteOne().catch(()=>{})
-          message.channel.send(`The embed contained a huge field that couldn't fit as this is the reason i failed to send the embed. I have resetted the database as you can try rerunning the command again.`)
+          message.channel.send(`Nội dung nhúng chứa một trường lớn không thể vừa vặn vì đây là lý do khiến tôi không gửi được nội dung nhúng. Tôi đã đặt lại cơ sở dữ liệu vì bạn có thể thử chạy lại lệnh.`)
         })
     }
 };

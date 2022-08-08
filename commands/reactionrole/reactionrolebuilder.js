@@ -32,7 +32,7 @@ module.exports = class extends Command {
       let success = message.client.emoji.success
   const missingPermEmbed = new MessageEmbed()
   .setAuthor(`Thiếu quyền của người dùng`, message.author.displayAvatarURL())
-  .setDescription(`${fail} Lệnh sau cần Quyền **Administrator **`)
+  .setDescription(`${fail} Lệnh sau cần Quyền **Administrator**`)
   .setFooter(`https://sodachan.tk/`)
 
 

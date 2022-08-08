@@ -1,8 +1,8 @@
 const Command = require('../../structures/Command');
 const { WebhookClient, MessageEmbed } = require('discord.js');
-const webhookClient = new WebhookClient({ 
-id: '807251494520881232',
-token: 'JpQapDJHsWHJJasugEk3ZpWaTPhxqP9c_sYcyABjSrkxpCIvBwJzt_0G6xL1GB0wS3iy'});
+const webhookClient = new WebhookClient({
+  id: `${jsonconfig.webhook_id}`, 
+  token: `${jsonconfig.webhook_url}`  });
 const logger = require('../../utils/logger');
 const Blacklist = require('../../database/schemas/blacklist');
 
@@ -87,10 +87,12 @@ member =  match ? message.mentions.members.first() || message.guild.members.fetc
         const embed = new MessageEmbed()
           .setColor('BLURPLE')
           .setTitle(`Blacklist Report`)
-          .addField('Status', 'Đã xóa khỏi danh sách đen.')
-          .addField('Máy chủ', `${guild.name} (${guild.id})`)
-          .addField('Chịu trách nhiệm', `${message.author} (${message.author.id})`)
-          .addField('Lý do', reason)
+          .addFields(
+            { name: 'Status', value: 'Đã xóa khỏi danh sách đen', },
+            { name: 'Máy chủ', value: `${guild.name} (${guild.id})`, inline: true },
+            { name: 'Chịu trách nhiệm', value: `${message.author} (${message.author.id})`, inline: true },
+            { name: 'Lý do', value: reason, inline: true },
+          )
 
         webhookClient.send({
           username: 'Soda Chan',

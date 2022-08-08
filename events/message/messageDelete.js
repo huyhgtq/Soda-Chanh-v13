@@ -137,7 +137,7 @@ if(color == "#000000") color = message.client.color.red;
 
 
      const embed = new MessageEmbed()
-    .setAuthor(`${message.author.tag} | Message Deleted`, message.author.displayAvatarURL({ dynamic: true }))
+    .setAuthor(`${message.author.tag} | Tin nhắn đã bị xóa`, message.author.displayAvatarURL({ dynamic: true }))
     .setTimestamp()
     .setFooter(`ID: ${message.id}`)
     .setColor(message.guild.me.displayHexColor);
@@ -151,7 +151,7 @@ if (message.content) {
 
       embed
       .setDescription(`${message.member}'s tin nhắn đã bị xóa trong ${message.channel}`)
-        .addField('Message', message.content);
+        .addField('Tin nhắn', message.content);
         
     
 

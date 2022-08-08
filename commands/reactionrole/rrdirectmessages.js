@@ -71,7 +71,7 @@ module.exports = class extends Command {
 
 message.channel.send(new MessageEmbed()
    .setAuthor(message.author.tag, message.author.displayAvatarURL())
-  .setDescription(`${success} DM của vai trò phản ứng đã bị tắt!`)
+  .setDescription(`${success} DMs của vai trò phản ứng đã bị tắt!`)
   .setFooter(`https://sodachan.tk/`)
    .setColor(client.color.red)
  )
@@ -96,7 +96,7 @@ message.channel.send(new MessageEmbed()
  
 message.channel.send(new MessageEmbed()
    .setAuthor(message.author.tag, message.author.displayAvatarURL())
-  .setDescription(`${success} Các DM của Vai trò phản ứng đã được bật!`)
+  .setDescription(`${success} Các DMs của Vai trò phản ứng đã được bật!`)
   .setFooter(`https://sodachan.tk/`)
    .setColor(client.color.red)
  )

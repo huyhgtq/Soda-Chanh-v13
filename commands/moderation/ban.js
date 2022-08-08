@@ -66,7 +66,7 @@ if (!member) {
 if (!reason) reason = `${language.noReasonProvided}`;
 if (reason.length > 1024) reason = reason.slice(0, 1021) + '...';
 
-    await message.guild.members.ban(u.id, { reason: `${reason} / Responsible user: ${message.author.tag}` })
+    await message.guild.members.ban(u.id, { reason: `${reason} / Người dùng có trách nhiệm: ${message.author.tag}` })
     
   const embed = new MessageEmbed()
 .setDescription(`${client.emoji.success} | **${u.tag}** ${language.banBan} ${logging && logging.moderation.include_reason === "true" ?`\n\n**Lý do:** ${reason}`:``}`)

@@ -30,7 +30,7 @@ module.exports = class extends Command {
     
       const language = require(`../../data/language/${guildDB.language}.json`)
       
-     // not finished
+     // chưa xong
 
     }
 };

@@ -40,7 +40,7 @@ Logging.findOneAndDelete({
     }).catch(()=>{});
 
 if(config.datadogApiKey){
-      metrics.init({ apiKey: this.client.config.datadogApiKey, host: 'pogy', prefix: 'pogy.' });
+      metrics.init({ apiKey: this.client.config.datadogApiKey, host: 'soda', prefix: 'soda.' });
       metrics.increment('guildDelete');
 }
 

@@ -51,7 +51,7 @@ message.channel.send(`${language.remind4} **[s/m/h/d]**`)
 
 if (!isNaN(ms(collected.first().content))) {
 if(time > 86400000 ) {
-  message.channel.send(`${message.client.emoji.fail} Please provide a date less than **1 day**`)
+  message.channel.send(`${message.client.emoji.fail} Vui lòng cung cấp ngày ít hơn ** 1 ngày **`)
    reminderstarted.delete(message.author.id);
   return;
 } 

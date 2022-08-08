@@ -24,8 +24,8 @@ embed = `${info} - ${number}`;
 logger.info(info, { label: 'Debug' })
 
 if(number >= 10){
-  embed = `${info} - ${number} - SAFE MODE REACHED`;
-  console.log('Safe mode reached - Turning maintenance mode on.')
+  embed = `${info} - ${number} - ĐÃ ĐẠT ĐƯỢC CHẾ ĐỘ AN TOÀN`;
+  console.log('Đã đạt đến chế độ an toàn - Đang bật chế độ bảo trì.')
   maintenance.toggle = "false"
   await maintenance.save();
   process.exit(1);

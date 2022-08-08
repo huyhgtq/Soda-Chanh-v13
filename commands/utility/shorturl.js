@@ -28,7 +28,7 @@ module.exports = class extends Command {
           
 
           if (talkedRecently.has(message.author.id)) {
-            message.reply(`Bạn bị ** chặn ** khỏi lệnh sau - ${message.author}`);
+            message.reply(`Bạn bị **chặn** khỏi lệnh sau - ${message.author}`);
           
           } else {
          

@@ -75,66 +75,6 @@ module.exports = class extends Event {
       });
 
       if (!settings) return message.channel.send('Oops, this server was not found in the database. Please try to run the command again now!');
-// const res = await axios.get('https://discord-phishing-backend.herokuapp.com/all');
-//     const array = res.data;
-//     if (array.some(word => message.content.toLowerCase().includes(word))) {
-//         // console.log(message.content.toLowerCase());
-//         message.delete()
-//         // console.log(message.author.id)
-//         const embedUser = new MessageEmbed()
-//             .setTitle('Thông báo từ hệ thống Soda')
-//             .setDescription(`Chúng tôi phát hiện bạn spam link scam`)
-//             .addField(`Thông tin người gửi:`, `${message.author.id}`, true)
-//             .addField(`Tại server:`, `${message.guild.id} **(${message.guild.name})**`, true)
-//             .addField(`Tại channel:`, `${message.channel.id}`, true)
-//             .addField(`Id tin nhắn:`, `${message.id}`, true)
-//             .addField(`Thời gian:`, `<t:${parseInt(message.createdAt /1000)}:F>`, true)
-//             .addField(`Nội dung tin nhắn:`, `\`\`\`diff\n${message.content}\`\`\``, false)
-//             .setColor('#ff0000')
-//         message.author.send({ embeds: [embedUser] });
-
-//         const member = message.guild.members.cache.get(message.author.id);
-//         // console.log(member)
-//         member.ban({ reason: 'Gửi link scam' });
-//         const embed = new MessageEmbed()
-//             .setTitle("Cảnh báo link scam") 
-//             .setColor("#ff0000")
-//             .setDescription(`Hình như bạn ${message.author} đã gửi link scam`) 
-//             .addField(` Nội dung tin nhắn:`, `\`\`\`diff\n${message.content}\`\`\``, false)
-            
-//         message.channel.send({ embeds: [embed] }).then(m => { setTimeout(() => { m.delete() }, 10000) })
-		
-// 		const scam = new WebhookClient({ id: `971858056474398750`, token: `NnHPBzmiGxnsy6hEvNIQObMG_2iokc8piRKYEoflbcKomlSwSlxvTkWfuAcXxm5CEWYE`});
-		
-// 		const scam2 = new MessageEmbed()
-//             .setTitle("Cảnh báo link scam")
-//             .setColor("#ff0000")
-//             .setDescription(`Hình như bạn ${message.author} đã gửi link scam`)
-//             .addField(`Thông tin người gửi:`, `${message.author.id}`, true)
-//             .addField(`Tại server:`, `${message.guild.id} **(${message.guild.name})**`, true)
-//             .addField(`Tại channel:`, `${message.channel.id}`, true)
-//             .addField(`Id tin nhắn:`, `${message.id}`, true)
-//             .addField(`Thời gian:`, `<t:${parseInt(message.createdAt /1000)}:F>`, true)
-//             .addField(`Nội dung tin nhắn:`, `\`\`\`diff\n${message.content}\`\`\``, false)
-
-//           scam.send({
-//             username: 'Scam',
-//             embeds: [scam2]
-//           });
-//     }
-		
-//       if (message.content.match(mentionRegex)) {
-//         const proofita = `\`\`\`css\n[     Prefix: ${settings.prefix || '!'}     ]\`\`\``;
-//         const proofitaa = `\`\`\`css\n[      Help: ${settings.prefix || '!'}help    ]\`\`\``;
-//         const embed = new MessageEmbed()
-//           .setTitle(`Xin chào tôi là ${jsconfig.bot_name}`)
-//           .addField(`Prefix`,proofita, true)
-//           .addField(`Usage`,proofitaa, true)
-//           .setDescription(`\nNếu bạn thích ${jsconfig.bot_name}, Coi như [inviting](https://discord.com/oauth2/authorize?client_id=${jsconfig.client_id}&scope=bot&permissions=470150262) nó đến máy chủ của bạn! Cảm ơn bạn đã sử dụng ${jsconfig.bot_name}, chúng tôi hy vọng bạn sẽ thích nó, vì chúng tôi luôn mong muốn cải thiện bot`)
-//           .setFooter(`Cảm ơn bạn đã sử dụng ${jsconfig.bot_name}!!`)
-//           .setColor('#FF2C98')
-//         message.reply({ embeds: [embed] });
-//       }
 
 if(config.datadogApiKey){
       // Add increment after every fucking message lmfao!
@@ -190,7 +130,7 @@ const maintenance = await Maintenance.findOne({
 
       if (userBlacklistSettings && userBlacklistSettings.isBlacklisted)  return;
      if(maintenance && maintenance.toggle == "true") return;
-        if(autoResponseCooldown.has(message.author.id)) return message.reply(`${message.client.emoji.fail} Slow Down - ${message.author}`)
+        if(autoResponseCooldown.has(message.author.id)) return message.reply(`${message.client.emoji.fail} Chậm lại nào - ${message.author}`)
 
          message.reply(autoResponseSettings.content  
 
@@ -338,7 +278,7 @@ return message.reply({ embeds: [embed] });
       if (customCommandSettings && customCommandSettings.name && !customCommandSettings.description && customCommandSettings.json == "true") {
   if (userBlacklistSettings && userBlacklistSettings.isBlacklisted)  return;
         const command = JSON.parse(customCommandSettings.content)
-        return message.reply(command).catch((e)=>{message.reply(`Đã xảy ra sự cố khi gửi tệp nhúng của bạn, đây có thể là lỗi JSON.\Đọc thêm tại đây -> https://${jsconfig.domain}/embeds\n\n__Error:__\n\`${e}\``)})
+        return message.reply(command).catch((e)=>{message.reply(`Đã xảy ra sự cố khi gửi tệp nhúng của bạn, đây có thể là lỗi JSON.\nĐọc thêm tại đây -> https://${jsconfig.domain}/embeds\n\n__Error:__\n\`${e}\``)})
       }
 
       if (command) {

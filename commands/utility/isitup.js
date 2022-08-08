@@ -10,7 +10,7 @@ module.exports = class extends Command {
       super(...args, {
         name: 'isitup',
         aliases: [ 'isitonline' ],
-        description: 'Checks whether a website is up or down',
+        description: 'Kiểm tra xem một trang web đang lên hay xuống',
         category: 'Utility',
         usage: '<url>',
         cooldown: 3

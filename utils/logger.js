@@ -1,10 +1,12 @@
 const { createLogger, format, transports } = require('winston');
+const jsonconfig = require('../config.json');
 const { combine, timestamp, label, printf } = format;
 const Discord = require('discord.js');
 const config = require('./../config.json');
+const jsonconfig = require('../config.json');
 const webhookClient = new Discord.WebhookClient({ 
-	id: "927663649236070401", 
-	token: "WW1MdxgAE4d7PKVRN5vAK6MVqHpU3prSSzspeesyBtdceinh0yK28g6IFI2PhHtXQtE_" });
+  id: `${jsonconfig.webhook_id}`, 
+  token: `${jsonconfig.webhook_url}`  });
 const chalk = require('chalk');
 
 

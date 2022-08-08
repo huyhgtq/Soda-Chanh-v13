@@ -15,7 +15,7 @@ module.exports = class extends Command {
         aliases: [ 'botsuggest' ],
         description: `Đề xuất một tính năng mới cho Soda Chan!`,
         category: 'Utility',
-        examples: [ 'suggest Can you add music Please!' ],
+        examples: [ 'suggest Bạn có thể thêm âm nhạc Xin vui lòng!' ],
         cooldown: 60
       });
     }

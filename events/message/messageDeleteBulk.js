@@ -47,7 +47,7 @@ if(color == "#000000") color = this.client.color.red;
     .setTimestamp()
     .setDescription(`**${messages.size} tin nhắn** trong ${message.channel} đã bị xóa.`)
     .setColor(message.guild.me.displayHexColor)
-    .setFooter(`${messages.size} Messages`);
+    .setFooter(`${messages.size} Tin nhắn`);
 
     if(channelEmbed &&
       channelEmbed.viewable &&

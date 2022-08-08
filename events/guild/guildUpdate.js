@@ -61,13 +61,13 @@ if(oldGuild.verificationLevel !== newGuild.verificationLevel) {
 
  
  if(oldGuild.region !== newGuild.region) {
-    embed.addField('vùng đất', `${oldGuild.region || 'Không'} --> ${newGuild.region || 'Không'}`, true)
+    embed.addField('Khu vực', `${oldGuild.region || 'Không'} --> ${newGuild.region || 'Không'}`, true)
 
  }
 
 
    if(oldGuild.ownerID !== newGuild.ownerID) {
-    embed.addField('Chủ nhân', `<@${oldGuild.ownerID || 'Không'}> **(${oldGuild.ownerID})** --> <@${newGuild.ownerID}>**(${newGuild.ownerID})**`, true)
+    embed.addField('Chủ sở hữu', `<@${oldGuild.ownerID || 'Không'}> **(${oldGuild.ownerID})** --> <@${newGuild.ownerID}>**(${newGuild.ownerID})**`, true)
 
  }
 

@@ -99,7 +99,7 @@ logging2.moderation.mute_role = muteRole.id
     if(textChats){
       const embed = new Discord.MessageEmbed()
       .setColor('PURPLE')
-      .setDescription(`Hey Poggers! I'm **a Bot**.\n\nThank you for inviting me to your server as it means a lot to us! You can get started with [\`p!help\`](https://${jsconfig.domain}) & customise your server settings by accessing the Dashboard [\`here\`](https://${jsconfig.domain}/dashboard/${guild.id}).\n\n__**Current News**__\n\`\`\`\nWe are currently giving premium to all servers until 1000 guilds! If interested Please visit https://${jsconfig.domain}/redeem\`\`\`\n\nAgain, thank you for inviting me! (this server is now very pog)\n****`)
+      .setDescription(`Này bạn! Tôi là **Bot Soda**. \ N \ nCảm ơn bạn đã mời tôi vào máy chủ của bạn vì nó rất có ý nghĩa đối với chúng tôi! Bạn có thể bắt đầu với [\`!help\`](https://${jsconfig.domain}) & tùy chỉnh cài đặt máy chủ của bạn bằng cách truy cập Trang tổng quan [\`Ở đây\`](https://${jsconfig.domain}/dashboard/${guild.id}).\n\n__**Tin tức hiện tại**__\n\`\`\`\nChúng tôi hiện đang tặng phí bảo hiểm cho tất cả các máy chủ cho đến 1000 bang hội! Nếu quan tâm Vui lòng truy cập https://${jsconfig.domain}/redeem\`\`\`\n\nMột lần nữa, cảm ơn bạn đã mời tôi!\n****`)
 
 
 

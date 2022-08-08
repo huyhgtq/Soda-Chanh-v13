@@ -48,8 +48,7 @@ module.exports = class extends Command {
         owner: `${emojis.owner}`,
         game: `${emojis.game}`,
 		voice: `${emojis.voice}`,
-		activities: `${emojis.activities}`,
-		random: `${emojis.random}`
+		activities: `${emojis.activities}`
       };
      
       const green = '<:2311Online:897806949737979954>';
@@ -306,32 +305,6 @@ embed.addField(
         return message.reply({ embeds: [embed] })
 
       	
-        } else if(args && args[0].toLowerCase() == "random"  || args && args[0].toLowerCase() == "random"){
-
-        embed.setTitle(` ${emojis.random} - Random`)
-        embed.setDescription(this.client.commands.filter(cmd => 
-      
-            cmd.category.toLowerCase() === "random").map(cmd => `${cmd.disabled || disabledCommands.includes(cmd.name || cmd) ? red : green} \`${cmd.name} ${" ".repeat(14 - Number(cmd.name.length))}:\` ${cmd.description}`).join("\n"));
-
-        embed.setFooter(`${language.requested} ${message.author.username}`, message.author.displayAvatarURL({ dynamic: true }))
-        embed.setTimestamp()
-
-        embed.addField(
-        `\u200b`, 
-        `**[Invite](https://discord.com/api/oauth2/authorize?client_id=${domain.client_id}&permissions=8&scope=bot) | ` +
-        `[Support Server](${domain.support_server_link}) | ` +
-        `[Dashboard](${domain.domain || "https://sodachan.tk/dashboard"})**`
-      );
-        return message.reply({ embeds: [embed], components: [random] })
-
-        embed.addField(
-        `\u200b`, 
-        `**[Invite](https://discord.com/api/oauth2/authorize?client_id=${domain.client_id}&permissions=8&scope=bot) | ` +
-        `[Support Server](${domain.support_server_link}) | ` +
-        `[Dashboard](${domain.domain || "https://sodachan.tk/dashboard"})**`
-      );
-        return message.reply({ embeds: [embed], components: [random]})
-
         } else if(args && args[0].toLowerCase() == "voice"  || args && args[0].toLowerCase() == "voice"){
 
         embed.setTitle(` ${emojis.voice} - voice`)

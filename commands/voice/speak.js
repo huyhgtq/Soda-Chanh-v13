@@ -10,7 +10,7 @@ module.exports = class extends Command {
         aliases: ['say', 's'],
         description: 'đọc tin nhắn của bạn trên kênh voice',
         category: 'Voice',
-        usage: [ '<PREFIX>speak [lang] <text>' ],
+        usage: [ '<PREFIX>speak <text>' ],
         cooldown: 3
       });
     }

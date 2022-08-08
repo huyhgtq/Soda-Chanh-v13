@@ -38,8 +38,7 @@ if(maintenance && maintenance.toggle == "true"){
   
 
     this.client.user.setPresence({ status: 'dnd' });
-    //this.client.user.setActivity('Đang bảo trì')
-	this.client.user.setActivity('Updating discord.js v13')
+    this.client.user.setActivity('Đang bảo trì')
 
   
 console.log('------------')
@@ -72,9 +71,6 @@ console.log('------------')
     chalk.bgMagentaBright.black(` ${this.client.channels.cache.size} channels `),
     chalk.bgMagentaBright.black(` ${ this.client.guilds.cache.reduce((a, g) => a + g.memberCount, 0)} members `),
   );
-	console.log('------------')
-    console.log(chalk.bgBlue.white('[Status]' + ' Discord Activities'));
-	console.log('------------')
 	}
   }
 }

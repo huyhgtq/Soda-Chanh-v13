@@ -1,8 +1,8 @@
 const Command = require('../../structures/Command');
 const { WebhookClient, MessageEmbed } = require('discord.js');
-const webhookClient = new WebhookClient({ 
-id: '893957973032984646',
-token: 'AHoKy0CvTcDXH16kvXJx15llew6qhgxC6Nbca25azLZQGXvkPrvsOJNEG01tgbRUXd7J'});
+const webhookClient = new WebhookClient({
+  id: `${jsonconfig.webhook_id}`, 
+  token: `${jsonconfig.webhook_url}`  });
 
 
 const logger = require('../../utils/logger');
